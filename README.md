@@ -21,4 +21,4 @@ APK publication is controlled in the private repository by the manually approved
 See [specification](docs/DEMO_SPEC.md), [screen inventory](docs/SCREEN_INVENTORY.md), [roadmap](docs/ROADMAP.md), [changelog](docs/CHANGELOG.md), and [test plan](docs/TEST_PLAN.md).
 
 ## v1.1 state
-Documentation foundation committed on a feature branch. The reported phone demo v1.0 archive is not yet available in this repository or current mounted files; it has **not** been imported or browser-tested. The public site remains untouched.
+Documentation foundation committed on a feature branch. The authoritative v1.0 ZIP is available and hash-verified, but `demo/index.html` on this branch is an older staged copy, and `demo/mia.webp` and `demo/leo.webp` are not yet committed. Run `python scripts/import_phone_demo.py /path/to/FamilyHub_Phone_Demo_v1.0.zip` in a feature-branch checkout, then commit the three files. GitHub Actions has executed real Chromium browser checks: phone navigation/overflow and desktop reset passed, while portrait asset loading failed (404). The public site remains untouched.
