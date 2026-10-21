@@ -22,7 +22,23 @@ jobs:
         with:
           node-version: '22'
       - name: Verify original demo asset hashes
-        run: python scripts/verify_phone_demo.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          from importlib.machinery import SourceFileLoader
+          import sys
+          sys.path.insert(0,'scripts')
+          from import_phone_demo import EXPECTED, ROOT
+          for name in ('mia.webp','leo.webp'):
+              digest,size=EXPECTED[name]
+              data=(ROOT/'demo'/name).read_bytes()
+              assert len(data)==size and sha256(data).hexdigest()==digest, name
+          html=(ROOT/'demo/index.html').read_text()
+          assert 'Phone fidelity demo v1.2' in html
+          assert 'v12-android-native-tokens' in html
+          print('v1.2 source and unchanged portrait assets verified')
+          PY
       - name: Check HTML script syntax and demo isolation
         shell: bash
         run: |
