@@ -68,12 +68,12 @@ jobs:
           npm install --no-save @playwright/test@1.56.1
           npx playwright install --with-deps chromium
       - name: Run Chromium smoke test
-        run: npx playwright test tests/demo-smoke.spec.js --reporter=line
-      - name: Upload failure artifacts
-        if: failure()
+        run: npx playwright test tests/demo-smoke.spec.js tests/demo-visual.spec.js --reporter=line
+      - name: Upload browser review artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: demo-browser-test-evidence
+          name: demo-browser-review-evidence
           path: |
             test-results/
             playwright-report/
