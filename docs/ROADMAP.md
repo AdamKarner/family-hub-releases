@@ -6,11 +6,12 @@ This document tracks **demo** work, not Android APK releases.
 - [x] Inspect public/private repositories and release boundaries
 - [x] Create dedicated public-repository development branch
 - [x] Establish central docs and screen inventory
-- [ ] Import exact v1.0 baseline from author-provided ZIP (currently unavailable)
+- [ ] Replace staged HTML with byte-identical ZIP baseline and commit both portrait assets (original ZIP verified locally)
 - [ ] Review and separate demo CSS, JS, data, assets where safe without regressions
-- [ ] Add browser smoke tests and capture screenshots
+- [x] Add initial Playwright smoke test and PR static-check workflow (execution pending)
+- [ ] Capture screenshots and complete browser interaction tests
 - [ ] Privacy/content review of imported demo
-- [ ] Draft PR; merge only with explicit approval
+- [x] Draft PR; merge only with explicit approval
 
 ## v1.2 — Phone fidelity
 Complete screenshot-by-screenshot layout matching and end-to-end behavior for all phone screens.
