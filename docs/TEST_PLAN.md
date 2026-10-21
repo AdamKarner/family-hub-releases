@@ -47,3 +47,11 @@ Repository/documentation checks only. No demo v1.0 artifact was provided in the 
 - Fictional portrait assets HTTP response: **FAIL**, missing `demo/mia.webp` (404; `demo/leo.webp` also previously observed missing).
 - Static checks: **PASS**. Overall workflow remains **FAILED** pending exact portrait import.
 - Screenshot-to-native visual fidelity and full interaction suite remain unverified. Do not represent this as production readiness.
+
+## 2026-10-21 — Post-import review
+- Authentic HTML and both fictional portraits are present in the feature branch with correct file sizes and matching Git blob hashes.
+- Latest Actions run: individual static/asset-integrity and browser test steps completed successfully. Full workflow conclusion was still pending when checked; do not report a completed green run until GitHub finalizes it.
+- Local static source review of the original 58,230-byte HTML found no `fetch(`, XMLHttpRequest, localStorage, sessionStorage or runtime Firebase API integration. One occurrence of "Firebase" is a textual disclaimer. The one external URL loads Figtree via Google Fonts. This is a preliminary privacy/source audit, not proof that all artwork and content are publicly cleared.
+- Original HTML document title still says `Phone fidelity demo v0.7` despite the ZIP being labeled v1.0. This is a documentation/version-label inconsistency; keep imported bytes unchanged until a separately reviewed correction.
+- Attempted local headless Chromium screenshot, but no screenshot was generated. Visual fidelity against native Android references remains **NOT TESTED**.
+- Final review needs rendered screenshots at phone viewport (390 × 844), interaction walkthrough, consent/privacy check of fictional portraits, and consistent version labeling.
