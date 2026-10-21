@@ -55,3 +55,7 @@ Repository/documentation checks only. No demo v1.0 artifact was provided in the 
 - Original HTML document title still says `Phone fidelity demo v0.7` despite the ZIP being labeled v1.0. This is a documentation/version-label inconsistency; keep imported bytes unchanged until a separately reviewed correction.
 - Attempted local headless Chromium screenshot, but no screenshot was generated. Visual fidelity against native Android references remains **NOT TESTED**.
 - Final review needs rendered screenshots at phone viewport (390 × 844), interaction walkthrough, consent/privacy check of fictional portraits, and consistent version labeling.
+
+## Screenshot evidence collection
+- CI screenshot capture added at three viewport sizes across all five main tabs. Run screenshots are test artifacts for human review, not automatic visual fidelity certification.
+- Requested a new PR validation run after the screenshot-upload workflow changed. Check artifacts and review against sanitized Android screenshots before acceptance.
