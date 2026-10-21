@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify original demo asset hashes
+        run: python scripts/verify_phone_demo.py
       - name: Check HTML script syntax and demo isolation
         shell: bash
         run: |
