@@ -1,14 +1,24 @@
-# Family Hub Phone Demo v1.0 — staging
+# Family Hub phone demo — v1.1 staging
 
-This folder holds the v1.0 phone demo HTML extracted from the user-provided `FamilyHub_Phone_Demo_v1.0.zip`. Its functionality and local sample data are preserved as a standalone development baseline.
+The authoritative source is the supplied `FamilyHub_Phone_Demo_v1.0.zip`. The current `demo/index.html` on this branch is an earlier indexed copy and must **not** be considered source-identical to the ZIP. The two fictional portraits (`mia.webp`, `leo.webp`) are still absent.
 
-**Asset blocker:** the original ZIP also contains `mia.webp` and `leo.webp`, fictional bundled portraits referenced by `index.html`. The binary portrait assets have not yet been committed to GitHub; this branch is not ready for review or publication as a complete replica. Use the original ZIP to test the complete baseline locally.
+## Verified import workflow
 
-**Source check:** the demo HTML was transferred from a pre-existing indexed copy of `index.html` (the same size-class, but not byte-identically confirmed against the supplied archive). Before finalizing v1.1 compare it against the archive byte-for-byte, and replace it with the authoritative file if differences exist.
+On a computer with a checkout of `feature/interactive-demo-v1.1`:
 
-Do not add a link from the live landing page or merge this draft PR until both portrait assets and verified source parity are committed, privacy-reviewed, and browser-tested.
+```bash
+python scripts/import_phone_demo.py "/path/to/FamilyHub_Phone_Demo_v1.0.zip"
+git status --short
+git diff --check
+git add demo/index.html demo/mia.webp demo/leo.webp
+git commit -m "feat(demo): import exact v1.0 source and fictional portraits"
+git push origin feature/interactive-demo-v1.1
+```
 
-## Offline baseline
-Extract the original ZIP, retain both .webp images next to index.html, and serve the directory with `python -m http.server 8000`.
+The script verifies the original SHA-256 and byte size of all three files, refuses mismatches, and writes original bytes to `demo/`. Do not use real household data or images. Review the diff before pushing.
 
-The standalone demo has no Firebase integration. Google Fonts Figtree CSS is externally loaded, with fallback fonts if unavailable.
+After pushing, GitHub Actions should run Playwright and the static privacy/website-protection checks. Do not merge until these checks pass and the visual and privacy audits are reviewed.
+
+## Local preview
+
+From repository root, run `python -m http.server 8765` and visit `http://127.0.0.1:8765/demo/`. The demo uses fictional local state and Google Fonts for Figtree, with system fallback. There is no Firebase connection.
