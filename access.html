@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Family Hub · Download Access</title><style>
+:root{font-family:system-ui;background:#0a1324;color:#f8f9fc;color-scheme:dark}body{margin:0;padding:24px}main{max-width:620px;margin:40px auto;background:#17243a;padding:28px;border-radius:24px}input,button{font:inherit;padding:12px;border-radius:9px}input{box-sizing:border-box;display:block;width:100%;background:#21324d;border:1px solid #65748b;color:white;margin:8px 0 16px}button{background:#ff8164;color:#111;border:0;cursor:pointer;margin:4px}a{color:#ffab94}section{border-top:1px solid #52617b;padding-top:16px;margin-top:18px}#message{white-space:pre-wrap}
+</style></head><body><main><a href="./">← Family Hub</a><h1>Download access</h1><p>Verify your email and register once. After verifying your email, downloads are available immediately.</p><p id="message" role="status"></p>
+<section id="login"><label>Email address<input id="email" type="email" autocomplete="email"></label><button id="send">Email me a sign-in link</button></section>
+<section id="account" hidden><p id="identity"></p><button id="logout">Sign out</button><div id="apply"><label>Your name<input id="name" maxlength="100" autocomplete="name"></label><button id="request">Register & Download</button></div><p id="approval"></p><button id="refresh">Refresh approval</button>
+<div id="downloads" hidden><h2>Your downloads</h2><p id="release"></p><button id="android">Android APK</button><button id="wall">Wall APK</button></div></section>
+<section id="admin" hidden><h2>Review requests</h2><button id="list">Refresh list</button><div id="people"></div></section></main>
+<script src="./distribution-config.js"></script><script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,sendSignInLinkToEmail,isSignInWithEmailLink,signInWithEmailLink,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,collection,getDocs,updateDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const c=window.FAMILY_HUB_DISTRIBUTION_CONFIG;const $=id=>document.getElementById(id);const show=msg=>$("message").textContent=msg;
+if(!c?.apiKey||!c?.projectId||!c?.appId){show("Downloads are being configured. Please come back later.");$("login").hidden=true;}
+else{
+ const app=initializeApp(c,"distribution"),auth=getAuth(app),db=getFirestore(app);
+ const safe=fn=>Promise.resolve().then(fn).catch(e=>show(e.message||String(e)));
+ const userDoc=()=>doc(db,"distributionAccess",auth.currentUser.uid);
+ $("send").onclick=()=>safe(async()=>{const email=$("email").value.trim();if(!email||!$("email").checkValidity())throw Error("Enter a valid email.");await sendSignInLinkToEmail(auth,email,{url:location.origin+location.pathname,handleCodeInApp:true});sessionStorage.setItem("fh-download-email",email);show("Check your inbox for the sign-in link.");});
+ if(isSignInWithEmailLink(auth,location.href)){const email=sessionStorage.getItem("fh-download-email")||prompt("Confirm the email you signed in with");if(email)safe(async()=>{await signInWithEmailLink(auth,email,location.href);sessionStorage.removeItem("fh-download-email");history.replaceState(null,"",location.pathname);});}
+ async function refresh(){
+  const d=await getDoc(userDoc()),status=d.exists()?d.data().status:"none";
+  $("approval").textContent="Status: "+status;$("apply").hidden=status!=="none";$("downloads").hidden=status!=="approved";
+  if(status==="approved"){const result=await getDoc(doc(db,"distributionPublic","latest"));if(!result.exists()){show("No release published yet.");return;}const release=result.data();$("release").textContent=(release.versionName||"Family Hub")+" — "+(release.notes||"");
+   for(const kind of ["android","wall"])$(kind).onclick=()=>{const link=release[kind+"Url"];if(typeof link==="string"&&link.startsWith("https://github.com/AdamKarner/family-hub-releases/"))window.open(link,"_blank","noopener,noreferrer");else show("Download not available.");};
+  }
+ }
+ onAuthStateChanged(auth,user=>safe(async()=>{$("login").hidden=!!user;$("account").hidden=!user;$("admin").hidden=true;if(!user)return;$("identity").textContent=user.email;await refresh();try {const a=await getDoc(doc(db,"distributionAdmins",user.uid));$("admin").hidden=!a.exists();} catch (_) {$("admin").hidden=true;}}));
+ $("request").onclick=()=>safe(async()=>{const u=auth.currentUser,name=$("name").value.trim();if(!u?.emailVerified)throw Error("Verify your email first.");if(name.length<2)throw Error("Please enter your name.");await setDoc(userDoc(),{name,email:u.email,status:"approved",createdAt:serverTimestamp()});await refresh();show("Registration completed. You can download now.");});
+ $("refresh").onclick=()=>safe(refresh);$("logout").onclick=()=>safe(()=>signOut(auth));
+ $("list").onclick=()=>safe(async()=>{$("people").replaceChildren();const rows=await getDocs(collection(db,"distributionAccess"));for(const row of rows.docs){const person=row.data(),line=document.createElement("div");line.textContent=(person.name||"")+" — "+(person.email||"")+" — "+person.status+" ";for(const state of ["approved","denied","revoked"]){const b=document.createElement("button");b.textContent=state;b.onclick=()=>safe(async()=>{await updateDoc(row.ref,{status:state,reviewedAt:serverTimestamp()});$("list").click();});line.appendChild(b);}$("people").appendChild(line);}});
+}
+</script></body></html>
