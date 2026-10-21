@@ -51,8 +51,10 @@ html[data-accent=ocean]{--accent:#48b7f1}html[data-accent=meadow]{--accent:#54d5
 }
 @media(max-width:1060px){
   .art picture{
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 89%,transparent 100%);
-    mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 89%,transparent 100%);
+    /* The horizontal fade must remain on mobile: the leftmost device is clipped
+       by the embedded artwork's raster boundary otherwise. */
+    -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 19%,#000 94%,transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0%,#000 19%,#000 94%,transparent 100%);
   }
 }
 </style></head><body><div class="nav"><nav aria-label="Main navigation" class="wrap bar"><a class="logo" href="#top">⌂ Family <span>Hub</span></a><div class="links"><a href="#features">Features</a><a href="#downloads">Download</a><a href="releases.html">Release Center</a><a href="setup.html">Setup Guide</a></div><div class="controls"><div aria-label="Color mode" class="toggle" role="group"><button aria-pressed="true" data-mode-choice="dark" type="button">Dark</button><button aria-pressed="false" data-mode-choice="light" type="button">Light</button></div><div aria-label="Accent color" class="swatches" role="group"><button aria-label="Coral" aria-pressed="true" data-color="coral" style="background:#ff8067" type="button"></button><button aria-label="Ocean" aria-pressed="false" data-color="ocean" style="background:#48b7f1" type="button"></button><button aria-label="Meadow" aria-pressed="false" data-color="meadow" style="background:#54d59c" type="button"></button><button aria-label="Plum" aria-pressed="false" data-color="plum" style="background:#b38af1" type="button"></button></div></div></nav></div>
