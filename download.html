@@ -6,10 +6,37 @@ main{width:min(calc(100% - 36px),1040px);margin:75px auto 80px;display:grid;grid
 </style></head><body><nav><a class="logo" href="./">⌂ Family <span>Hub</span></a></nav><main><div class="intro"><div class="eyebrow">Welcome to Family Hub</div><h1>Bring your family together.</h1><p>Get the Family Hub app for your Android phone, tablet, or wall display. Just enter your email to access the downloads. No password or verification code required.</p></div><div class="panel"><div id="email-step"><h2>Get your downloads</h2><form id="form"><label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="254"><button id="submit" type="submit">Continue to downloads →</button></form><p class="hint">We collect your email to keep track of Family Hub downloads. This email is not verified. No account is created.</p></div><div id="ready" hidden><h2>Your downloads are ready</h2><p class="hint">Choose the version that's right for your device.</p><div class="files"><a id="android" href="https://github.com/AdamKarner/family-hub-releases/releases">Download Android APK</a><a id="wall" href="https://github.com/AdamKarner/family-hub-releases/releases">Download Wall Display APK</a></div></div><p id="status" role="status" aria-live="polite"></p></div><p class="foot">Family Hub — A little less chaos. A lot more together. · <a href="./">Back to website</a></p></main><script src="./distribution-config.js"></script><script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import {getFirestore,collection,addDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-const c=window.FAMILY_HUB_DISTRIBUTION_CONFIG;const el=id=>document.getElementById(id);const message=t=>el("status").textContent=t;
+import {initializeAppCheck,ReCaptchaEnterpriseProvider,getToken} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-check.js";
+let visitorLeadId=null;let clickInFlight=false;const c=window.FAMILY_HUB_DISTRIBUTION_CONFIG;const el=id=>document.getElementById(id);const message=t=>el("status").textContent=t;
 if(!c?.projectId||!c?.apiKey||!c?.appId){message("Downloads are temporarily unavailable. Please try again later.");el("submit").disabled=true;}else{
-const app=initializeApp(c,"public-downloads"),db=getFirestore(app);
-el("form").addEventListener("submit",async e=>{e.preventDefault();const email=el("email").value.trim().toLowerCase();if(!el("email").checkValidity())return;el("submit").disabled=true;message("Preparing your downloads…");try{await addDoc(collection(db,"distributionLeads"),{email,createdAt:serverTimestamp(),source:"website",intendedDevice:(["android","wall"].includes(new URLSearchParams(location.search).get("device"))?new URLSearchParams(location.search).get("device"):"unspecified")});el("email-step").hidden=true;el("ready").hidden=false;message("");}catch(err){const code=String(err?.code||"unknown");console.error("Family Hub download lead save failed",code,err);const info=code==="permission-denied"?"The database rejected this submission.":code==="unavailable"?"The database connection is unavailable.":code==="failed-precondition"?"The database is not ready for this operation.":code==="unauthenticated"?"The database requires a sign-in that this form does not provide.":"The save could not complete.";message("We couldn't save your email. "+info+" (Error: "+code+"). Please contact the site administrator.");el("submit").disabled=false;}});
+const app=initializeApp(c,"public-downloads");
+let appCheck=null;
+if(c.appCheckSiteKey){
+ try{appCheck=initializeAppCheck(app,{provider:new ReCaptchaEnterpriseProvider(c.appCheckSiteKey),isTokenAutoRefreshEnabled:true});}
+ catch(err){console.warn("App Check initialization unavailable",err?.code||"error");}
+}
+const db=getFirestore(app);
+if(appCheck){getToken(appCheck).then(()=>console.info("Family Hub App Check token obtained")).catch(err=>console.warn("App Check token unavailable",err?.code||"error"));}
+
+el("form").addEventListener("submit",async e=>{e.preventDefault();const email=el("email").value.trim().toLowerCase();if(!el("email").checkValidity())return;el("submit").disabled=true;message("Preparing your downloads…");try{const saved=await addDoc(collection(db,"distributionLeads"),{email,createdAt:serverTimestamp(),source:"website",intendedDevice:(["android","wall"].includes(new URLSearchParams(location.search).get("device"))?new URLSearchParams(location.search).get("device"):"unspecified")});visitorLeadId=saved.id;el("email-step").hidden=true;el("ready").hidden=false;message("");}catch(err){const code=String(err?.code||"unknown");console.error("Family Hub download lead save failed",code,err);const info=code==="permission-denied"?"The database rejected this submission.":code==="unavailable"?"The database connection is unavailable.":code==="failed-precondition"?"The database is not ready for this operation.":code==="unauthenticated"?"The database requires a sign-in that this form does not provide.":"The save could not complete.";message("We couldn't save your email. "+info+" (Error: "+code+"). Please contact the site administrator.");el("submit").disabled=false;}});
+for(const kind of ["android","wall"]){
+ el(kind).addEventListener("click",event=>{
+  if(!visitorLeadId){event.preventDefault();message("Enter your email first.");return;}
+  if(clickInFlight){event.preventDefault();return;}
+  const target=el(kind).href;
+  if(!target.startsWith("https://github.com/AdamKarner/family-hub-releases/")){event.preventDefault();message("Download link not available.");return;}
+  event.preventDefault();clickInFlight=true;
+  let finished=false;
+  const navigate=()=>{if(finished)return;finished=true;clickInFlight=false;window.location.assign(target);};
+  // Never block the APK download if analytics are slow or unavailable.
+  const fallback=setTimeout(navigate,900);
+  addDoc(collection(db,"distributionClicks"),{
+   leadId:visitorLeadId,kind,version:(target.match(/build-(\d+)\.apk$/i)||[])[1]||"unknown",
+   source:"website",createdAt:serverTimestamp()
+  }).catch(err=>console.warn("Family Hub click tracking unavailable",err?.code||"error"))
+    .finally(()=>{clearTimeout(fallback);navigate();});
+ });
+}
 }
 const apiBase="https://api.github.com/repos/AdamKarner/family-hub-releases/releases";(async()=>{for(const endpoint of ["/latest","/tags/latest"]){try{const r=await fetch(apiBase+endpoint,{headers:{Accept:"application/vnd.github+json"}});if(!r.ok)continue;const rel=await r.json();for(const [id,prefix] of [["android","FamilyHub-build-"],["wall","FamilyHubWall-build-"]]){const assets=(rel.assets||[]).filter(x=>x.name.startsWith(prefix)&&/^\d+\.apk$/.test(x.name.slice(prefix.length))).sort((a,b)=>Number(b.name.slice(prefix.length).replace(".apk",""))-Number(a.name.slice(prefix.length).replace(".apk","")));if(assets[0])el(id).href=assets[0].browser_download_url;}break;}catch(_){}}})();
 try{const t=JSON.parse(localStorage.getItem("fh_site_theme")||"{}");if(["light","dark"].includes(t.mode))document.documentElement.dataset.mode=t.mode;if(["coral","ocean","meadow","plum"].includes(t.accent))document.documentElement.dataset.accent=t.accent;}catch(_){}
