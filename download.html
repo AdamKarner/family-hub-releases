@@ -14,14 +14,18 @@ for(const kind of ["android","wall"]){
  el(kind).addEventListener("click",event=>{
   if(!visitorLeadId){event.preventDefault();message("Enter your email first.");return;}
   if(clickInFlight){event.preventDefault();return;}
-  // A recorded click is an attempt, not proof of a completed download.
-  clickInFlight=true;const button=el(kind),target=button.href;
-  event.preventDefault();
+  const target=el(kind).href;
+  if(!target.startsWith("https://github.com/AdamKarner/family-hub-releases/")){event.preventDefault();message("Download link not available.");return;}
+  event.preventDefault();clickInFlight=true;
+  let finished=false;
+  const navigate=()=>{if(finished)return;finished=true;clickInFlight=false;window.location.assign(target);};
+  // Never block the APK download if analytics are slow or unavailable.
+  const fallback=setTimeout(navigate,900);
   addDoc(collection(db,"distributionClicks"),{
-   leadId:visitorLeadId,kind,version:(target.match(/build-(\\d+)\\.apk$/i)||[])[1]||"unknown",
+   leadId:visitorLeadId,kind,version:(target.match(/build-(\d+)\.apk$/i)||[])[1]||"unknown",
    source:"website",createdAt:serverTimestamp()
-  }).catch(err=>console.warn("Family Hub click analytics unavailable",err?.code||"error"))
-  .finally(()=>{clickInFlight=false;window.location.assign(target);});
+  }).catch(err=>console.warn("Family Hub click tracking unavailable",err?.code||"error"))
+    .finally(()=>{clearTimeout(fallback);navigate();});
  });
 }
 }
