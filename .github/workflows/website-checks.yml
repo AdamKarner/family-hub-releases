@@ -1,0 +1,44 @@
+name: Public website checks
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'download.html'
+      - 'releases.html'
+      - 'install.html'
+      - 'hearth.html'
+      - 'help.html'
+      - 'feedback.html'
+      - 'privacy.html'
+      - 'tests/website-smoke.spec.js'
+      - '.github/workflows/website-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          npm install --no-save @playwright/test@1.56.1
+          npx playwright install --with-deps chromium
+      - run: npx playwright test tests/website-smoke.spec.js --reporter=line
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-browser-test-evidence
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
