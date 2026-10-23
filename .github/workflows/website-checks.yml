@@ -1,6 +1,19 @@
 name: Public website checks
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'download.html'
+      - 'releases.html'
+      - 'install.html'
+      - 'hearth.html'
+      - 'help.html'
+      - 'feedback.html'
+      - 'privacy.html'
+      - 'tests/website-smoke.spec.js'
+      - '.github/workflows/website-checks.yml'
   pull_request:
     paths:
       - 'index.html'
