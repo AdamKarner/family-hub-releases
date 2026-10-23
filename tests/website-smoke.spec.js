@@ -27,7 +27,7 @@ test('download page recovers from an unavailable GitHub API', async ({ page }) =
 
 test('Help Center search filters FAQ and guides', async ({ page }) => {
   await page.goto('/help.html');
-  await page.locator('#search').fill('Hearth');
+  await page.locator('#search').fill('Bugjaeger');
   await expect(page.locator('#articles .tile:visible')).toHaveCount(1);
   await expect(page.locator('#faqgroup details:visible')).toHaveCount(1);
   await page.locator('#search').focus();
