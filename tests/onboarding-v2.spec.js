@@ -10,6 +10,7 @@ test('onboarding v2 concept stays clearly nonfunctional and mobile-friendly', as
     await expect(page.getByRole('link',{name:/Current setup guide/})).toHaveAttribute('href','setup.html');
     await expect(page.locator('input')).toHaveCount(0);
     await expect(page.locator('form')).toHaveCount(0);
+    if (width === 390 || width === 1440) await page.screenshot({path:'test-results/onboarding-v2-'+width+'.png',fullPage:true});
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
     expect(overflow,'horizontal overflow at '+width+'px').toBe(false);
   }
