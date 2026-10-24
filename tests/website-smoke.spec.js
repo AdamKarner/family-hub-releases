@@ -43,3 +43,26 @@ test('public entry pages fit a narrow Android viewport', async ({ page }) => {
     expect(overflow, path + ' has horizontal overflow').toBe(false);
   }
 });
+
+test('feedback form offers the same Notion destination embedded and directly', async ({ page }) => {
+  await page.goto('/feedback.html');
+  const iframe = page.getByTitle('Submit Family Hub feedback');
+  await expect(iframe).toBeVisible();
+  const embedded = await iframe.getAttribute('src');
+  const direct = await page.getByRole('link', { name: /Open form in new tab/ }).getAttribute('href');
+  expect(embedded).toBe(direct);
+  expect(new URL(embedded).hostname).toBe('hypnotic-octave-a1d.notion.site');
+  await expect(page.getByText(/If the embedded form doesn't load/)).toBeVisible();
+});
+
+test('capture public landing pages in phone and desktop viewports', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844, name: 'mobile' }, { width: 1440, height: 900, name: 'desktop' }]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    for (const [name, path] of [['home', '/'], ['downloads', '/download.html'], ['help', '/help.html'], ['feedback', '/feedback.html']]) {
+      await page.goto(path);
+      await page.screenshot({ path: 'test-results/' + name + '-' + viewport.name + '.png', fullPage: true });
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+      expect(overflow, name + ' ' + viewport.name + ' overflow').toBe(false);
+    }
+  }
+});
