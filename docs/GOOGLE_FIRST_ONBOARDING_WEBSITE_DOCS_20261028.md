@@ -2,7 +2,7 @@
 
 **Status:** Draft / publication-gated. **Date:** 2026-10-28  
 **Decision source:** [Notion Google-first onboarding v1.0](https://app.notion.com/p/407bdde74aee818286ffdca49acf5c78)  
-**Android candidate:** [PR #109](https://github.com/AdamKarner/family-hub/pull/109), open draft; not a released first-run experience.
+**Android candidate:** [PR #109](https://github.com/AdamKarner/family-hub/pull/109), open draft; not a released first-run experience.  \n**Existing website implementation:** [draft PR #10](https://github.com/AdamKarner/family-hub-releases/pull/10) already edits start.html and help.html. [Draft PR #9](https://github.com/AdamKarner/family-hub-releases/pull/9) overlaps help.html; reconcile before publication. This document-only branch is a reference, **not a competing site implementation**.
 
 ## What changes when the matching app build ships
 
