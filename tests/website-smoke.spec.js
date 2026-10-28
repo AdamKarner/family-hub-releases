@@ -75,7 +75,7 @@ test('recent Family Hub workflows are searchable and available under Everyday us
   await expect(page.getByText('How do invites and kid permissions work?')).toBeVisible();
   await page.locator('#search').fill('');
   await page.getByRole('button', { name: 'Everyday use' }).click();
-  await expect(page.locator('#faqgroup details:visible').count()).resolves.toBeGreaterThan(5);
+  expect(await page.locator('#faqgroup details:visible').count()).toBeGreaterThan(5);
   await expect(page.getByText('Where did the Calendar controls go on a tablet?')).toBeVisible();
 });
 
