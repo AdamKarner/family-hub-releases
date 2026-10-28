@@ -102,3 +102,16 @@ test('privacy describes household membership and private requests', async ({page
   await expect(page.getByText('Last reviewed: October 28, 2026')).toBeVisible();
   await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
 });
+
+test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('made-up email');
+  const question = page.getByText("My child doesn't have a Google account. Can I use a made-up email address?");
+  await expect(question).toBeVisible();
+  await question.click();
+  await expect(page.getByText(/typing a made-up address here does not create an account/)).toBeVisible();
+  await page.getByRole('link', { name: 'Read the child account setup note' }).click();
+  await expect(page).toHaveURL(/start\.html#kids-without-google$/);
+  await expect(page.getByRole('heading', { name: 'About the made-up email address tip' })).toBeVisible();
+  await expect(page.getByText(/not yet a self-service sign-up method/)).toBeVisible();
+});
