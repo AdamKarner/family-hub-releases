@@ -37,7 +37,7 @@ test('Help Center search filters FAQ and guides', async ({ page }) => {
 
 test('public entry pages fit a narrow Android viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 780 });
-  for (const path of ['/', '/download.html', '/releases.html', '/install.html', '/help.html', '/feedback.html']) {
+  for (const path of ['/', '/download.html', '/releases.html', '/install.html', '/help.html', '/feedback.html', '/start.html', '/privacy.html']) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(overflow, path + ' has horizontal overflow').toBe(false);
@@ -85,4 +85,20 @@ test('current household help keeps a clearly labeled legacy setup path', async (
   await expect(q).toBeVisible();
   await q.click();
   await expect(page.getByRole('link', { name: 'legacy Firebase setup guide' })).toHaveAttribute('href', 'setup.html');
+});
+
+test('updated household guidance and Baton feature are discoverable', async ({page}) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('Pass the Baton');
+  await expect(page.getByText('How do I ask someone to do something with Pass the Baton?')).toBeVisible();
+  await page.locator('#search').fill('');
+  await expect(page.getByRole('link', {name: /Set up or join a household/}).first()).toHaveAttribute('href', 'start.html');
+  await page.goto('/start.html');
+  await expect(page.getByRole('heading', {name: 'Get your household connected.'})).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Legacy Firebase walkthrough'})).toHaveAttribute('href', 'setup.html');
+});
+test('privacy describes household membership and private requests', async ({page}) => {
+  await page.goto('/privacy.html');
+  await expect(page.getByText('Last reviewed: October 28, 2026')).toBeVisible();
+  await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
 });
