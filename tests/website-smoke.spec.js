@@ -66,3 +66,23 @@ test('capture public landing pages in phone and desktop viewports', async ({ pag
     }
   }
 });
+
+test('recent Family Hub workflows are searchable and available under Everyday use', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('Monday');
+  await expect(page.getByText('What happens to the meal plan on Monday?')).toBeVisible();
+  await page.locator('#search').fill('kid permissions');
+  await expect(page.getByText('How do invites and kid permissions work?')).toBeVisible();
+  await page.locator('#search').fill('');
+  await page.getByRole('button', { name: 'Everyday use' }).click();
+  await expect(page.locator('#faqgroup details:visible').count()).resolves.toBeGreaterThan(5);
+  await expect(page.getByText('Where did the Calendar controls go on a tablet?')).toBeVisible();
+});
+
+test('current household help keeps a clearly labeled legacy setup path', async ({ page }) => {
+  await page.goto('/help.html');
+  const q = page.getByText('How do I create or join a household?');
+  await expect(q).toBeVisible();
+  await q.click();
+  await expect(page.getByRole('link', { name: 'legacy Firebase setup guide' })).toHaveAttribute('href', 'setup.html');
+});
