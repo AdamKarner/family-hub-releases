@@ -136,3 +136,24 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
     expect(report.validHeroImage, 'hero image missing at ' + width).toBe(true);
   }
 });
+
+test('proposed iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#nav-open-family-hub')).toHaveAttribute('href','web.html');
+  for (const id of ['web-iphone','web-computer']) {
+    await expect(page.locator('#' + id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  }
+  await expect(page.locator('#web-guide')).toHaveAttribute('href','web.html');
+  await page.goto('/web.html');
+  await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
+  for (const id of ['open-iphone','open-computer']) {
+    await expect(page.locator('#'+id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  }
+  await expect(page.locator('#android-download')).toHaveAttribute('href','download.html?device=android');
+  await expect(page.locator('#wall-download')).toHaveAttribute('href','download.html?device=wall');
+  await expect(page.locator('input[type=password]')).toHaveCount(0);
+  for (const width of [360,390,768,1440]) {
+    await page.setViewportSize({width,height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth+1)).toBe(false);
+  }
+});
