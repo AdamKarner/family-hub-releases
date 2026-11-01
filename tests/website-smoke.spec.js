@@ -157,3 +157,21 @@ test('proposed iPhone and computer entry points do not create a second sign-in s
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth+1)).toBe(false);
   }
 });
+
+test('web guide restores Family Hub dark-light and accent theme preferences', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.setItem('fh_site_theme', JSON.stringify({mode:'light',accent:'ocean'})));
+  await page.goto('/web.html');
+  await expect(page.locator('html')).toHaveAttribute('data-mode','light');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','ocean');
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('color-scheme').trim())).toBe('light');
+  await page.evaluate(() => localStorage.setItem('fh_site_theme', JSON.stringify({mode:'dark',accent:'plum'})));
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-mode','dark');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','plum');
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim())).toBe('#b38af1');
+  await page.evaluate(() => localStorage.setItem('fh_site_theme', '{"mode":"invalid","accent":"invalid"}'));
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-mode','dark');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','coral');
+});
