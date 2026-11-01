@@ -13,6 +13,9 @@ on:
       - 'feedback.html'
       - 'privacy.html'
       - 'tests/website-smoke.spec.js'
+      - 'tests/approved-homepage-hero.test.cjs'
+      - 'scripts/apply-approved-homepage-hero.js'
+      - 'web.html'
       - '.github/workflows/website-checks.yml'
   pull_request:
     paths:
@@ -45,6 +48,7 @@ jobs:
       - run: |
           npm install --no-save @playwright/test@1.56.1
           npx playwright install --with-deps chromium
+      - run: node tests/approved-homepage-hero.test.cjs
       - run: npx playwright test tests/website-smoke.spec.js --reporter=line
       - name: Upload browser QA screenshots and failure evidence
         if: always()
