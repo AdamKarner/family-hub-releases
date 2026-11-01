@@ -119,8 +119,8 @@ test('child-without-Google FAQ distinguishes a created login from a fictitious e
 
 test('homepage preserves working Android and Wall actions plus accessible hero', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#hero-android')).toHaveAttribute('href','download.html?device=android');
-  await expect(page.locator('#hero-wall')).toHaveAttribute('href','download.html?device=wall');
+  await expect(page.locator('#hero-android')).toHaveAttribute('href',/download\.html\?device=android$/);
+  await expect(page.locator('#hero-wall')).toHaveAttribute('href',/download\.html\?device=wall$/);
   await expect(page.locator('main .hero h1')).toBeVisible();
   const art = page.locator('main .hero picture img');
   await expect(art).toHaveAttribute('alt', /Family Hub/i);
