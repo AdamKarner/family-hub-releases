@@ -175,3 +175,23 @@ test('web guide restores Family Hub dark-light and accent theme preferences', as
   await expect(page.locator('html')).toHaveAttribute('data-mode','dark');
   await expect(page.locator('html')).toHaveAttribute('data-accent','coral');
 });
+
+test('web guide theme controls are keyboard accessible and persist back to homepage', async ({ page }) => {
+  await page.goto('/web.html');
+  const light=page.getByRole('button',{name:'Light'});
+  const plum=page.getByRole('button',{name:'Plum'});
+  await light.click();
+  await plum.click();
+  await expect(light).toHaveAttribute('aria-pressed','true');
+  await expect(plum).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('html')).toHaveAttribute('data-mode','light');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','plum');
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('fh_site_theme')));
+  expect(saved).toEqual({mode:'light',accent:'plum'});
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-mode','light');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','plum');
+  await page.goto('/web.html');
+  await expect(page.getByRole('button',{name:'Plum'})).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content','#fbf8f4');
+});
