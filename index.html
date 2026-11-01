@@ -97,6 +97,14 @@ html[data-accent=ocean]{--accent:#48b7f1}html[data-accent=meadow]{--accent:#54d5
  .mobile-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:4px 20px 13px}
  .mobile-shortcuts a{min-width:0;flex:auto;white-space:normal;text-align:center;line-height:1.15;gap:4px;padding:9px 6px;font-size:clamp(.73rem,3vw,.82rem)}
 }
+<style id="lumen-tablet-navigation">
+@media(min-width:681px) and (max-width:1060px){
+  .mobile-shortcuts{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:12px 24px}
+  .mobile-shortcuts a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none;font-weight:750;padding:10px 18px}
+  .mobile-shortcuts a:last-child{border-color:var(--accent)}
+  .mobile-shortcuts a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+}
+</style>
 <style id="lumen-mobile-web-entry">
 @media(max-width:680px){
   .mobile-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
