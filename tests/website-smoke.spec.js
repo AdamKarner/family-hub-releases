@@ -195,3 +195,16 @@ test('web guide theme controls are keyboard accessible and persist back to homep
   await expect(page.getByRole('button',{name:'Plum'})).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content','#fbf8f4');
 });
+
+
+test('mobile quick navigation exposes the existing-family web app guide', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  const entry=page.locator('#mobile-open-family-hub');
+  await expect(entry).toBeVisible();
+  await expect(entry).toHaveAttribute('href','web.html');
+  await entry.click();
+  await expect(page).toHaveURL(/\/web\.html$/);
+  await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)).toBe(false);
+});
