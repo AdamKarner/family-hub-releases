@@ -208,3 +208,15 @@ test('mobile quick navigation exposes the existing-family web app guide', async 
   await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)).toBe(false);
 });
+
+test('web app entry remains discoverable across phone, tablet, and desktop widths', async ({ page }) => {
+  await page.goto('/');
+  for (const width of [360,390,680,681,768,1024,1060,1061,1440]) {
+    await page.setViewportSize({width,height:860});
+    const visible = await page.locator('#mobile-open-family-hub').isVisible() ||
+      await page.locator('#nav-open-family-hub').isVisible();
+    expect(visible, 'Open Family Hub missing at ' + width + 'px').toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      'horizontal overflow at ' + width + 'px').toBe(false);
+  }
+});
