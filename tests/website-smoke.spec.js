@@ -115,3 +115,24 @@ test('child-without-Google FAQ distinguishes a created login from a fictitious e
   await expect(page.getByRole('heading', { name: 'About the made-up email address tip' })).toBeVisible();
   await expect(page.getByText(/not yet a self-service sign-up method/)).toBeVisible();
 });
+
+
+test('homepage preserves working Android and Wall actions plus accessible hero', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#hero-android')).toHaveAttribute('href','download.html?device=android');
+  await expect(page.locator('#hero-wall')).toHaveAttribute('href','download.html?device=wall');
+  await expect(page.locator('main .hero h1')).toBeVisible();
+  const art = page.locator('main .hero picture img');
+  await expect(art).toHaveAttribute('alt', /Family Hub/i);
+  for (const width of [360, 390, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 860 });
+    await expect(page.locator('#hero-android')).toBeVisible();
+    await expect(page.locator('#hero-wall')).toBeVisible();
+    const report = await page.evaluate(() => ({
+      viewport: innerWidth, pageWidth: document.documentElement.scrollWidth,
+      validHeroImage: (() => { const el = document.querySelector('main .hero picture img'); return Boolean(el && el.complete && el.naturalWidth > 0); })()
+    }));
+    expect(report.pageWidth, 'homepage overflow at ' + width).toBeLessThanOrEqual(report.viewport + 1);
+    expect(report.validHeroImage, 'hero image missing at ' + width).toBe(true);
+  }
+});
