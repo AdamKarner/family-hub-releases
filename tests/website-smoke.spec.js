@@ -317,3 +317,30 @@ test('colour swatches have a generous tap area and stay inside the header', asyn
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(false);
   }
 });
+
+test('phone Get Started buttons are both filled with the accent colour', async ({ page }) => {
+  for (const mode of ['dark','light']) {
+    await page.addInitScript(m => { try { localStorage.setItem('fh_site_theme', JSON.stringify({mode:m,accent:'ocean'})); } catch (_) {} }, mode);
+    await page.setViewportSize({width:390,height:844});
+    await page.goto('/');
+    const bg = id => page.locator(id).evaluate(el => getComputedStyle(el).backgroundColor);
+    const hero = await bg('#hero-get-started');
+    expect(hero, mode+' hero Get Started is filled').not.toBe('rgba(0, 0, 0, 0)');
+    expect(await bg('#mobile-get-started'), mode+' header Get Started matches the hero button').toBe(hero);
+  }
+});
+
+test('Help and Setup show a Get Started button that opens the Get Started page', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  for (const [url,id] of [['/help.html','#help-get-started-cta'],['/start.html','#start-get-started-cta']]) {
+    await page.goto(url);
+    const cta=page.locator(id);
+    await expect(cta).toBeVisible();
+    await expect(cta).toHaveAttribute('href','get-started.html');
+    const box=await cta.boundingBox();
+    expect(box.height, id+' height').toBeGreaterThanOrEqual(44);
+    expect(box.x+box.width, id+' inside screen').toBeLessThanOrEqual(390);
+    await cta.click();
+    await expect(page).toHaveURL(/\/get-started\.html$/);
+  }
+});
