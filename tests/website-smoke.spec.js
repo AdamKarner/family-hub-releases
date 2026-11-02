@@ -139,7 +139,8 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
 
 test('proposed iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#nav-open-family-hub')).toHaveAttribute('href','web.html');
+  await expect(page.locator('#nav-open-family-hub')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#nav-web-guide')).toHaveAttribute('href','web.html');
   for (const id of ['web-iphone','web-computer']) {
     await expect(page.locator('#' + id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
   }
@@ -197,13 +198,20 @@ test('web guide theme controls are keyboard accessible and persist back to homep
 });
 
 
-test('mobile quick navigation exposes the existing-family web app guide', async ({ page }) => {
+test('mobile quick navigation opens the web app directly and still reaches the guide', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
   const entry=page.locator('#mobile-open-family-hub');
   await expect(entry).toBeVisible();
-  await expect(entry).toHaveAttribute('href','web.html');
-  await entry.click();
+  await expect(entry).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  const box=await entry.boundingBox();
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x+box.width).toBeLessThanOrEqual(390);
+  expect(box.y+box.height).toBeLessThanOrEqual(844);
+  expect(box.height).toBeGreaterThanOrEqual(44);
+  const guide=page.locator('#web-guide');
+  await expect(guide).toHaveAttribute('href','web.html');
+  await guide.click();
   await expect(page).toHaveURL(/\/web\.html$/);
   await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)).toBe(false);
@@ -230,7 +238,7 @@ test('tablet Open Family Hub button is accessible inside the visible header', as
   await page.goto('/');
   const link=page.locator('#tablet-open-family-hub');
   await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute('href','web.html');
+  await expect(link).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
   await expect(link).toHaveCSS('min-height','48px');
 });
 
