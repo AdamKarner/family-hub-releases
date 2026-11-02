@@ -13,6 +13,7 @@ on:
       - 'feedback.html'
       - 'privacy.html'
       - 'tests/website-smoke.spec.js'
+      - 'tests/website-review-screenshots.spec.js'
       - 'tests/approved-homepage-hero.test.cjs'
       - 'scripts/apply-approved-homepage-hero.js'
       - 'web.html'
@@ -28,6 +29,7 @@ on:
       - 'feedback.html'
       - 'privacy.html'
       - 'tests/website-smoke.spec.js'
+      - 'tests/website-review-screenshots.spec.js'
       - '.github/workflows/website-checks.yml'
   workflow_dispatch:
 
@@ -49,7 +51,7 @@ jobs:
           npm install --no-save @playwright/test@1.56.1
           npx playwright install --with-deps chromium
       - run: node tests/approved-homepage-hero.test.cjs
-      - run: npx playwright test tests/website-smoke.spec.js --reporter=line
+      - run: npx playwright test tests/website-smoke.spec.js tests/website-review-screenshots.spec.js --reporter=line
       - name: Upload browser QA screenshots and failure evidence
         if: always()
         uses: actions/upload-artifact@v4
