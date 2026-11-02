@@ -11,7 +11,7 @@ try {
  fs.writeFileSync(f,original);const img=Buffer.concat([Buffer.from('RIFF'),Buffer.alloc(4),Buffer.from('WEBP'),Buffer.alloc(1200)]);
  fs.writeFileSync(d,img);fs.writeFileSync(m,img);
  const tool=path.resolve(__dirname,'../scripts/apply-approved-homepage-hero.js');
- cp.execFileSync(process.execPath,[tool,f,d,m,o],{stdio:'pipe'});
+ cp.execFileSync(process.execPath,[tool,f,d,m,o,'--test-fixture-only'],{stdio:'pipe'});
  const result=fs.readFileSync(o,'utf8');
  assert.match(result,/id="approved-homepage-hero"/);
  assert.match(result,/data:image\/webp;base64,/);
