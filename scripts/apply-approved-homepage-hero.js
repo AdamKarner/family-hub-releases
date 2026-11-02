@@ -39,7 +39,7 @@ const expectedHashes = {
 };
 for (const [name, bytes] of [['desktop', desktop], ['mobile', mobile]]) {
   const actual = crypto.createHash('sha256').update(bytes).digest('hex');
-  if (!process.argv.includes('--test-fixture-only') && actual !== expectedHashes[name]) {
+  if (actual !== expectedHashes[name] && !(process.env.FAMILY_HUB_SYNTHETIC_TEST_FIXTURE === '1' && process.argv.includes('--test-fixture-only'))) {
     throw new Error(name + ' artwork differs from the approved review package; review and update the manifest before integration');
   }
 }
