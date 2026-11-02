@@ -15,7 +15,11 @@ main{padding:60px 0 84px}h1{font:500 clamp(2.35rem,5vw,4.8rem)/1.08 Georgia,seri
 .theme-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.85rem}.theme-label{color:var(--muted)}.theme-modes{display:flex;gap:3px;border:1px solid var(--line);border-radius:10px;padding:3px}.theme-modes button{border:0;border-radius:7px;background:transparent;color:var(--txt);padding:6px 10px;cursor:pointer}.theme-modes button[aria-pressed=true]{background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}.theme-accents{display:flex;gap:8px}.theme-accents button{width:26px;height:26px;border-radius:50%;background:var(--swatch);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--line);cursor:pointer}.theme-accents button[aria-pressed=true]{box-shadow:0 0 0 2px var(--txt)}button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:670px){main{padding-top:36px}.grid{grid-template-columns:1fr}.header{padding-top:15px;padding-bottom:15px}.card{padding:22px}.button{width:100%}}
 </style>
-</head>
+<style id="light-contrast">
+/* Light mode: accent-coloured small text darkened to meet WCAG AA (4.5:1). Hue is kept. */
+html[data-mode="light"]{--accent-ink:color-mix(in srgb,var(--accent) 55%,#000)}
+html[data-mode="light"] .eyebrow{color:var(--accent-ink)}
+</style></head>
 <body>
 <header><div class="wrap header"><a class="brand" href="./">⌂ Family Hub</a><nav class="nav" aria-label="Main navigation"><a href="./#features">Features</a><a href="./#downloads">Get Family Hub</a><a href="start.html">Setup</a><a href="help.html">Help</a></nav><div class="theme-controls" role="group" aria-label="Website appearance"><span class="theme-label">Appearance</span><div class="theme-modes" role="group" aria-label="Color mode"><button type="button" data-theme-mode="light" aria-pressed="false">Light</button><button type="button" data-theme-mode="dark" aria-pressed="true">Dark</button></div><div class="theme-accents" role="group" aria-label="Accent color"><button type="button" data-theme-accent="coral" aria-label="Coral" aria-pressed="true" style="--swatch:#ff8067"></button><button type="button" data-theme-accent="ocean" aria-label="Ocean" aria-pressed="false" style="--swatch:#48b7f1"></button><button type="button" data-theme-accent="meadow" aria-label="Meadow" aria-pressed="false" style="--swatch:#54d59c"></button><button type="button" data-theme-accent="plum" aria-label="Plum" aria-pressed="false" style="--swatch:#b38af1"></button></div></div></div></header>
 <main class="wrap">

@@ -344,3 +344,25 @@ test('Help and Setup show a Get Started button that opens the Get Started page',
     await expect(page).toHaveURL(/\/get-started\.html$/);
   }
 });
+
+test('hero artwork is framed with rounded corners and room below on both themes', async ({ page }) => {
+  for (const mode of ['light','dark']) {
+    for (const width of [390,1440]) {
+      await page.addInitScript(m => { try { localStorage.setItem('fh_site_theme', JSON.stringify({mode:m,accent:'coral'})); } catch (_) {} }, mode);
+      await page.setViewportSize({width,height:900});
+      await page.goto('/');
+      const info = await page.evaluate(() => {
+        const pic = document.querySelector('.hero .art picture'), art = document.querySelector('.hero .art'), img = pic.querySelector('img');
+        const cs = getComputedStyle(pic);
+        return { radius: parseFloat(cs.borderTopLeftRadius), overflow: cs.overflow, shadow: cs.boxShadow, below: parseFloat(getComputedStyle(art).marginBottom), loaded: img.complete && img.naturalWidth > 0, sw: document.documentElement.scrollWidth <= innerWidth };
+      });
+      const label = mode + ' ' + width + 'px';
+      expect(info.radius, label + ' corner radius').toBeGreaterThanOrEqual(18);
+      expect(info.overflow, label + ' clips to the frame').toBe('hidden');
+      expect(info.shadow, label + ' has a soft shadow').not.toBe('none');
+      expect(info.below, label + ' room below the image').toBeGreaterThanOrEqual(40);
+      expect(info.loaded, label + ' image loaded').toBe(true);
+      expect(info.sw, label + ' no horizontal overflow').toBe(true);
+    }
+  }
+});

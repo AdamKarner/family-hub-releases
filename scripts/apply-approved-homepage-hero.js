@@ -65,8 +65,13 @@ html[data-mode="dark"] .hero{background:linear-gradient(180deg,#0b1425 0%,#15223
 .hero .art:before{display:none!important}
 .hero .art picture,.hero .art img{display:block;max-width:100%;width:100%;height:auto;object-fit:contain;filter:none;mask-image:none!important;-webkit-mask-image:none!important}
 .hero .btn.outline{background:var(--surface);border-color:var(--line);color:var(--text)}
+/* Frame the artwork so it sits well on both the Light and Dark hero backgrounds. */
+.hero .art{margin:28px auto 64px}
+.hero .art picture{border-radius:24px;overflow:hidden;background:#1a1f2b;box-shadow:0 34px 70px -30px rgba(5,10,22,.7),0 0 0 1px rgba(255,255,255,.07)}
+html[data-mode="light"] .hero .art picture{box-shadow:0 30px 60px -30px rgba(70,45,25,.38),0 0 0 1px rgba(39,51,59,.1)}
 @media(max-width:1060px){.hero-inner{padding-top:40px}.hero .art{height:auto;margin:16px auto 0;width:100%}}
 @media(max-width:680px){.hero-inner{padding-top:28px}.hero h1{font-size:clamp(2.5rem,10.8vw,4rem)}.hero .lead{font-size:1rem}.hero .art{width:100%;margin:16px auto 0;left:auto;right:auto}.hero .art img{width:100%}.hero .hero-benefits{margin-top:18px}.hero .btns{grid-template-columns:1fr 1fr}.hero{overflow:hidden}}
+@media(max-width:680px){.hero .art{margin:20px auto 40px}.hero .art picture{border-radius:18px}}
 </style>`;
 let result=source.replace(heroPicture,picture);
 result=result.replace('</head>',style+'</head>');
