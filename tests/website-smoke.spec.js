@@ -366,3 +366,17 @@ test('hero artwork is framed with rounded corners and room below on both themes'
     }
   }
 });
+
+test('the top bar Help & Support link lands on a section with a Get Started button', async ({ page }) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/');
+  await page.locator('.nav .links a[href="#help"]').click();
+  await expect(page).toHaveURL(/#help$/);
+  const cta=page.locator('#help-section-get-started');
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveAttribute('href','get-started.html');
+  // The page scrolls smoothly, so wait for it to arrive before checking.
+  await expect.poll(() => cta.evaluate(el => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight; }), { message: 'button is on screen after the jump', timeout: 8000 }).toBe(true);
+  await cta.click();
+  await expect(page).toHaveURL(/\/get-started\.html$/);
+});
