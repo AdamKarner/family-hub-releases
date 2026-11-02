@@ -139,7 +139,8 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
 
 test('proposed iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#nav-open-family-hub')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#header-sign-in')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#header-get-started')).toHaveAttribute('href','get-started.html');
   await expect(page.locator('#nav-web-guide')).toHaveAttribute('href','web.html');
   for (const id of ['web-iphone','web-computer']) {
     await expect(page.locator('#' + id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
@@ -198,69 +199,101 @@ test('web guide theme controls are keyboard accessible and persist back to homep
 });
 
 
-test('mobile quick navigation opens the web app directly and still reaches the guide', async ({ page }) => {
+test('mobile navigation has Get Started and Sign In inside the screen at 390px', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
-  const entry=page.locator('#mobile-open-family-hub');
-  await expect(entry).toBeVisible();
-  await expect(entry).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
-  const box=await entry.boundingBox();
-  expect(box.x).toBeGreaterThanOrEqual(0);
-  expect(box.x+box.width).toBeLessThanOrEqual(390);
-  expect(box.y+box.height).toBeLessThanOrEqual(844);
-  expect(box.height).toBeGreaterThanOrEqual(44);
+  for (const [id,href] of [['#mobile-get-started','get-started.html'],['#mobile-sign-in','https://family-hub-7cb05.web.app/'],['#hero-get-started','get-started.html']]) {
+    const link=page.locator(id);
+    await expect(link, id).toBeVisible();
+    await expect(link, id).toHaveAttribute('href',href);
+    const box=await link.boundingBox();
+    expect(box.x, id).toBeGreaterThanOrEqual(0);
+    expect(box.x+box.width, id).toBeLessThanOrEqual(390);
+    expect(box.height, id).toBeGreaterThanOrEqual(44);
+  }
+  const mobileCta=await page.locator('#mobile-get-started').boundingBox();
+  expect(mobileCta.y+mobileCta.height, 'Get Started above the fold').toBeLessThanOrEqual(844);
   const guide=page.locator('#web-guide');
   await expect(guide).toHaveAttribute('href','web.html');
-  await guide.click();
-  await expect(page).toHaveURL(/\/web\.html$/);
-  await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)).toBe(false);
 });
 
-test('web app entry remains discoverable across phone, tablet, and desktop widths', async ({ page }) => {
+test('Sign In and Get Started are each visible exactly once in the header area at every width', async ({ page }) => {
   await page.goto('/');
-  for (const width of [360,390,680,681,768,1024,1060,1061,1440]) {
-    await page.setViewportSize({width,height:860});
-    await expect.poll(async () =>
-      (await page.locator('#mobile-open-family-hub').isVisible()) ||
-      (await page.locator('#tablet-open-family-hub').isVisible()) ||
-      (await page.locator('#nav-open-family-hub').isVisible()), {
-        message: 'Open Family Hub missing at ' + width + 'px',
-        timeout: 3000
-      }).toBe(true);
+  for (const width of [360,390,680,681,768,1024,1060,1061,1200,1440]) {
+    await page.setViewportSize({width,height:900});
+    let signIn=0, getStarted=0;
+    for (const id of ['#header-sign-in','#mobile-sign-in']) if (await page.locator(id).isVisible()) signIn++;
+    for (const id of ['#header-get-started','#mobile-get-started']) if (await page.locator(id).isVisible()) getStarted++;
+    expect(signIn, 'Sign In links at '+width+'px').toBe(1);
+    expect(getStarted, 'Get Started links at '+width+'px').toBe(1);
+    await expect(page.locator('#hero-get-started')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
       'horizontal overflow at ' + width + 'px').toBe(false);
   }
 });
 
-test('tablet Open Family Hub button is accessible inside the visible header', async ({ page }) => {
-  await page.setViewportSize({width:768,height:900});
-  await page.goto('/');
-  const link=page.locator('#tablet-open-family-hub');
-  await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
-  await expect(link).toHaveCSS('min-height','48px');
-});
-
-test('existing Setup and Help pages cross-link the proposed browser app guide', async ({ page }) => {
-  for(const [url,id] of [['/start.html','#start-web-guide'],['/help.html','#help-web-guide']]) {
-    await page.goto(url);
-    await expect(page.locator(id)).toHaveAttribute('href','web.html');
-    await expect(page.locator(id)).toBeVisible();
-    await page.locator(id).click();
-    await expect(page).toHaveURL(/\/web\.html$/);
-    await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
+test('header Sign In and Get Started sit at the right of the header with 44px targets', async ({ page }) => {
+  for (const width of [768,1440]) {
+    await page.setViewportSize({width,height:900});
+    await page.goto('/');
+    const signIn=page.locator('#header-sign-in');
+    const start=page.locator('#header-get-started');
+    await expect(signIn).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+    await expect(start).toHaveAttribute('href','get-started.html');
+    for (const link of [signIn,start]) {
+      const box=await link.boundingBox();
+      expect(box.height).toBeGreaterThanOrEqual(44);
+      expect(box.x+box.width).toBeLessThanOrEqual(width);
+    }
+    const a=await signIn.boundingBox(), b=await start.boundingBox();
+    expect(b.x, 'Get Started after Sign In').toBeGreaterThan(a.x);
   }
 });
 
-test('only one primary header web app entry is visible at each responsive width', async ({ page }) => {
+test('header theme controls keep a gutter from the screen edge on phones', async ({ page }) => {
+  for (const width of [360,390,430]) {
+    await page.setViewportSize({width,height:800});
+    await page.goto('/');
+    const edges=await page.evaluate(() => [...document.querySelectorAll('.nav [data-color]')].map(e => e.getBoundingClientRect().right));
+    expect(edges.length).toBe(4);
+    for (const right of edges) expect(right, 'swatch right edge at '+width+'px').toBeLessThanOrEqual(width-12);
+  }
+});
+
+test('Get Started page guides new, invited and returning families without a website account', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
   await page.goto('/');
-  for (const width of [390,680,681,768,1024,1060,1061,1200,1440]) {
-    await page.setViewportSize({width,height:900});
-    let count=0;
-    for (const id of ['#mobile-open-family-hub','#tablet-open-family-hub','#nav-open-family-hub']) {
-      if (await page.locator(id).isVisible()) count++;
-    }
-    expect(count, 'visible primary links at '+width+'px').toBe(1);
+  await page.locator('#hero-get-started').click();
+  await expect(page).toHaveURL(/\/get-started\.html$/);
+  await expect(page.getByRole('heading',{level:1,name:/Get your family started/})).toBeVisible();
+  await expect(page.locator('#start-android')).toHaveAttribute('href','download.html?device=android');
+  for (const id of ['#start-join','#start-sign-in']) await expect(page.locator(id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.getByText(/never asks for your password/)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(false);
+  await page.setViewportSize({width:1440,height:900});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(false);
+});
+
+test('Get Started page keeps the saved theme and updates it', async ({ page }) => {
+  await page.addInitScript(() => { try { localStorage.setItem('fh_site_theme', JSON.stringify({mode:'light',accent:'ocean'})); } catch (_) {} });
+  await page.goto('/get-started.html');
+  await expect(page.locator('html')).toHaveAttribute('data-mode','light');
+  await expect(page.locator('html')).toHaveAttribute('data-accent','ocean');
+  await page.getByRole('button',{name:'Plum'}).click();
+  await expect(page.locator('html')).toHaveAttribute('data-accent','plum');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('fh_site_theme')).accent)).toBe('plum');
+});
+
+test('existing Setup and Help pages cross-link Get Started and the browser app guide', async ({ page }) => {
+  for(const [url,start,guide] of [['/start.html','#start-get-started','#start-web-guide'],['/help.html','#help-get-started','#help-web-guide']]) {
+    await page.goto(url);
+    await expect(page.locator(start)).toHaveAttribute('href','get-started.html');
+    await expect(page.locator(guide)).toHaveAttribute('href','web.html');
+    await page.locator(guide).click();
+    await expect(page).toHaveURL(/\/web\.html$/);
+    await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
+    await page.goto(url);
+    await page.locator(start).click();
+    await expect(page).toHaveURL(/\/get-started\.html$/);
   }
 });

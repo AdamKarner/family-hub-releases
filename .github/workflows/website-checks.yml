@@ -17,6 +17,8 @@ on:
       - 'tests/approved-homepage-hero.test.cjs'
       - 'scripts/apply-approved-homepage-hero.js'
       - 'web.html'
+      - 'get-started.html'
+      - 'start.html'
       - '.github/workflows/website-checks.yml'
   pull_request:
     paths:
@@ -28,6 +30,9 @@ on:
       - 'help.html'
       - 'feedback.html'
       - 'privacy.html'
+      - 'get-started.html'
+      - 'start.html'
+      - 'web.html'
       - 'tests/website-smoke.spec.js'
       - 'tests/website-review-screenshots.spec.js'
       - '.github/workflows/website-checks.yml'
