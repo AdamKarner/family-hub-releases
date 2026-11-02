@@ -114,6 +114,18 @@ html[data-accent=ocean]{--accent:#48b7f1}html[data-accent=meadow]{--accent:#54d5
   .nav .mobile-shortcuts a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 }
 </style>
+<style id="lumen-primary-header-responsive">
+/* Exactly one primary Open Family Hub entry across the header breakpoints. */
+@media(max-width:680px){
+  .nav .links #nav-open-family-hub,#tablet-open-family-hub{display:none!important}
+}
+@media(min-width:681px) and (max-width:1060px){
+  .nav .links #nav-open-family-hub,#mobile-open-family-hub{display:none!important}
+}
+@media(min-width:1061px){
+  #tablet-open-family-hub,#mobile-open-family-hub{display:none!important}
+}
+</style>
 <style id="lumen-mobile-web-entry">
 @media(max-width:680px){
   .mobile-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
