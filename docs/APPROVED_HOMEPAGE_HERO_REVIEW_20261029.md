@@ -38,3 +38,12 @@ Do not treat the local package as a verified production replacement for existing
 4. Prepare a review PR with exact test evidence, screenshots and explicit production-release gate. Do not merge, publish or deploy until separately approved.
 
 Source of truth: Notion website workstream and Atlas coordination page.
+
+## Update November 2, 2026: approved artwork integrated into index.html
+Product Owner approved `privacy_safe_family_hub_dashboard.png` (1672x941): warm kitchen, portrait Wall, desktop, landscape tablet, phone, fictional Riley and Taylor with initials icons. It replaces the earlier rejected set.
+
+Integrated with `scripts/apply-approved-homepage-hero.js` (inline WebP data URIs, so no relative image paths and no `content://` breakage):
+- Desktop and tablet (above 680px): full scene, `desktop-hero.webp`, 1672x941, 155,876 bytes, SHA256 `bb27ae35289a938bf5c67372846cb5054d20bbc0056cd973a229da54b82b1011`.
+- Phone (680px and below): crop of the same image, left 780px (Wall display and phone), `mobile-hero.webp`, 780x941, 84,884 bytes, SHA256 `ee0a59131a04fdd6e496084c9bdd8dd776b69755a535d78e8975fdad000680ce`. The monitor and tablet are cut off on phones. **This crop has not been approved by the Product Owner.**
+- The helper manifest hashes were updated on purpose. The fixture guard is unchanged.
+- The artwork is a visual concept. The device screens are not captures of a released build.

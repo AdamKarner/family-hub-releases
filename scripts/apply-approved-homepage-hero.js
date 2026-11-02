@@ -34,8 +34,8 @@ for (const [name, data] of [['desktop', desktop], ['mobile', mobile]]) {
 // identifiable names, messages, photos and membership details. This script
 // verifies file integrity, not the privacy of text rendered inside pixels.
 const expectedHashes = {
-  desktop: 'f77f0c87062396b55898d16e3d6476dc18033dc5c484da64d0d9682f51f61291',
-  mobile: '4c90cf78ab69689b197392583654ed2b02279b641e3bba5e2a085ce1946ce854'
+  desktop: 'bb27ae35289a938bf5c67372846cb5054d20bbc0056cd973a229da54b82b1011',
+  mobile: 'ee0a59131a04fdd6e496084c9bdd8dd776b69755a535d78e8975fdad000680ce'
 };
 for (const [name, bytes] of [['desktop', desktop], ['mobile', mobile]]) {
   const actual = crypto.createHash('sha256').update(bytes).digest('hex');
@@ -43,9 +43,9 @@ for (const [name, bytes] of [['desktop', desktop], ['mobile', mobile]]) {
     throw new Error(name + ' artwork differs from the approved review package; review and update the manifest before integration');
   }
 }
-const picture = '<div class="art"><picture><source media="(max-width:1060px)" srcset="data:image/webp;base64,'+
- mobile.toString('base64')+'"><img alt="Illustrative Family Hub concept showing the family workspace on wall, desktop, phone and tablet screens" src="data:image/webp;base64,'+
- desktop.toString('base64')+'" width="1536" height="1024" fetchpriority="high"></picture></div>';
+const picture = '<div class="art"><picture><source media="(max-width:680px)" width="780" height="941" srcset="data:image/webp;base64,'+
+ mobile.toString('base64')+'"><img alt="Illustration of Family Hub in a warm kitchen: a portrait wall display, a desktop monitor, a tablet and a phone showing the agenda, meals, grocery list and daily tasks of a fictional family" src="data:image/webp;base64,'+
+ desktop.toString('base64')+'" width="1672" height="941" fetchpriority="high"></picture></div>';
 const style = `<style id="approved-homepage-hero">
 /* Scoped hero presentation: retains all current site functionality and styling elsewhere. */
 .hero{min-height:auto;background:var(--bg);color:var(--text)}
