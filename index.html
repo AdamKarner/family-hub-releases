@@ -124,8 +124,12 @@ html[data-accent=ocean]{--accent:#48b7f1}html[data-accent=meadow]{--accent:#54d5
 @media(min-width:1061px) and (max-width:1199px){
   .bar{gap:14px}.links{gap:14px}.links a{font-size:.86rem}.controls{gap:8px}.hdr-signin,.hdr-cta{padding:8px 12px;font-size:.86rem}.toggle button{padding:6px 9px;font-size:.8rem}.swatches{gap:7px}
 }
+/* Bigger tap area for the colour swatches without changing how they look. */
+.swatches button{position:relative}
+.swatches button::after{content:"";position:absolute;inset:-11px -3px}
 @media(max-width:680px){
   .bar{padding:12px 20px}
+  .swatches{gap:6px}.swatches button{width:20px;height:20px}
   .m-cta{display:inline-flex;grid-column:1/-1;background:var(--accent);color:#11172a;border-color:var(--accent);font-weight:850}
   .mobile-shortcuts a.m-cta{border-color:var(--accent)}
   #hero-get-started{grid-column:1/-1}

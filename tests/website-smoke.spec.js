@@ -297,3 +297,23 @@ test('existing Setup and Help pages cross-link Get Started and the browser app g
     await expect(page).toHaveURL(/\/get-started\.html$/);
   }
 });
+
+test('colour swatches have a generous tap area and stay inside the header', async ({ page }) => {
+  for (const width of [360,390,1440]) {
+    await page.setViewportSize({width,height:800});
+    await page.goto('/');
+    const hits=await page.evaluate(() => [...document.querySelectorAll('.nav [data-color]')].map(el => {
+      const r=el.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+      const owner=(x,y) => { const t=document.elementFromPoint(x,y); const b=t && t.closest('[data-color]'); return b ? b.dataset.color : null; };
+      return { color: el.dataset.color, width: r.width, right: r.right,
+        up: owner(cx,cy-20), down: owner(cx,cy+20), left: owner(cx-11,cy), rightHit: owner(cx+11,cy) };
+    }));
+    expect(hits.length).toBe(4);
+    for (const h of hits) {
+      expect(h.width, h.color+' size at '+width).toBeGreaterThanOrEqual(20);
+      expect(h.right, h.color+' edge at '+width).toBeLessThanOrEqual(width-12);
+      for (const side of ['up','down']) expect(h[side], h.color+' '+side+' tap at '+width).toBe(h.color);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(false);
+  }
+});
