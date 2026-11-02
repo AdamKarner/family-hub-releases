@@ -10,6 +10,7 @@
  * Output is for review only. Requires separately approved, privacy-sanitized artwork.
  */
 const fs = require('node:fs');
+const crypto = require('node:crypto');
 const [sourcePath, desktopPath, mobilePath, outputPath] = process.argv.slice(2);
 if (![sourcePath, desktopPath, mobilePath, outputPath].every(Boolean)) {
   console.error('Usage: node apply-approved-homepage-hero.js index.html desktop.webp mobile.webp output.html');
@@ -26,6 +27,20 @@ const mobile = fs.readFileSync(mobilePath);
 for (const [name, data] of [['desktop', desktop], ['mobile', mobile]]) {
   if (data.length < 1000 || data.toString('ascii',0,4) !== 'RIFF' || data.toString('ascii',8,12) !== 'WEBP') {
     throw new Error(name + ' must be nonempty WebP');
+  }
+}
+// Do not silently publish personal household content from unreviewed mockups.
+// Before committing generated output, explicitly review both input images for
+// identifiable names, messages, photos and membership details. This script
+// verifies file integrity, not the privacy of text rendered inside pixels.
+const expectedHashes = {
+  desktop: 'f77f0c87062396b55898d16e3d6476dc18033dc5c484da64d0d9682f51f61291',
+  mobile: '4c90cf78ab69689b197392583654ed2b02279b641e3bba5e2a085ce1946ce854'
+};
+for (const [name, bytes] of [['desktop', desktop], ['mobile', mobile]]) {
+  const actual = crypto.createHash('sha256').update(bytes).digest('hex');
+  if (actual !== expectedHashes[name]) {
+    throw new Error(name + ' artwork differs from the approved review package; review and update the manifest before integration');
   }
 }
 const picture = '<div class="art"><picture><source media="(max-width:1060px)" srcset="data:image/webp;base64,'+
