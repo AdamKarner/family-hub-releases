@@ -252,3 +252,15 @@ test('existing Setup and Help pages cross-link the proposed browser app guide', 
     await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
   }
 });
+
+test('only one primary header web app entry is visible at each responsive width', async ({ page }) => {
+  await page.goto('/');
+  for (const width of [390,680,681,768,1024,1060,1061,1200,1440]) {
+    await page.setViewportSize({width,height:900});
+    let count=0;
+    for (const id of ['#mobile-open-family-hub','#tablet-open-family-hub','#nav-open-family-hub']) {
+      if (await page.locator(id).isVisible()) count++;
+    }
+    expect(count, 'visible primary links at '+width+'px').toBe(1);
+  }
+});
