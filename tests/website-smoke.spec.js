@@ -215,6 +215,7 @@ test('web app entry remains discoverable across phone, tablet, and desktop width
     await page.setViewportSize({width,height:860});
     await expect.poll(async () =>
       (await page.locator('#mobile-open-family-hub').isVisible()) ||
+      (await page.locator('#tablet-open-family-hub').isVisible()) ||
       (await page.locator('#nav-open-family-hub').isVisible()), {
         message: 'Open Family Hub missing at ' + width + 'px',
         timeout: 3000
@@ -222,4 +223,13 @@ test('web app entry remains discoverable across phone, tablet, and desktop width
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
       'horizontal overflow at ' + width + 'px').toBe(false);
   }
+});
+
+test('tablet Open Family Hub button is accessible inside the visible header', async ({ page }) => {
+  await page.setViewportSize({width:768,height:900});
+  await page.goto('/');
+  const link=page.locator('#tablet-open-family-hub');
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute('href','web.html');
+  await expect(link).toHaveCSS('min-height','48px');
 });
