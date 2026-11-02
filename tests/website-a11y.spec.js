@@ -1,6 +1,13 @@
 const { test, expect } = require('@playwright/test');
 const axe = require('axe-core');
 
+// Keep the scan to our own pages. External embeds (for example the Notion form on
+// feedback.html) are blocked so the result does not depend on the internet or on
+// another site's security policy.
+test.beforeEach(async ({ page }) => {
+  await page.route(url => !/^https?:\/\/(127\.0\.0\.1|localhost)(:|\/)/.test(url.href), route => route.abort());
+});
+
 const pages = ['index','get-started','web','help','start','download','install','hearth','releases','privacy','feedback'];
 
 // WCAG 2.x AA text contrast on every public page, in Light (all four accents) and Dark.
