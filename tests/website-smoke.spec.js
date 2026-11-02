@@ -233,3 +233,14 @@ test('tablet Open Family Hub button is accessible inside the visible header', as
   await expect(link).toHaveAttribute('href','web.html');
   await expect(link).toHaveCSS('min-height','48px');
 });
+
+test('existing Setup and Help pages cross-link the proposed browser app guide', async ({ page }) => {
+  for(const [url,id] of [['/start.html','#start-web-guide'],['/help.html','#help-web-guide']]) {
+    await page.goto(url);
+    await expect(page.locator(id)).toHaveAttribute('href','web.html');
+    await expect(page.locator(id)).toBeVisible();
+    await page.locator(id).click();
+    await expect(page).toHaveURL(/\/web\.html$/);
+    await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
+  }
+});
