@@ -260,12 +260,13 @@ test('header theme controls keep a gutter from the screen edge on phones', async
   }
 });
 
-test('Get Started page guides new, invited and returning families without a website account', async ({ page }) => {
+test('Get Started page routes new, invited and returning families to browser sign-in', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
   await page.locator('#hero-get-started').click();
   await expect(page).toHaveURL(/\/get-started\.html$/);
   await expect(page.getByRole('heading',{level:1,name:/Get your family started/})).toBeVisible();
+  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
   await expect(page.locator('#start-android')).toHaveAttribute('href','download.html?device=android');
   for (const id of ['#start-join','#start-sign-in']) await expect(page.locator(id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
   await expect(page.getByText(/never asks for your password/)).toBeVisible();
