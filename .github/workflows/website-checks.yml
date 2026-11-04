@@ -13,6 +13,11 @@ on:
       - 'feedback.html'
       - 'privacy.html'
       - 'tests/website-smoke.spec.js'
+      - 'tests/website-review-screenshots.spec.js'
+      - 'tests/website-a11y.spec.js'
+      - 'web.html'
+      - 'get-started.html'
+      - 'start.html'
       - '.github/workflows/website-checks.yml'
   pull_request:
     paths:
@@ -24,7 +29,12 @@ on:
       - 'help.html'
       - 'feedback.html'
       - 'privacy.html'
+      - 'get-started.html'
+      - 'start.html'
+      - 'web.html'
       - 'tests/website-smoke.spec.js'
+      - 'tests/website-review-screenshots.spec.js'
+      - 'tests/website-a11y.spec.js'
       - '.github/workflows/website-checks.yml'
   workflow_dispatch:
 
@@ -43,9 +53,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: |
-          npm install --no-save @playwright/test@1.56.1
+          npm install --no-save @playwright/test@1.56.1 axe-core@4.14.0
           npx playwright install --with-deps chromium
-      - run: npx playwright test tests/website-smoke.spec.js --reporter=line
+      - run: npx playwright test tests/website-smoke.spec.js tests/website-review-screenshots.spec.js tests/website-a11y.spec.js --reporter=line
       - name: Upload browser QA screenshots and failure evidence
         if: always()
         uses: actions/upload-artifact@v4
