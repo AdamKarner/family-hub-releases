@@ -18,7 +18,7 @@ jobs:
       - name: Check published homepage, signup guide and production app fingerprint
         run: |
           python - <<'PY'
-          import json, time
+          import base64, hashlib, json, time
           from html.parser import HTMLParser
           from urllib.request import Request, urlopen
           site = 'https://adamkarner.github.io/family-hub-releases/'
@@ -27,8 +27,15 @@ jobs:
               def __init__(self):
                   super().__init__()
                   self.links = {}
+                  self.image_hashes = []
+                  self.hero_media = None
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
+                  for key in ['srcset', 'src']:
+                      value = attrs.get(key, '')
+                      if value.startswith('data:image/webp;base64,'):
+                          self.image_hashes.append(hashlib.sha256(base64.b64decode(value.split(',', 1)[1])).hexdigest())
+                          if tag == 'source': self.hero_media = attrs.get('media')
                   if tag == 'a' and attrs.get('id'):
                       self.links[attrs['id']] = attrs.get('href')
           def get(url):
@@ -40,6 +47,9 @@ jobs:
           homepage = get(site)
           parser = Links()
           parser.feed(homepage)
+          assert parser.image_hashes == ['ee0a59131a04fdd6e496084c9bdd8dd776b69755a535d78e8975fdad000680ce', 'bb27ae35289a938bf5c67372846cb5054d20bbc0056cd973a229da54b82b1011'], parser.image_hashes
+          assert parser.hero_media == '(max-width:680px)', parser.hero_media
+          print('Selected mobile and desktop hero SHA-256 verified:', json.dumps(parser.image_hashes))
           for key in ['header-sign-in', 'mobile-sign-in', 'web-iphone', 'web-computer']:
               assert parser.links.get(key) == app, (key, parser.links.get(key))
           for key in ['header-get-started', 'hero-get-started', 'mobile-get-started']:
@@ -48,5 +58,5 @@ jobs:
           assert app in guide
           get(site + 'web.html')
           assert json.loads(get(app + 'build-info.json')) == {'commit': '706d5678e5b281a22bd81a36d84713fa6ebf200c', 'project': 'family-hub-7cb05'}
-          print('PASS: published homepage Sign In/Get Started, signup guide and exact production app verified.')
+          print('PASS: published selected desktop/mobile hero, Sign In/Get Started, signup guide and exact production app verified.')
           PY
