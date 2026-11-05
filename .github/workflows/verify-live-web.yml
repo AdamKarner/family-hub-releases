@@ -1,0 +1,52 @@
+name: Verify published web endpoints (read only)
+on:
+  push:
+    branches: ['codex/verify-live-web-20261105']
+    paths: ['.github/workflows/verify-live-web.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/codex/verify-live-web-20261105'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check published homepage, signup guide and production app fingerprint
+        run: |
+          python - <<'PY'
+          import json, time
+          from html.parser import HTMLParser
+          from urllib.request import Request, urlopen
+          site = 'https://adamkarner.github.io/family-hub-releases/'
+          app = 'https://family-hub-7cb05.web.app/'
+          class Links(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = {}
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag == 'a' and attrs.get('id'):
+                      self.links[attrs['id']] = attrs.get('href')
+          def get(url):
+              request = Request(url + ('&' if '?' in url else '?') + 'releasecheck=' + str(time.time_ns()), headers={'Cache-Control': 'no-cache', 'User-Agent': 'FamilyHub-Release-Verification'})
+              with urlopen(request, timeout=30) as response:
+                  assert response.status == 200
+                  print('HTTP 200:', url)
+                  return response.read().decode()
+          homepage = get(site)
+          parser = Links()
+          parser.feed(homepage)
+          for key in ['header-sign-in', 'mobile-sign-in', 'web-iphone', 'web-computer']:
+              assert parser.links.get(key) == app, (key, parser.links.get(key))
+          for key in ['header-get-started', 'hero-get-started', 'mobile-get-started']:
+              assert parser.links.get(key) == 'get-started.html', (key, parser.links.get(key))
+          guide = get(site + 'get-started.html')
+          assert app in guide
+          get(site + 'web.html')
+          assert json.loads(get(app + 'build-info.json')) == {'commit': '706d5678e5b281a22bd81a36d84713fa6ebf200c', 'project': 'family-hub-7cb05'}
+          print('PASS: published homepage Sign In/Get Started, signup guide and exact production app verified.')
+          PY
