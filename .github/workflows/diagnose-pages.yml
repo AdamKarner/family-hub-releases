@@ -1,0 +1,48 @@
+name: Diagnose Pages publication (read only)
+on:
+  push:
+    branches: ['codex/verify-live-web-20261105']
+    paths: ['.github/workflows/diagnose-pages.yml']
+permissions:
+  contents: read
+  pages: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read Pages site, latest build, deployment status and service status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError
+          root = 'https://api.github.com/repos/AdamKarner/family-hub-releases'
+          for path in ['/pages', '/pages/builds/latest', '/pages/deployments/4517e30000d9afcb4a7b9c49590ff69358cf7a86']:
+              request = Request(root + path, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
+              try:
+                  with urlopen(request, timeout=30) as response:
+                      data = json.load(response)
+                  if path == '/pages':
+                      data = {k: data.get(k) for k in ['status', 'cname', 'html_url', 'https_enforced', 'build_type', 'source']}
+                  elif 'builds' in path:
+                      data = {k: data.get(k) for k in ['status', 'error', 'commit', 'created_at', 'updated_at']}
+                  print(path, json.dumps(data))
+              except HTTPError as error:
+                  print(path, 'HTTP', error.code)
+          for path in ['components.json', 'incidents/unresolved.json']:
+              try:
+                  with urlopen('https://www.githubstatus.com/api/v2/' + path, timeout=30) as response:
+                      data = json.load(response)
+                  if 'components' in data:
+                      print('GitHub Pages service status:', json.dumps([x for x in data['components'] if 'Pages' in x.get('name', '')]))
+                  else:
+                      print('GitHub unresolved incidents:', json.dumps([{'name': x.get('name'), 'status': x.get('status'), 'updated_at': x.get('updated_at')} for x in data.get('incidents', [])]))
+              except Exception as error:
+                  print('Optional service status unavailable:', type(error).__name__)
+          PY
