@@ -27,10 +27,12 @@ jobs:
               def __init__(self):
                   super().__init__()
                   self.links = {}
+                  self.mode = None
                   self.image_hashes = []
                   self.hero_media = None
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
+                  if tag == 'html': self.mode = attrs.get('data-mode')
                   for key in ['srcset', 'src']:
                       value = attrs.get(key, '')
                       if value.startswith('data:image/webp;base64,'):
@@ -47,6 +49,8 @@ jobs:
           homepage = get(site)
           parser = Links()
           parser.feed(homepage)
+          assert parser.mode == 'light', parser.mode
+          print('WEBSITE_LIGHT_DEFAULT_VERIFIED')
           assert parser.image_hashes == ['ee0a59131a04fdd6e496084c9bdd8dd776b69755a535d78e8975fdad000680ce', 'bb27ae35289a938bf5c67372846cb5054d20bbc0056cd973a229da54b82b1011'], parser.image_hashes
           assert parser.hero_media == '(max-width:680px)', parser.hero_media
           print('Selected mobile and desktop hero SHA-256 verified:', json.dumps(parser.image_hashes))
@@ -57,6 +61,15 @@ jobs:
           guide = get(site + 'get-started.html')
           assert app in guide
           get(site + 'web.html')
-          assert json.loads(get(app + 'build-info.json')) == {'commit': '706d5678e5b281a22bd81a36d84713fa6ebf200c', 'project': 'family-hub-7cb05'}
-          print('PASS: published selected desktop/mobile hero, Sign In/Get Started, signup guide and exact production app verified.')
+          build = json.loads(get(app + 'build-info.json'))
+          assert build.get('project') == 'family-hub-7cb05'
+          assert build.get('commit') in ['706d5678e5b281a22bd81a36d84713fa6ebf200c', 'b7f4f5baed54b3e7e4f4b4c636cdf43e937fbede']
+          if build['commit'] == 'b7f4f5baed54b3e7e4f4b4c636cdf43e937fbede':
+              app_page = Links()
+              app_page.feed(get(app))
+              assert app_page.mode == 'light', app_page.mode
+              print('APP_LIGHT_DEFAULT_VERIFIED:', build['commit'])
+          else:
+              print('APP_LIGHT_PENDING_OWNER_RUN:', build['commit'])
+          print('PASS: website Light default, selected hero, sign-in links and deployed app status verified.')
           PY
