@@ -1,0 +1,42 @@
+name: Refresh approved Pages publication
+on:
+  push:
+    branches: ['codex/verify-live-web-20261105']
+    paths: ['.github/workflows/refresh-approved-pages.yml']
+permissions:
+  contents: read
+  pages: write
+jobs:
+  request-build:
+    if: github.ref == 'refs/heads/codex/verify-live-web-20261105' && github.actor == 'AdamKarner'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Request a fresh Pages build of the exact owner-approved main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from urllib.request import Request, urlopen
+          root = 'https://api.github.com/repos/AdamKarner/family-hub-releases'
+          approved = '4517e30000d9afcb4a7b9c49590ff69358cf7a86'
+          def api(path, method='GET'):
+              request = Request(root + path, data=b'{}' if method=='POST' else None, method=method, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'})
+              with urlopen(request, timeout=30) as response:
+                  return response.status, json.load(response)
+          _, ref = api('/git/ref/heads/main')
+          if ref.get('object', {}).get('sha') != approved:
+              raise SystemExit('Main changed from the owner-approved website; refusing a new publication target')
+          _, site = api('/pages')
+          if site.get('build_type') != 'legacy' or site.get('source') != {'branch':'main','path':'/'} or site.get('cname') is not None:
+              raise SystemExit('Unexpected Pages configuration; no settings will be changed')
+          status, result = api('/pages/builds', 'POST')
+          if status != 201: raise SystemExit('Unexpected Pages build request response: ' + str(status))
+          print('Fresh Pages build requested for unchanged approved main:', approved)
+          print(json.dumps(result))
+          print('No source, Pages settings, domains, credentials or application backend changed.')
+          PY
