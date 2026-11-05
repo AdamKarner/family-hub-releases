@@ -174,7 +174,7 @@ test('web guide restores Family Hub dark-light and accent theme preferences', as
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim())).toBe('#b38af1');
   await page.evaluate(() => localStorage.setItem('fh_site_theme', '{"mode":"invalid","accent":"invalid"}'));
   await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-mode','dark');
+  await expect(page.locator('html')).toHaveAttribute('data-mode','light');
   await expect(page.locator('html')).toHaveAttribute('data-accent','coral');
 });
 
@@ -398,5 +398,25 @@ test('homepage uses the selected artwork and responsive crop at the approved bre
       return createHash('sha256').update(Buffer.from(src.split(',')[1], 'base64')).digest('hex');
     }, { message: 'Selected hero bytes at viewport ' + width }).toBe(expected);
     await expect.poll(() => image.evaluate(img => [img.naturalWidth, img.naturalHeight])).toEqual(phone ? [780, 941] : [1672, 941]);
+  }
+});
+
+
+test('new visitors start every themed website page in Light even on a dark device', async ({ page }) => {
+  await page.addInitScript(() => localStorage.removeItem('fh_site_theme'));
+  await page.emulateMedia({ colorScheme: 'dark' });
+  for (const name of ['index','get-started','web','help','start','download','install','hearth','releases','privacy','feedback','access','setup','household-setup-concept']) {
+    await page.goto('/' + name + '.html');
+    await expect(page.locator('html'), name).toHaveAttribute('data-mode', 'light');
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme), name).toBe('light');
+  }
+});
+
+test('saved Dark choice overrides the Light default before page scripts finish', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('fh_site_theme', JSON.stringify({mode:'dark',accent:'plum'})));
+  for (const path of ['/', '/get-started.html', '/web.html', '/help.html']) {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'dark');
+    await expect(page.locator('html')).toHaveAttribute('data-accent', 'plum');
   }
 });
