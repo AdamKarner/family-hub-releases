@@ -1,0 +1,48 @@
+name: Recover stalled website validation
+on:
+  push:
+    branches: ['codex/verify-live-web-20261105']
+    paths: ['.github/workflows/recover-light-validation.yml']
+permissions:
+  contents: read
+  actions: write
+jobs:
+  cancel-stalled-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cancel only the exact candidate check if dependency installation is stalled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from urllib.request import Request, urlopen
+          root = 'https://api.github.com/repos/AdamKarner/family-hub-releases'
+          def api(path, method='GET'):
+              request = Request(root + path, method=method, headers={'Authorization':'Bearer ' + os.environ['GH_TOKEN'], 'Accept':'application/vnd.github+json'})
+              with urlopen(request, timeout=30) as response:
+                  return response.status, json.load(response) if method=='GET' else None
+          _, run = api('/actions/runs/42109098521')
+          if run.get('head_sha') != '8a2fc4caf7908faacf6ec8272132b98eabb7e0da' or run.get('name') != 'Public website checks':
+              raise SystemExit('Unexpected validation target')
+          if run.get('status') != 'in_progress':
+              print('Validation is no longer running; no cancellation needed.')
+              raise SystemExit(0)
+          _, jobs = api('/actions/runs/42109098521/jobs?filter=latest')
+          for job in jobs.get('jobs', []):
+              for step in job.get('steps', []):
+                  if step.get('status') == 'in_progress' and step.get('name', '').startswith('Run npm install --no-save @playwright/test'):
+                      started = datetime.fromisoformat(step['started_at'].replace('Z','+00:00'))
+                      age = (datetime.now(timezone.utc) - started).total_seconds()
+                      if age >= 480:
+                          status, _ = api('/actions/runs/42109098521/cancel', 'POST')
+                          assert status == 202, status
+                          print('Canceled stalled dependency-installation check for the unchanged Light candidate; ready to rerun.')
+                          raise SystemExit(0)
+          print('Dependency installation is not stalled past the threshold; no cancellation performed.')
+          PY
