@@ -381,3 +381,22 @@ test('the top bar Help & Support link lands on a section with a Get Started butt
   await cta.click();
   await expect(page).toHaveURL(/\/get-started\.html$/);
 });
+
+
+test('homepage uses the selected artwork and responsive crop at the approved breakpoint', async ({ page }) => {
+  const { createHash } = require('node:crypto');
+  await page.goto('/');
+  const image = page.locator('main .hero picture img');
+  await expect(image).toHaveAttribute('alt', /^Illustration of Family Hub/);
+  for (const width of [390, 680, 681, 820, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    const phone = width <= 680;
+    const expected = phone ? 'ee0a59131a04fdd6e496084c9bdd8dd776b69755a535d78e8975fdad000680ce' : 'bb27ae35289a938bf5c67372846cb5054d20bbc0056cd973a229da54b82b1011';
+    await expect.poll(async () => {
+      const src = await image.evaluate(img => img.currentSrc);
+      if (!src.startsWith('data:image/webp;base64,')) return 'missing selected artwork';
+      return createHash('sha256').update(Buffer.from(src.split(',')[1], 'base64')).digest('hex');
+    }, { message: 'Selected hero bytes at viewport ' + width }).toBe(expected);
+    await expect.poll(() => image.evaluate(img => [img.naturalWidth, img.naturalHeight])).toEqual(phone ? [780, 941] : [1672, 941]);
+  }
+});
