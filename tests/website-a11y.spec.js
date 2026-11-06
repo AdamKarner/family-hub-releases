@@ -41,3 +41,19 @@ test('homepage text contrast passes on a phone in Light and Dark', async ({ page
     expect(bad, 'phone ' + mode).toEqual([]);
   }
 });
+
+
+test('signup notices and links remain readable on legacy and administration pages', async ({ page }) => {
+  for (const [url,selector] of [['/setup.html','#current-web-setup'],['/setup/','#current-web-setup'],['/setup-demo.html','#current-web-setup'],['/access.html','.intro']]) {
+    for(const mode of ['light','dark']) {
+      await page.addInitScript(m=>localStorage.setItem('fh_site_theme',JSON.stringify({mode:m,accent:'coral'})),mode);
+      await page.goto(url);
+      await page.addScriptTag({content:axe.source});
+      const bad=await page.evaluate(async selector=>{
+        const result=await axe.run(document.querySelector(selector),{runOnly:{type:'rule',values:['color-contrast']}});
+        return result.violations.flatMap(v=>v.nodes.map(n=>n.target.join(' ')));
+      },selector);
+      expect(bad,url+' '+mode).toEqual([]);
+    }
+  }
+});
