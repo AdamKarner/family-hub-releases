@@ -10,12 +10,12 @@ jobs:
   verify:
     if: github.ref == 'refs/heads/codex/verify-live-web-20261105'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check published homepage, signup guide and production app fingerprint
+      - name: Verify all approved signup pages, selected hero and production app fingerprint
         run: |
           python - <<'PY'
           import base64, hashlib, json, time
@@ -58,18 +58,30 @@ jobs:
               assert parser.links.get(key) == app, (key, parser.links.get(key))
           for key in ['header-get-started', 'hero-get-started', 'mobile-get-started']:
               assert parser.links.get(key) == 'get-started.html', (key, parser.links.get(key))
-          guide = get(site + 'get-started.html')
-          assert app in guide
-          get(site + 'web.html')
+          expected_pages = {"index.html":"01f82f92eab358be34bfca4451859eade6a36e11","start.html":"3a23be99fbcc60b91ba4316ac0ad36a24e835521","help.html":"dd9fc5be4c716510168aaea32bcf99c597a43436","web.html":"57f40c7ef05249a0af87f776b0686a7579d28563","get-started.html":"69436f37fdd7e9422acca1d039788b861c141256","install.html":"25db46ebea561f3c64535be5f4ad214acda0c4d0","privacy.html":"e127877a0b9ef0ed58ecb7d89d69a39ebaca6be2","setup.html":"23008d2a877b049368ec30f4f7d971c8fe8c2078","setup/index.html":"7ad395c8916508203a9407e6965a3a2f40850e31","setup-demo.html":"9d4432f4d86b7cb1b6d8ad516c7dc0bfe82abd1b","household-setup-concept.html":"be2673601707e460a31f3d437d940c4b663c1c63","access.html":"33bce128d208abfa6ee95ae6d54fb6857ca75061","download.html":"3dcfe000a2423aa0231b406e13f9301a96c693e2"}
+          live_pages = {'index.html': homepage}
+          for name, expected in expected_pages.items():
+              page = live_pages.get(name)
+              if page is None: page = get(site + name)
+              live_pages[name] = page
+              body = page.encode('utf-8')
+              actual = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
+              assert actual == expected, (name, 'published content differs from approved PR #18', actual, expected)
+              print('APPROVED_PAGE_BYTES_VERIFIED:', name)
+          assert 'Already part of a Family Hub household?' not in homepage
+          assert 'Start a new household' in homepage
+          assert parser.links.get('web-get-started') == 'get-started.html'
+          assert 'Your first sign-in creates your account' in live_pages['get-started.html']
+          assert 'Home → Settings' in live_pages['web.html']
+          for name in ['setup.html', 'setup/index.html', 'setup-demo.html']:
+              assert 'id="current-web-setup"' in live_pages[name]
+          print('WEB_SIGNUP_GUIDANCE_VERIFIED: 13 approved HTML pages')
           build = json.loads(get(app + 'build-info.json'))
           assert build.get('project') == 'family-hub-7cb05'
-          assert build.get('commit') in ['706d5678e5b281a22bd81a36d84713fa6ebf200c', 'b7f4f5baed54b3e7e4f4b4c636cdf43e937fbede']
-          if build['commit'] == 'b7f4f5baed54b3e7e4f4b4c636cdf43e937fbede':
-              app_page = Links()
-              app_page.feed(get(app))
-              assert app_page.mode == 'light', app_page.mode
-              print('APP_LIGHT_DEFAULT_VERIFIED:', build['commit'])
-          else:
-              print('APP_LIGHT_PENDING_OWNER_RUN:', build['commit'])
-          print('PASS: website Light default, selected hero, sign-in links and deployed app status verified.')
+          assert build.get('commit') == '49550d4c610fc046ac5dd7beac65f473a47e7a82', build
+          app_page = Links()
+          app_page.feed(get(app))
+          assert app_page.mode == 'light', app_page.mode
+          print('APP_LIGHT_DEFAULT_VERIFIED:', build['commit'])
+          print('PASS: approved website signup guidance, Light default, selected hero, links and exact deployed app verified.')
           PY
