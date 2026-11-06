@@ -18,6 +18,11 @@ on:
       - 'web.html'
       - 'get-started.html'
       - 'start.html'
+      - 'setup.html'
+      - 'setup/index.html'
+      - 'setup-demo.html'
+      - 'household-setup-concept.html'
+      - 'access.html'
       - '.github/workflows/website-checks.yml'
   pull_request:
     paths:
@@ -31,6 +36,11 @@ on:
       - 'privacy.html'
       - 'get-started.html'
       - 'start.html'
+      - 'setup.html'
+      - 'setup/index.html'
+      - 'setup-demo.html'
+      - 'household-setup-concept.html'
+      - 'access.html'
       - 'web.html'
       - 'tests/website-smoke.spec.js'
       - 'tests/website-review-screenshots.spec.js'
@@ -54,6 +64,12 @@ jobs:
           python-version: '3.12'
       - run: |
           npm install --no-save @playwright/test@1.56.1 axe-core@4.14.0
+          # Avoid the Azure Ubuntu mirror that stalled browser font downloads.
+          for sources in /etc/apt/apt-mirrors.txt /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources; do
+            if test -f "$sources"; then
+              sudo sed -i -e 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' -e 's|https://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$sources"
+            fi
+          done
           npx playwright install --with-deps chromium
       - run: npx playwright test tests/website-smoke.spec.js tests/website-review-screenshots.spec.js tests/website-a11y.spec.js --reporter=line
       - name: Upload browser QA screenshots and failure evidence

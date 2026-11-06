@@ -99,7 +99,7 @@ test('updated household guidance and Baton feature are discoverable', async ({pa
 });
 test('privacy describes household membership and private requests', async ({page}) => {
   await page.goto('/privacy.html');
-  await expect(page.getByText('Last reviewed: October 28, 2026')).toBeVisible();
+  await expect(page.getByText('Last reviewed: November 6, 2026')).toBeVisible();
   await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
 });
 
@@ -137,7 +137,7 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
   }
 });
 
-test('proposed iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
+test('iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#header-sign-in')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
   await expect(page.locator('#header-get-started')).toHaveAttribute('href','get-started.html');
@@ -419,4 +419,80 @@ test('saved Dark choice overrides the Light default before page scripts finish',
     await expect(page.locator('html')).toHaveAttribute('data-mode', 'dark');
     await expect(page.locator('html')).toHaveAttribute('data-accent', 'plum');
   }
+});
+
+
+test('homepage welcomes new web households and routes them through current signup', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  const entry=page.locator('#web-app-entry');
+  await expect(entry).toContainText('Start a new household');
+  await expect(entry).toContainText('no Android device is required');
+  await expect(entry).not.toContainText('Already part of a Family Hub household?');
+  await expect(entry).not.toContainText('not on this website');
+  await entry.screenshot({path:'test-results/web-signup-mobile.png'});
+  await entry.locator('#web-get-started').click();
+  await expect(page).toHaveURL(/get-started\.html$/);
+  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#new-title').locator('..')).toContainText('Your first sign-in creates your account');
+  await expect(page.locator('#new-title').locator('..')).toContainText('Create household');
+});
+
+test('household and installation guides provide a standalone browser path', async ({ page }) => {
+  await page.goto('/start.html');
+  for(const id of ['#household-create-app','#household-join-app']) await expect(page.locator(id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#create-family')).toContainText('You do not need an Android device');
+  await expect(page.locator('#create-family')).not.toContainText('Install Family Hub for Android');
+  await expect(page.locator('#join-family')).not.toContainText('Install the Android app');
+  await expect(page.locator('#kids-without-google')).toContainText('The web app uses Google sign-in');
+  await page.goto('/install.html');
+  await expect(page.locator('#browser-install')).toContainText('Your first sign-in creates your Family Hub account');
+  await page.getByText('Can I use it on an iPhone or iPad?', {exact:true}).click();
+  await expect(page.getByText('An iPhone-friendly web companion is a separate development effort', {exact:false})).toHaveCount(0);
+  await expect(page.locator('#browser-install a').filter({hasText:'Sign in with Google'})).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+});
+
+test('Help Center explains browser signup, invitations and current Settings', async ({ page }) => {
+  await page.goto('/help.html');
+  const create=page.getByText('How do I create or join a household?',{exact:true}).locator('..');
+  await create.locator('summary').click();
+  await expect(create).toContainText('Your first sign-in creates your account');
+  await expect(create).toContainText('No Android device or Firebase setup is required');
+  await expect(create.getByRole('link',{name:'Get Started with browser signup'})).toHaveAttribute('href','get-started.html');
+  const invites=page.getByText('How do invites and kid permissions work?',{exact:true}).locator('..');
+  await invites.locator('summary').click();
+  await expect(invites).toContainText('Home → Settings → Household members');
+  await expect(invites).toContainText('24 hours');
+  const appearance=page.getByText("How do I change Family Hub's appearance?",{exact:true}).locator('..');
+  await appearance.locator('summary').click();
+  await expect(appearance).toContainText('Preferences');
+  await expect(appearance).toContainText('Light is the default');
+});
+
+test('old Firebase guide URLs clearly identify their legacy scope and lead new families to signup', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  for(const url of ['/setup.html','/setup/','/setup-demo.html']) {
+    await page.goto(url);
+    await expect(page).toHaveTitle('Legacy Firebase Setup — Family Hub');
+    const notice=page.locator('#current-web-setup');
+    await expect(notice).toBeVisible();
+    await expect(notice).toContainText('No Android device or Firebase project is required');
+    await expect(notice).toContainText('existing custom Firebase installation');
+    // Legacy screenshots and the complete step navigation remain available.
+    await expect(page.locator('#nav button')).toHaveCount(8);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+    await notice.getByRole('link',{name:'Get Started with Google signup'}).click();
+    await expect(page).toHaveURL(/get-started\.html$/);
+  }
+});
+
+test('archived setup concept and download administration point families to the live signup flow', async ({ page }) => {
+  await page.goto('/household-setup-concept.html');
+  await expect(page.locator('.notice')).toContainText('Archived design concept');
+  await expect(page.locator('.notice a')).toHaveAttribute('href','get-started.html');
+  await page.goto('/access.html');
+  await expect(page.getByRole('heading',{level:1})).toHaveText('Manage download access.');
+  await expect(page.locator('#access-family-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await page.goto('/download.html');
+  await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
 });
