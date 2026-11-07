@@ -58,7 +58,7 @@ test('feedback form offers the same Notion destination embedded and directly', a
 test('capture public landing pages in phone and desktop viewports', async ({ page }) => {
   for (const viewport of [{ width: 390, height: 844, name: 'mobile' }, { width: 1440, height: 900, name: 'desktop' }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    for (const [name, path] of [['home', '/'], ['downloads', '/download.html'], ['help', '/help.html'], ['feedback', '/feedback.html']]) {
+    for (const [name, path] of [['home', '/'], ['downloads', '/download.html'], ['help', '/help.html'], ['skylight', '/skylight.html'], ['feedback', '/feedback.html']]) {
       await page.goto(path);
       await page.screenshot({ path: 'test-results/' + name + '-' + viewport.name + '.png', fullPage: true });
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
