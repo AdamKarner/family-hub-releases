@@ -46,7 +46,7 @@ test('public entry pages fit a narrow Android viewport', async ({ page }) => {
 
 test('feedback form offers the same Notion destination embedded and directly', async ({ page }) => {
   await page.goto('/feedback.html');
-  const iframe = page.getByTitle('Submit Family Hub feedback');
+  const iframe = page.getByTitle('Submit Kindlane feedback');
   await expect(iframe).toBeVisible();
   const embedded = await iframe.getAttribute('src');
   const direct = await page.getByRole('link', { name: /Open form in new tab/ }).getAttribute('href');
@@ -446,7 +446,7 @@ test('household and installation guides provide a standalone browser path', asyn
   await expect(page.locator('#join-family')).not.toContainText('Install the Android app');
   await expect(page.locator('#kids-without-google')).toContainText('The web app uses Google sign-in');
   await page.goto('/install.html');
-  await expect(page.locator('#browser-install')).toContainText('Your first sign-in creates your Family Hub account');
+  await expect(page.locator('#browser-install')).toContainText('Your first sign-in creates your Kindlane account');
   await page.getByText('Can I use it on an iPhone or iPad?', {exact:true}).click();
   await expect(page.getByText('An iPhone-friendly web companion is a separate development effort', {exact:false})).toHaveCount(0);
   await expect(page.locator('#browser-install a').filter({hasText:'Sign in with Google'})).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
@@ -463,7 +463,7 @@ test('Help Center explains browser signup, invitations and current Settings', as
   await invites.locator('summary').click();
   await expect(invites).toContainText('Home → Settings → Household members');
   await expect(invites).toContainText('24 hours');
-  const appearance=page.getByText("How do I change Family Hub's appearance?",{exact:true}).locator('..');
+  const appearance=page.getByText("How do I change Kindlane's appearance?",{exact:true}).locator('..');
   await appearance.locator('summary').click();
   await expect(appearance).toContainText('Preferences');
   await expect(appearance).toContainText('Light is the default');
