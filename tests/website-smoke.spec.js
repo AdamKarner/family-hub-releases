@@ -496,3 +496,26 @@ test('archived setup concept and download administration point families to the l
   await page.goto('/download.html');
   await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
 });
+
+test('Skylight guide is discoverable, firmware-aware, and narrow-screen safe', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('Skylight');
+  await expect(page.locator('#articles .tile:visible')).toHaveCount(1);
+  await expect(page.locator('#faqgroup details:visible')).toHaveCount(1);
+  await expect(page.getByRole('link', { name: /Install on a Skylight Calendar Max/ })).toHaveAttribute('href', 'skylight.html');
+
+  await page.goto('/install.html');
+  await expect(page.locator('#skylightJump')).toHaveAttribute('href', 'skylight.html');
+
+  await page.goto('/skylight.html');
+  await expect(page.getByRole('heading', { name: /Install Kindlane on a Skylight Calendar Max/ })).toBeVisible();
+  await expect(page.getByText(/original Skylight Calendar Max ADB project/)).toBeVisible();
+  await expect(page.getByText(/updated devices/).first()).toBeVisible();
+  await expect(page.locator('pre.command')).toContainText(['adb devices', 'adb push', 'adb shell pm install -r', 'adb pair', 'adb connect']);
+  await expect(page.getByText(/not been verified on this hardware/)).toBeVisible();
+  for (const width of [360, 390, 768, 1440]) {
+    await page.setViewportSize({width, height: 844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      'Skylight guide horizontal overflow at '+width).toBe(false);
+  }
+});
