@@ -473,7 +473,7 @@ test('old Firebase guide URLs clearly identify their legacy scope and lead new f
   await page.setViewportSize({width:390,height:844});
   for(const url of ['/setup.html','/setup/','/setup-demo.html']) {
     await page.goto(url);
-    await expect(page).toHaveTitle('Legacy Firebase Setup — Family Hub');
+    await expect(page).toHaveTitle('Legacy Firebase Setup — Kindlane');
     const notice=page.locator('#current-web-setup');
     await expect(notice).toBeVisible();
     await expect(notice).toContainText('No Android device or Firebase project is required');
