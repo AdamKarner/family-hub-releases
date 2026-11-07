@@ -520,3 +520,14 @@ test('Skylight guide is discoverable, firmware-aware, and narrow-screen safe', a
       'Skylight guide horizontal overflow at '+width).toBe(false);
   }
 });
+
+test('Kindlane domain cutover metadata matches the one-domain Pages CNAME', async ({ page }) => {
+  const fs = require('node:fs');
+  expect(fs.readFileSync('CNAME', 'utf8').trim()).toBe('kindlane.app');
+  await page.goto('/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://kindlane.app/');
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://kindlane.app/');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
+  await expect(page.locator('a[href="https://family-hub-7cb05.web.app/"]').first()).toBeVisible();
+});
