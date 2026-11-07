@@ -511,7 +511,8 @@ test('Skylight guide is discoverable, firmware-aware, and narrow-screen safe', a
   await expect(page.getByRole('heading', { name: /Install Kindlane on a Skylight Calendar Max/ })).toBeVisible();
   await expect(page.getByText(/original Skylight Calendar Max ADB project/)).toBeVisible();
   await expect(page.getByText(/updated devices/).first()).toBeVisible();
-  await expect(page.locator('pre.command')).toContainText(['adb devices', 'adb push', 'adb shell pm install -r', 'adb pair', 'adb connect']);
+  const commands = (await page.locator('pre.command').allTextContents()).join('\n');
+  for (const expected of ['adb devices', 'adb push', 'adb shell pm install -r', 'adb pair', 'adb connect']) expect(commands).toContain(expected);
   await expect(page.getByText(/not been verified on this hardware/)).toBeVisible();
   for (const width of [360, 390, 768, 1440]) {
     await page.setViewportSize({width, height: 844});
