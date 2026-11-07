@@ -1,4 +1,4 @@
-# Family Hub — Public Website & Interactive Demo
+# Family Hub — Public Website
 
 Public website: https://adamkarner.github.io/family-hub-releases/
 
@@ -8,7 +8,7 @@ This **public** repository hosts the existing approved landing page, setup instr
 - `index.html` — public landing page with Sign In and Get Started.
 - `get-started.html`, `start.html`, `web.html` — current Google signup, household creation/joining and iPhone/computer setup.
 - `setup.html`, `setup/`, `setup-demo.html` — retained legacy custom Firebase guides, with links to current web signup.
-- `demo/` — future standalone interactive demo location; import pending the exact v1.0 archive.
+- `demo/` and `preview/` — retired sample-only demos; visitors are directed to the current authenticated web app.
 - `docs/` — canonical demo specification, inventory, roadmap, changelog and test plan.
 - `tests/` — browser smoke, accessibility, screenshot and onboarding regression checks.
 
@@ -24,7 +24,7 @@ See [specification](docs/DEMO_SPEC.md), [screen inventory](docs/SCREEN_INVENTORY
 ## Archived v1.1 handoff
 
 The following records the earlier demo handoff; current public onboarding is described below.
-Documentation foundation committed on a feature branch. The authoritative v1.0 ZIP is available and hash-verified, but `demo/index.html` on this branch is an older staged copy, and `demo/mia.webp` and `demo/leo.webp` are not yet committed. Run `python scripts/import_phone_demo.py /path/to/FamilyHub_Phone_Demo_v1.0.zip` in a feature-branch checkout, then commit the three files. GitHub Actions has executed real Chromium browser checks: phone navigation/overflow and desktop reset passed, while portrait asset loading failed (404). The public site remains untouched.
+The standalone fictional demo has been retired in favor of the real, authenticated Family Hub browser app. Older content remains in Git history; demo URLs show a retirement notice after publication. The current public landing and signup routes remain unchanged.
 
 ## Current onboarding
 
