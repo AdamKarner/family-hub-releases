@@ -1,290 +1,45 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Family Hub — Interactive Demo v2.4 (phone fix)</title><style>
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap');
-:root{--bg:#0d1321;--panel:#192334;--panel2:#232f45;--stroke:#32405c;--outline:#73839f;--text:#f5eee8;--muted:#a7b1c3;--accent:#60d995;--accentdim:#204339;--cyan:#56cde1;--gold:#ffc64e;--purple:#b49af1;color-scheme:dark}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080d16;color:var(--text);font-family:Figtree,system-ui,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.shell{min-height:100vh;padding:24px;display:grid;justify-items:center;align-content:start;gap:16px}.tools{width:min(1120px,100%);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.tools h1{font-size:21px;margin:0}.tools small{display:block;color:#b6bed0;font-size:12px;margin-top:4px}.controlgroup{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbtn{border:1px solid #475770;background:#1d2940;color:#e9ecf0;padding:10px 14px;border-radius:15px}.toolbtn.selected{background:var(--accent);color:#0a1920;border-color:var(--accent);font-weight:800}.device{background:var(--bg);border:7px solid #050914;border-radius:36px;width:396px;height:790px;display:flex;overflow:hidden;box-shadow:0 0 0 1px #48536c,0 25px 70px #0009;position:relative}.device.tablet{width:min(1120px,100%);height:700px;border-radius:24px}.device.portrait{width:640px;max-width:100%;height:850px;border-radius:25px}.appcontent{min-width:0;min-height:0;display:flex;flex-direction:column;flex:1}.scroller{flex:1;overflow:auto;min-height:0;scrollbar-width:thin;scrollbar-color:#3a4760 transparent;padding:22px 17px 24px}.nav{background:#192334;border-top:1px solid var(--stroke);display:grid;grid-template-columns:repeat(5,1fr);height:76px;flex:none}.nav button{border:0;background:transparent;color:var(--muted);font-size:11px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:4px 0}.nav button .ico{display:grid;place-items:center;width:65px;max-width:100%;height:34px;border-radius:40px}.nav button.on{color:var(--text)}.nav button.on .ico{color:var(--accent);background:var(--accentdim)}svg{display:block}.nav svg,.rail svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.rail{width:88px;flex:none;background:#192334;border-right:1px solid var(--stroke);display:none;flex-direction:column;align-items:center;gap:8px;padding:22px 5px}.rail button{border:0;background:transparent;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;width:78px;padding:10px 2px;border-radius:17px;font-size:11px}.rail button.on{color:var(--accent);background:var(--accentdim)}.tablet .rail{display:flex}.tablet .nav{display:none}.tablet .scroller{padding:32px 35px}.portrait .scroller{padding:30px 24px}.portrait .nav{height:84px}.page-title{font-size:29px;letter-spacing:-.8px;margin:0 0 20px;font-weight:700}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.muted{color:var(--muted)}.tiny{font-size:12px}.small{font-size:14px}.section{font-size:13px;letter-spacing:1.6px;color:var(--muted);font-weight:800;margin:28px 4px 13px}.pill{border:1px solid var(--outline);background:transparent;color:var(--text);padding:11px 17px;border-radius:32px;white-space:nowrap;font-weight:600;min-height:43px}.pill.on,.primary{background:var(--accent);color:#0b1921;border-color:var(--accent);font-weight:800}.primary{border:0;padding:14px 22px;border-radius:40px;min-height:49px}.outline{border:1px solid var(--outline);background:transparent;color:var(--text);border-radius:36px;padding:12px 17px}.full{width:100%}.seg{display:flex;background:var(--panel);border:1px solid var(--stroke);padding:4px;border-radius:42px;margin:0 0 16px;gap:2px}.seg button{flex:1;min-width:0;border:0;background:transparent;color:var(--muted);border-radius:35px;padding:12px 6px;font-weight:600;white-space:nowrap}.seg button.on{background:var(--accentdim);color:var(--accent);font-weight:800}.tabscroll{display:flex;gap:8px;overflow:auto;scrollbar-width:none;padding-bottom:5px}.tabscroll::-webkit-scrollbar{display:none}.card{background:var(--panel);border:1px solid var(--stroke);border-radius:25px;padding:17px}.card + .card{margin-top:10px}.input{background:transparent;color:var(--text);border:1px solid var(--outline);border-radius:25px;width:100%;padding:15px;min-width:0}.input::placeholder{color:var(--muted)}.tag{padding:5px 9px;border:1px solid var(--outline);border-radius:12px;color:var(--muted);font-size:12px}.datehead{display:flex;gap:7px;margin:20px 3px 10px;color:var(--muted)}.datehead b{letter-spacing:.4px}.event{border-left:5px solid var(--ev,#b49af1);padding:13px 13px 13px 17px;cursor:pointer}.event .when{font-weight:800;min-width:104px;line-height:1.55}.event .name{font-weight:700}.event .by{color:var(--ev,#b49af1);font-size:13px;margin-top:6px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}.calendar-grid .day{height:75px;background:var(--panel);padding:6px 3px;border-radius:8px;overflow:hidden;cursor:pointer;font-size:13px}.calendar-grid .day.today{outline:2px solid var(--accent);outline-offset:-2px}.calendar-grid .day i{display:block;background:#42405e;color:#d7c1ff;font-size:10px;border-radius:5px;padding:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px;font-style:normal}.week{display:grid;grid-template-columns:42px repeat(7,minmax(0,1fr));gap:3px;margin-top:15px}.week .col{height:57px;background:var(--panel);border-radius:5px;cursor:pointer}.week .col.has{border-left:4px solid var(--purple);background:#464461;color:#fff;font-size:11px;padding:5px}.chip{border:1px solid var(--stroke);border-radius:30px;padding:8px 10px;background:var(--panel);color:var(--text)}.chip.chosen{outline:2px solid var(--cyan);background:#254658}.sectionbar{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px}.listitem{display:flex;align-items:center;gap:11px;padding:14px 13px;background:var(--panel);border:1px solid var(--stroke);border-radius:22px;margin-bottom:9px;min-width:0}.circle{width:26px;height:26px;flex:none;border:2px solid var(--outline);border-radius:50%;background:none;color:#10202b}.circle.done{background:var(--accent);border-color:var(--accent)}.cross{text-decoration:line-through;color:var(--muted)}.progress{height:8px;border-radius:10px;background:#303d56;overflow:hidden}.progress>div{background:var(--cyan);height:100%}.mealrow{display:flex;align-items:center;gap:10px}.mealrow .day{min-width:54px;text-align:center}.mealrow .day b{display:block;color:var(--muted);font-size:13px}.mealrow .day strong{font-size:22px}.mealbody{flex:1;min-width:0;font-weight:650}.badge{background:var(--gold);color:#13202d;border-radius:50%;padding:5px 9px;font-size:14px;font-weight:850}.reward{display:flex;align-items:center;justify-content:space-between;gap:12px}.reward .pts{color:var(--gold);font-weight:850}.settings-label{font-size:14px;color:var(--accent);margin:29px 10px 12px}.setting{display:flex;align-items:center;gap:15px;text-align:left;width:100%;background:var(--panel);border:0;border-bottom:1px solid var(--stroke);padding:18px 12px;color:var(--text);min-height:78px}.setting:first-child{border-radius:22px 22px 0 0}.setting:last-child{border:0;border-radius:0 0 22px 22px}.setting:only-child{border-radius:22px}.setting .sq{display:grid;place-items:center;width:42px;height:42px;background:var(--panel2);border-radius:12px;color:var(--accent);font-size:22px}.setting .detail{flex:1}.setting .detail small{display:block;color:var(--muted);margin-top:4px}.homeclock{font-size:59px;font-weight:400;letter-spacing:-3px;line-height:1.1}.homeclock span{font-size:19px;letter-spacing:0;margin-left:4px}.hometop{display:flex;justify-content:space-between;align-items:center}.wxtop{font-size:27px;white-space:nowrap;display:flex;align-items:center;gap:10px}.dot{width:11px;height:11px;border-radius:50%;background:#13ba87}.homedate{font-size:20px;margin:18px 0 2px}.timeline{height:137px;border-radius:25px;margin-top:18px;padding:16px;position:relative;overflow:hidden}.timeline-event{position:absolute;top:37px;left:29%;width:50%;border-radius:30px;padding:7px;text-align:center;background:#665f80;color:#f2edf9;font-weight:750;font-size:13px;white-space:nowrap}.timeline-axis{display:flex;justify-content:space-between;position:absolute;left:20px;right:20px;bottom:16px;font-size:12px;color:var(--muted)}.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}.home-eyebrow{color:var(--muted);letter-spacing:2px;font-size:12px;font-weight:800}.summary{padding:18px 15px}.tablet .home-layout{display:grid;grid-template-columns:1.15fr 1fr;gap:18px}.tablet .home-layout .agenda-side{grid-column:2;grid-row:1 / span 4}.tablet .home-layout .main-side{grid-column:1}.tablet .timeline{height:175px}.tablet .homeclock{font-size:68px}.tablet .week .col{height:66px}.overlay{position:absolute;inset:0;z-index:30;background:#02050bc9;display:grid;place-items:center;padding:16px}.dialog{background:var(--panel);border:1px solid var(--stroke);border-radius:28px;padding:22px;width:min(560px,100%);max-height:90%;overflow:auto}.dialog h2{margin:0 0 18px;font-size:25px}.dialog footer{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}.field{margin:13px 0}.field label{display:block;margin-bottom:8px;color:var(--muted);font-size:12px;letter-spacing:1.4px;font-weight:850}.desktopnote{width:min(1120px,100%);color:#a9b2c0;text-align:center;font-size:12px}.portrait .hometop{flex-wrap:wrap}.tablet .calendar-grid .day{height:96px}@media(max-width:540px){.shell{padding:0;gap:0}.tools{padding:9px 10px;background:#1a2438}.tools h1{font-size:13px}.tools small{display:none}.controlgroup{gap:3px}.toolbtn{padding:7px 8px;font-size:11px}.device,.device.tablet,.device.portrait{width:100%;height:calc(100dvh - 55px);min-height:450px;border:0;border-radius:0;box-shadow:none}.desktopnote{display:none}.device.tablet .rail{width:60px}.device.tablet .rail button{width:52px;font-size:9px}.device.tablet .scroller{padding:15px}.tablet .home-layout{display:block}.tablet .home-layout .agenda-side{grid-column:auto;grid-row:auto}.device.portrait .scroller{padding:18px}}
-
-/* v2.1 mobile viewport repair: size the preview after its actual toolbar height.
-   Do not assume the toolbar is 55px: on Android it may wrap to two rows. */
-@media (max-width:540px){
-  html,body{height:100%;overflow:hidden}
-  .shell{height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;gap:0;overflow:hidden}
-  .tools{flex:0 0 auto;width:100%;min-height:0;box-sizing:border-box}
-  .device,.device.tablet,.device.portrait{flex:1 1 0;height:auto!important;min-height:0!important;max-height:none;width:100%;border:0;border-radius:0;box-shadow:none}
-  .appcontent{min-height:0;overflow:hidden}
-  .scroller{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .nav,.portrait .nav{flex:0 0 auto;height:auto;min-height:78px;padding-bottom:max(5px, env(safe-area-inset-bottom, 0px));box-sizing:border-box;position:relative;z-index:2}
-  .nav button{padding-top:6px;padding-bottom:7px;min-height:74px}
-  .desktopnote{display:none}
-}
-
-.timeline-weather{position:absolute;top:-12px;right:1%;width:28%;height:68px;pointer-events:none;z-index:3}.timeline-weather svg{width:100%;height:100%;overflow:visible}.timeline-weather span{position:absolute;top:0;color:var(--muted);font-size:11px}.timeline-weather .tw-first{left:0}.timeline-weather .tw-last{right:0}.timeline-event{z-index:2!important}
-/* v2.3: visually calibrated to the supplied native Home timeline.
-   Time slots use the same x-coordinate transform as the event overlays. */
-.timeline.card{height:142px;min-height:142px;padding:16px 16px 14px;margin-top:15px;border-radius:24px;display:grid;grid-template-rows:minmax(0,1fr) 22px;gap:3px;overflow:hidden;background:var(--panel)}
-.timeline-plot{position:relative;min-height:0;margin:0 4px}
-.timeline-ticks{display:none} /* native visualization has no vertical gridlines */
-.timeline-event{position:absolute;left:28.5714%;width:57.1428%;top:26%;height:29px;display:flex;align-items:center;justify-content:center;gap:4px;padding:4px 9px;border-radius:22px;background:#665f80;color:#f2edf9;font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2;box-shadow:0 1px 3px #0002}
-.timeline-event span{font-weight:650}
-.timeline-pickup{position:absolute;left:76.79%;top:69%;display:flex;gap:5px;align-items:center;color:#d6b088;font-size:11px;line-height:18px;white-space:nowrap;transform:translateX(-24%);z-index:3}
-.timeline-pickup-dot{width:10px;height:10px;border-radius:50%;background:#9c6c34;flex-shrink:0}
-.timeline-now{display:none} /* sample timeline is not live weather/calendar data */
-.timeline-axis{position:relative;height:22px;margin:0 4px;font-size:11px;line-height:22px;color:var(--muted)}
-.timeline-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
-.timeline-axis span:first-child{left:0;transform:none}
-.timeline-axis span:nth-child(2){left:42.857%}
-.timeline-axis span:nth-child(3){left:71.429%}
-.timeline-axis span:last-child{right:0;left:auto;transform:none}
-@media(max-width:370px){.timeline.card{height:130px;min-height:130px;padding-inline:12px}.timeline-event{font-size:10px;padding-inline:4px}.timeline-pickup{font-size:10px}}
-</style><style id="upnext-refinement">.upnext-card{background:#223b3b;border-color:#386d61;padding:16px!important}.upnext-main{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center}.upnext-card .home-eyebrow{color:#60d995}.upnext-title{font-size:23px!important;line-height:1.18;margin:12px 0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.upnext-detail{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--muted);white-space:nowrap;min-width:0;overflow:hidden}.upnext-avatar{display:inline-grid;place-items:center;width:29px;height:29px;border:2px solid #b59bf0;border-radius:50%;color:#e9dffc;flex-shrink:0}.upnext-count{min-width:100px;text-align:right;color:#60d995}.upnext-count small{display:block;color:#b6bfca;font-size:11px}.upnext-count strong{font-size:47px;line-height:1.1;font-weight:700}.upnext-count span{font-size:14px;color:#b6bfca;margin-left:4px}@media(max-width:350px){.upnext-count{min-width:80px}.upnext-count strong{font-size:38px}.upnext-title{font-size:19px!important}}</style><style id="home-agenda-native">.home-agenda{margin-top:16px;border-radius:27px;padding:20px 16px!important}.home-agenda-day{margin:0 0 17px}.home-agenda-day:last-child{margin-bottom:0}.home-agenda-day h3{font-size:18px;font-weight:700;margin:0 0 10px;letter-spacing:-.02em}.home-agenda-event{width:100%;display:grid;grid-template-columns:75px 31px minmax(0,1fr);align-items:center;gap:10px;padding:7px 0;border:0;background:transparent;color:var(--text);text-align:left;cursor:pointer}.home-agenda-time{color:var(--muted);font-size:14px;white-space:nowrap}.home-agenda-avatar{width:29px;height:29px;display:grid;place-items:center;border:2px solid;border-radius:50%;font-size:13px;color:var(--text);background:#ffffff12}.home-agenda-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}.home-agenda-event:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:5px}@media(min-width:650px){.tablet .home-agenda{margin-top:0}.home-agenda-event{grid-template-columns:80px 31px minmax(0,1fr)}}@media(max-width:370px){.home-agenda-event{grid-template-columns:70px 28px minmax(0,1fr);gap:8px}.home-agenda-title{font-size:14px}}</style><style id="native-density-v1">
-/* Compact native phone density calibrated from user Home/agenda references. */
-.device.phone .card{padding:14px;border-radius:23px}
-.device.phone .timeline.card{height:126px;min-height:126px;padding:12px 14px 10px;margin-top:13px;border-radius:23px}
-.device.phone .upnext-card{padding:13px 14px!important;margin-top:10px!important}
-.device.phone .upnext-title{font-size:21px!important;margin:7px 0!important}
-.device.phone .upnext-count strong{font-size:43px}
-.device.phone .two{gap:10px!important;margin-top:10px!important}
-.device.phone .two>.card{padding:13px!important}
-.device.phone .two h3{margin-top:12px}
-.device.phone .home-agenda{margin-top:13px;padding:16px 14px!important;border-radius:23px}
-.device.phone .home-agenda-day{margin-bottom:13px}
-.device.phone .home-agenda-day h3{margin-bottom:6px;font-size:17px}
-.device.phone .home-agenda-event{padding:5px 0;gap:9px;grid-template-columns:72px 29px minmax(0,1fr)}
-.device.phone .home-agenda-title{font-size:15px}
-.device.phone .home-agenda-time{font-size:13px}
-.device.phone .home-agenda-avatar{height:27px;width:27px}
-@media(max-width:520px){
-.device.phone .card{padding:13px}
-.device.phone .timeline.card{height:124px;min-height:124px}
-}
-</style>
-<style id="native-home-fidelity-v4">
-/* Native screenshot comparison: use the entire phone viewport. */
-@media(max-width:600px){
- .tools{display:none!important}
- .shell{padding:0!important;gap:0!important;min-height:100dvh;height:100dvh;max-height:100dvh}
- .device.phone{width:100%!important;max-width:none!important;height:100dvh!important;min-height:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}
- .appcontent{height:100%;min-height:0}
- .scroller{padding:18px 15px 16px!important}
- .nav{padding-bottom:max(6px,env(safe-area-inset-bottom,0px))}
-}
-.device.phone .timeline-weather{top:-7px;right:0;width:23%;height:48px;z-index:3}
-.device.phone .timeline-weather svg{height:46px}
-.device.phone .timeline-weather span{font-size:10px;top:-3px}
-.device.phone .timeline-event{top:38%;height:23px;font-size:11px;max-width:58%;z-index:2}
-.device.phone .timeline-pickup{top:72%;font-size:10px}
-.device.phone .upnext-main{grid-template-columns:minmax(0,1fr) 80px;gap:5px}
-.device.phone .upnext-count{min-width:0}
-.device.phone .upnext-count strong{font-size:37px}
-.device.phone .upnext-title{font-size:19px!important;letter-spacing:-.025em;line-height:1.18;max-width:100%;margin:6px 0!important}
-.device.phone .upnext-detail{font-size:11px;gap:6px}
-.device.phone .homeclock{font-size:58px}
-.device.phone .homedate{margin-top:9px}
-.device.phone .timeline.card{margin-top:12px;height:118px;min-height:118px}
-.device.phone .two>.card{padding:12px!important}
-@media(max-width:360px){.device.phone .upnext-main{grid-template-columns:minmax(0,1fr) 65px}.device.phone .upnext-count strong{font-size:32px}}
-</style><style id="native-home-scale-v5">
-/* Reference screenshots: compact lower Home content and combined weather panel. */
-.device.phone .home-summary{align-items:stretch;gap:10px!important}
-.device.phone .home-summary>.card{min-width:0;min-height:143px;padding:14px!important}
-.device.phone .home-summary h3{font-size:18px;line-height:1.22;margin:16px 0 10px;font-weight:650}
-.device.phone .home-meal h3{margin-top:17px}
-.device.phone .home-countdown-value{font-size:43px;line-height:1.05;color:var(--gold);font-weight:750;margin-top:16px}
-.device.phone .home-countdown-value small{font-size:14px;color:var(--muted);font-weight:500}
-.device.phone .home-countdown h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:10px 0 2px;font-size:17px}
-.device.phone .home-countdown-sub{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.home-forecast{margin-top:12px;border-radius:27px!important;padding:17px 14px 19px!important}
-.home-forecast-label{color:var(--muted);font-size:12px;letter-spacing:1.15px;font-weight:600}
-.forecast-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:10px}
-.forecast-item{min-width:0;display:flex;align-items:center;flex-direction:column;gap:6px}
-.forecast-time{color:var(--muted);font-size:13px;white-space:nowrap}
-.forecast-icon{color:#bdcdec;font-size:27px;line-height:1.2}
-.forecast-item strong{font-size:18px;font-weight:650;white-space:nowrap}
-.forecast-low{color:var(--muted);font-size:14px}
-.forecast-rule{height:1px;background:var(--stroke);margin:19px 0 12px}
-.device.phone .home-agenda{margin-top:12px!important}
-@media(max-width:360px){.forecast-time{font-size:11px}.forecast-item strong{font-size:16px}.device.phone .home-summary h3{font-size:16px}}
-</style><style id="agenda-density-v6">
-/* Phone agenda spacing based on native vs hosted screenshots (Oct 21). */
-.device.phone .home-agenda{padding:15px 13px 13px!important;border-radius:24px;border-color:#28354b}
-.device.phone .home-agenda-day{margin:0 0 11px!important}
-.device.phone .home-agenda-day:last-child{margin-bottom:0!important}
-.device.phone .home-agenda-day h3{font-size:16px!important;line-height:1.2;margin:0 0 5px!important;font-weight:650}
-.device.phone .home-agenda-event{grid-template-columns:67px 26px minmax(0,1fr)!important;column-gap:8px!important;padding:3px 0!important;min-height:33px;line-height:1.15}
-.device.phone .home-agenda-time{font-size:12px!important;letter-spacing:-.02em}
-.device.phone .home-agenda-avatar{width:25px!important;height:25px!important;font-size:12px!important}
-.device.phone .home-agenda-title{font-size:14px!important;line-height:1.2}
-@media(max-width:380px){.device.phone .home-agenda-event{grid-template-columns:64px 25px minmax(0,1fr)!important;column-gap:7px!important}}
-</style><style id="home-summary-canonical-v12">
-/* One source of truth for the small paired cards in phone mode. */
-@media(max-width:600px){
-.device.phone .home-summary{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:start!important;column-gap:9px!important;margin-top:9px!important}
-.device.phone .home-summary>.card{box-sizing:border-box!important;min-height:0!important;max-height:none!important;height:108px!important;padding:10px 11px!important;overflow:hidden!important;border-radius:22px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important}
-.device.phone .home-summary .home-eyebrow{font-size:11px!important;line-height:1.1!important;letter-spacing:1.2px!important;margin:0!important;flex-shrink:0}
-.device.phone .home-meal h3{font-size:16px!important;line-height:1.15!important;margin:10px 0 5px!important;max-height:38px!important;overflow:hidden!important}
-.device.phone .home-meal .tag{font-size:11px!important;line-height:1.1!important;padding:3px 7px!important}
-.device.phone .home-countdown .home-countdown-value{display:flex!important;align-items:baseline!important;gap:5px!important;line-height:1!important;margin:5px 0 2px!important}
-.device.phone .home-countdown-value strong{color:var(--gold)!important;font-size:34px!important;line-height:1!important;font-weight:750!important}
-.device.phone .home-countdown-value small{font-size:12px!important;color:var(--muted)!important}
-.device.phone .home-countdown h3{font-size:13px!important;line-height:1.15!important;margin:2px 0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
-.device.phone .home-countdown-sub{font-size:10px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
-.device.phone .home-forecast{margin-top:9px!important}
-}
-</style><style id="home-timeline-fidelity-v13">
-/* Phone timeline: time labels and events share one coordinate system.
-   Weather lives in a reserved upper-right band, never atop the work label. */
-@media(max-width:600px){
-.device.phone .timeline.card{height:94px!important;min-height:94px!important;padding:8px 12px 7px!important;grid-template-rows:minmax(0,1fr) 17px!important;gap:2px!important}
-.device.phone .timeline-plot{position:relative!important;margin:0 3px!important;overflow:visible!important}
-.device.phone .timeline-event{left:28.571%!important;width:57.142%!important;top:39%!important;height:22px!important;padding:2px 5px!important;border-radius:16px!important;font-size:11px!important;letter-spacing:-.02em!important;line-height:1!important;z-index:2!important}
-.device.phone .timeline-pickup{left:76.8%!important;top:77%!important;font-size:9px!important;line-height:13px!important;transform:translateX(-18%)!important}
-.device.phone .timeline-pickup-dot{width:7px!important;height:7px!important}
-.device.phone .timeline-weather{position:absolute!important;top:-3px!important;right:0!important;width:24%!important;height:32px!important;z-index:3!important}
-.device.phone .timeline-weather svg{height:32px!important}
-.device.phone .timeline-weather span{top:-5px!important;font-size:9px!important}
-.device.phone .timeline-axis{height:17px!important;line-height:17px!important;margin:0 3px!important;font-size:10px!important}
-.device.phone .upnext-main{grid-template-columns:minmax(0,1fr) 70px!important}
-.device.phone .upnext-count{min-width:0!important}
-.device.phone .upnext-count strong{font-size:34px!important;line-height:1!important}
-.device.phone .upnext-detail{overflow:hidden!important;text-overflow:ellipsis!important}
-}
-</style><style id="phone-secondary-screens-v14">
-/* Shared phone density on Calendar, Meals, Grocery and Daily List.
-   These rules deliberately exclude Home's card hierarchy. */
-@media(max-width:600px){
-.device.phone #screen>.screen-title,.device.phone #screen>h1{margin-bottom:11px!important}
-.device.phone .seg{margin-bottom:12px!important;padding:3px!important;border-radius:20px!important}
-.device.phone .seg button{padding:9px 5px!important;font-size:12px!important;min-height:36px!important}
-.device.phone .tabscroll{margin-bottom:7px!important;gap:7px!important}
-.device.phone .tabscroll button{white-space:nowrap!important;padding:8px 10px!important;font-size:12px!important}
-.device.phone .datehead{margin:14px 2px 7px!important;font-size:12px!important;line-height:1.25!important}
-.device.phone .event{padding:10px 11px 10px 13px!important;margin-bottom:7px!important;border-radius:18px!important;border-left-width:4px!important}
-.device.phone .event .when{min-width:89px!important;font-size:12px!important;line-height:1.4!important}
-.device.phone .event .name{font-size:14px!important;line-height:1.25!important}
-.device.phone .event .by{margin-top:3px!important;font-size:11px!important}
-.device.phone .calendar-grid .day{height:69px!important;padding:5px 3px!important;font-size:12px!important}
-.device.phone .calendar-grid .day i{font-size:9px!important;padding:2px!important;margin-top:2px!important}
-.device.phone .week{grid-template-columns:28px repeat(7,minmax(0,1fr))!important;gap:2px!important;margin-top:9px!important}
-.device.phone .week .col{height:48px!important}
-.device.phone .week .col.has{padding:2px!important;font-size:9px!important}
-.device.phone .mealrow{padding:11px 12px!important;gap:8px!important;margin-top:7px!important;border-radius:18px!important}
-.device.phone .mealrow .day{min-width:43px!important}
-.device.phone .mealrow .day strong{font-size:19px!important}
-.device.phone .mealbody{font-size:13px!important;line-height:1.3!important}
-.device.phone .sectionbar{margin:16px 0 8px!important}
-.device.phone .listitem{padding:11px 12px!important;gap:9px!important;border-radius:17px!important;margin-bottom:7px!important}
-.device.phone .listitem .circle{flex-shrink:0}
-.device.phone .input{min-height:41px!important}
-.device.phone .progress{margin-top:10px!important}
-}
-</style><style id="dialog-p0-controls">.dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.dialog-head h2{margin:0 0 14px}.dialog-x{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--panel2);color:var(--text);border:1px solid var(--stroke);font-size:23px;cursor:pointer;flex-shrink:0;margin-bottom:14px}.dialog:focus{outline:none}</style><style id="approved-coral-header-feature-v15">
-/* Preserve the approved dot / sun / temperature / gear composition. */
-.device .wxtop .dot{background:#60d995!important}
-.device .wxtop{display:flex;align-items:center;white-space:nowrap}
-.device .upnext-card{background:linear-gradient(115deg,rgba(255,128,103,.16),rgba(255,128,103,.13))!important;border:1px solid rgba(255,128,103,.4)!important}
-.device .upnext-card .home-eyebrow,.device .upnext-count strong{color:#ff8067!important}
-.device .homeclock{font-weight:400;letter-spacing:-2.6px}
-.device .homeclock span{font-weight:400;letter-spacing:0;vertical-align:baseline}
-@media(max-width:600px){
-.device.phone .homeclock{font-size:52px!important;line-height:1.02!important;letter-spacing:-2px!important}
-.device.phone .homeclock span{font-size:17px!important;margin-left:4px!important}
-.device.phone .hometop{align-items:center!important}
-.device.phone .homedate{margin-top:3px!important;line-height:1.22!important}
-.device.phone .upnext-card{padding:12px 13px!important;border-radius:24px!important}
-.device.phone .upnext-title{font-size:18px!important;line-height:1.15!important;margin:7px 0 8px!important}
-.device.phone .upnext-detail{font-size:11px!important}
-.device.phone .upnext-count strong{font-size:38px!important;line-height:1!important}
-}
-</style><style id="home-detail-polish-v16">
-/* Targeted detail polish without changing approved Coral header or Up Next appearance. */
-@media(max-width:600px){
-.device.phone .timeline-plot{isolation:isolate!important}
-.device.phone .timeline-event{max-width:56%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;z-index:2!important}
-.device.phone .timeline-pickup{left:76%!important;top:76%!important;max-width:22%!important;transform:translateX(-5%)!important;overflow:hidden!important;z-index:4!important;gap:3px!important}
-.device.phone .timeline-pickup span:last-child{overflow:hidden!important;text-overflow:ellipsis!important}
-.device.phone .timeline-axis{font-variant-numeric:tabular-nums!important}
-.device.phone .timeline-axis span:nth-child(3){left:70%!important}
-.device.phone .home-forecast{border-radius:24px!important;padding:13px 12px 15px!important}
-.device.phone .forecast-hourly{min-width:0!important}
-.device.phone .forecast-item{min-width:0!important}
-.device.phone .forecast-time{white-space:nowrap!important}
-.device.phone .upnext-detail span:last-child{display:block!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
-.device.phone .home-summary .home-meal h3{overflow:hidden!important;text-overflow:ellipsis!important}
-}
-</style></head><body><div class="shell"><div class="tools"><div><h1>Family Hub · Interactive demo v2.3</h1><small>Sanitized native-inspired walkthrough • no account or sync</small></div><div class="controlgroup"><button class="toolbtn selected" data-device="phone" onclick="device('phone')">Phone</button><button class="toolbtn" data-device="tablet" onclick="device('tablet')">Tablet</button><button class="toolbtn" data-device="portrait" onclick="device('portrait')">Portrait</button><button class="toolbtn" onclick="reset()">↻ Reset</button></div></div><div id="device" class="device"><aside id="rail" class="rail"></aside><div class="appcontent"><main id="screen" class="scroller"></main><nav id="nav" class="nav"></nav></div><div id="overlayhost"></div></div><div class="desktopnote">Fictional sample data only. All edits stay in this browser session; no external accounts, calendars or Firebase connections.</div></div><script>
-const ICON={Home:'<path d="m3 11 9-8 9 8v9H4v-9m5 9v-7h6v7"/>',Calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',Meals:'<path d="M4 3v8m4-8v8M4 7h4M6 11v10M18 3v18m0-18c-4 5-5 10 0 12"/>',Grocery:'<path d="M3 9h18l-3 12H6L3 9Zm3 0 6-6 6 6M9 14v4m6-4v4"/>','Daily list':'<path d="m3 6 2 2 3-4M11 6h10M3 13l2 2 3-4m3 2h10M3 20l2 2 3-4m3 2h10"/>'};const tabs=Object.keys(ICON);function ico(t){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+ICON[t]+'</svg>'};const initial={device:'phone',tab:'Home',calendar:'Agenda',offset:0,mealTab:'This week',mealFilter:'Dinner',groceryTab:'Weekly',dailyTab:'Tasks',person:'Mia',theme:'Coral',appearance:'Dark',settings:false,modal:null,selectedEvent:0,query:'',tasksDone:{'Make bed':true,'Get dressed':true},points:{Mia:148,Leo:139},grocery:{Weekly:[['Produce','garlic bread','🍝 Spaghetti and meat sauce',false],['Produce','lettuce','🌮 Taco night',false],['Meat and seafood','ground beef','3 lb · Taco night',false],['Dairy and eggs','shredded cheese','2 bags',false],['Pantry','pasta sauce','1 jar',false],['Pantry','salsa','Taco night',false],['Pantry','spaghetti','1 box',false],['Drinks','Bottled Water','Always buy',false]],'One time':[['Produce','Baby-cut carrots','1 lb',false],['Produce','Green bell pepper','1',false],['Drinks','Sparkling water','2',false]],'Always buy':[['Drinks','Bottled Water','',false]]},dishes:['French Toast','🥓 Bacon','🥚 Eggs','🥞 Pancakes','🥯 Breakfast Sandwich','Meatloaf','Quesadillas','🌮 Taco night','🍗 Chicken and rice','🍝 Spaghetti and meat sauce','🥩 Steak','🌽 Corn'],saved:['🌮 Taco night','🍕 Pizza','🍝 Spaghetti and meat sauce','🍗 Chicken and rice','🥩 Steak, corn, potatoes'],events:[{day:23,when:'ALL DAY',to:'',title:'Mia bring music to school',who:'Mia',color:'#56cde1'},{day:23,when:'5:30 PM',to:'8:30 PM',title:'Family dinner',who:'Family',color:'#b49af1'},{day:24,when:'11:00 AM',to:'12:00 PM',title:'Kids haircuts',who:'Family',color:'#b49af1'},{day:24,when:'2:00 PM',to:'3:00 PM',title:'Birthday party',who:'Family',color:'#b49af1'},{day:25,when:'10:15 AM',to:'11:00 AM',title:'Haircut',who:'Parent A',color:'#d4a879'}]};let s=structuredClone(initial);const $=id=>document.getElementById(id);function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function button(text,action,style='outline'){return `<button class="${style}" onclick="${action.replaceAll('"','&quot;')}">${text}</button>`}function device(v){s.device=v;render();document.querySelectorAll('[data-device]').forEach(b=>b.classList.toggle('selected',b.dataset.device===v))}function reset(){let d=s.device;s=structuredClone(initial);s.device=d;render()}function nav(t){s.tab=t;s.settings=false;s.query='';render();$('screen').scrollTop=0}function set(k,v){s[k]=v;render()}function modal(type,index=0){s.modal=type;s.selectedEvent=index;render();requestAnimationFrame(()=>{const d=document.querySelector('.dialog');if(d){d.setAttribute('tabindex','-1');d.focus({preventScroll:true})}})}function dismissDemoDialog(){if(!s.modal)return;s.modal=null;render();const trigger=document.querySelector('#screen button, #nav button');if(trigger)trigger.focus({preventScroll:true})}function demoGoBack(){if(s.modal){dismissDemoDialog();return}if(s.settings){s.settings=false;render();return}if(s.tab!=='Home'){nav('Home');return}}function seg(items,chosen,key){return `<div class="seg">${items.map(x=>`<button class="${chosen===x?'on':''}" onclick="set('${key}','${x.replaceAll("'","\\'")}')">${esc(x)}</button>`).join('')}</div>`}function screenTitle(n){return `<h1 class="page-title">${n}</h1>`}function tabnav(isRail=false){return tabs.map(t=>`<button class="${s.tab===t?'on':''}" onclick="nav('${t}')"><span class="ico">${ico(t)}</span><span>${t}</span></button>`).join('')}function render(){const root=document.documentElement;let palette={Meadow:['#60d995','#204339'],Coral:['#ff8067','#49302d'],Ocean:['#48b7f1','#203e53'],Plum:['#ba90f4','#3b2d53']}[s.theme];root.style.setProperty('--accent',palette[0]);root.style.setProperty('--accentdim',palette[1]);let light=s.appearance==='Light';root.style.setProperty('--bg',light?'#f5f7fc':'#0d1321');root.style.setProperty('--panel',light?'#fff':'#192334');root.style.setProperty('--panel2',light?'#e7edf5':'#232f45');root.style.setProperty('--text',light?'#1c2940':'#f5eee8');root.style.setProperty('--muted',light?'#62718b':'#a7b1c3');root.style.setProperty('--stroke',light?'#d2dce9':'#32405c');$('device').className='device '+s.device;$('rail').innerHTML=tabnav(true);$('nav').innerHTML=tabnav();$('screen').innerHTML=s.settings?settings():({Home:home,Calendar:calendar,Meals:meals,Grocery:grocery,'Daily list':daily}[s.tab])();$('overlayhost').innerHTML=s.modal?overlay():''}function eventCard(e,i){return `<div class="card event" style="--ev:${e.color}" onclick="modal('event',${i})"><div class="row" style="align-items:start"><div class="when">${esc(e.when)}<div class="muted small" style="font-weight:400">${esc(e.to?('to '+e.to):'')}</div></div><div style="min-width:0"><div class="name">${esc(e.title)}</div><div class="by">● ${esc(e.who)}</div></div></div></div>`}function home(){let agendaRows=[
-  ['Today',[['9:00 PM','F','Family movie night','#b69cf3']]],
-  ['Friday, Oct 23',[['All day','M','Music folder to school','#56cee0'],['5:30 PM','F','Family dinner','#b69cf3']]],
-  ['Saturday, Oct 24',[['11:00 AM','F','Haircuts for the kids','#b69cf3'],['2:00 PM','F','Birthday party','#b69cf3']]],
-  ['Sunday, Oct 25',[['10:15 AM','P','Haircut appointment','#d4b08f'],['4:00 PM','F','Dinner with friends','#b69cf3']]],
-  ['Monday, Oct 26',[['7:00 AM','F','Morning school drop-off','#b69cf3'],['5:00 PM','F','Afternoon pickup','#b69cf3']]],
-  ['Tuesday, Oct 27',[['9:30 AM','P','Family appointment','#d4b08f']]]
-];let right=`<div class="agenda-side card home-agenda" role="region" aria-label="Upcoming household agenda">${agendaRows.map(([date,items])=>`<section class="home-agenda-day"><h3>${date}</h3>${items.map(([time,person,title,color])=>`<button type="button" class="home-agenda-event" onclick="nav('Calendar')" aria-label="${esc(title)}, ${esc(date)}, ${esc(time)}"><span class="home-agenda-time">${time}</span><span class="home-agenda-avatar" style="border-color:${color}">${person}</span><span class="home-agenda-title">${esc(title)}</span></button>`).join('')}</section>`).join('')}</div>`;return `<div class="home-layout"><div class="main-side"><div class="hometop"><div class="homeclock">4:43<span>PM</span></div><div class="wxtop"><span class="dot"></span>☀ 70° ${button('⚙',"s.settings=true;render()",'pill')}</div></div><div class="homedate">Wednesday, October 21</div><div class="muted">Clear · H 71° L 38°</div><div class="timeline card" aria-label="Sample schedule: work from 10 AM until 6 PM; school pickup at 4:45 PM">
-  <div class="timeline-plot">
-    <div class="timeline-weather" aria-label="Illustrative forecast: 58 degrees at 8 PM, 53 degrees later tonight"><svg viewBox="0 0 120 52" preserveAspectRatio="none" aria-hidden="true"><path d="M12 19 L103 43" stroke="#d5ac53" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M12 12 V51" stroke="#60d995" stroke-width="2.7"/><circle cx="12" cy="12" r="6" fill="#60d995"/></svg><span class="tw-first">58°</span><span class="tw-last">53°</span></div>
-    <div class="timeline-event" title="Work, 10 AM to 6 PM">Parent A work <span>10–6</span></div>
-    <div class="timeline-pickup" title="School pickup, 4:45 PM"><span class="timeline-pickup-dot"></span><span>School pickup</span></div>
-
-  </div>
-  <div class="timeline-axis" aria-hidden="true"><span>6 AM</span><span>12 PM</span><span>4 PM</span><span>8 PM</span></div>
-</div><div class="card upnext-card" style="margin-top:12px;cursor:pointer" onclick="nav('Calendar')"><div class="upnext-main"><div><div class="home-eyebrow">UP NEXT</div><h2 class="upnext-title">Family movie night</h2><div class="upnext-detail"><span class="upnext-avatar">F</span><span>9:00 PM to 10:30 PM · Family</span></div></div><div class="upnext-count"><small>starts in</small><strong>46</strong><span>min</span></div></div></div><div class="two home-summary" style="margin-top:12px"><div class="card home-meal"><div class="home-eyebrow">TOMORROW NIGHT</div><h3>🌮 Taco night</h3><span class="tag">Normal</span></div><div class="card home-countdown"><div class="home-eyebrow">COUNTDOWN</div><div class="home-countdown-value"><strong>3</strong><small>days</small></div><h3>Riley birthday party</h3><div class="home-countdown-sub">Sat, Oct 24 · 2 more</div></div></div><div class="card home-forecast" aria-label="Illustrative hourly and seven-day weather forecast"><div class="home-forecast-label">NEXT HOURS</div><div class="forecast-grid forecast-hourly">${[['Now','☾','58°'],['9 PM','☾','57°'],['10 PM','☾','55°'],['11 PM','☾','53°'],['12 AM','☾','52°']].map(([time,icon,temp])=>`<div class="forecast-item"><span class="forecast-time">${time}</span><span class="forecast-icon">${icon}</span><strong>${temp}</strong></div>`).join('')}</div><div class="forecast-rule"></div><div class="home-forecast-label">NEXT 7 DAYS</div><div class="forecast-grid forecast-daily">${[['Thu','☁','73°','46°'],['Fri','☁','70°','52°'],['Sat','☁','69°','53°'],['Sun','☁','70°','54°'],['Mon','☁','56°','49°']].map(([day,icon,high,low])=>`<div class="forecast-item"><span class="forecast-time">${day}</span><span class="forecast-icon">${icon}</span><strong>${high}</strong><span class="forecast-low">${low}</span></div>`).join('')}</div></div></div>${right}</div>`}function calendar(){return screenTitle('Calendar')+`<div class="row wrap" style="margin-bottom:12px">${['Agenda','Week','Month'].map(x=>button(x,`set('calendar','${x}')`,'pill '+(s.calendar===x?'on':''))).join('')}</div><div class="tabscroll">${button('+ Add event',"modal('addEvent')",'primary')}${button('⟳',"modal('refresh')",'pill')}${button('Manage',"modal('manage')",'pill')}${button('Countdowns',"modal('countdowns')",'pill')}</div><p class="muted small">Updated recently. Tap an event for details. Hold to count down.</p>`+(s.calendar==='Agenda'?agenda():s.calendar==='Week'?week():month())}function agenda(){return [21,23,24,25].map(day=>`<div class="datehead"><b style="color:${day===21?'var(--accent)':'var(--muted)'}">${day===21?'TODAY':{23:'FRI',24:'SAT',25:'SUN'}[day]}</b> <span>${{21:'Wednesday, Oct 21',23:'Oct 23',24:'Oct 24',25:'Oct 25'}[day]}</span></div>${s.events.filter(e=>e.day===day).map(e=>eventCard(e,s.events.indexOf(e))).join('')||'<p class="muted small">Nothing planned today.</p>'}`).join('')}function month(){let d=new Date(2026,9+s.offset,1),name=d.toLocaleString('en-US',{month:'long',year:'numeric'}),start=(d.getDay()+6)%7,days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();let prev=new Date(d.getFullYear(),d.getMonth(),0).getDate();let html=`<div class="row between" style="margin:17px 0">${button('‹',"s.offset--;render()",'pill')}<h2 style="margin:0;font-size:21px">${name}</h2>${button('›',"s.offset++;render()",'pill')}${button('Today',"s.offset=0;render()",'pill')}</div><div class="calendar-grid">${['M','T','W','T','F','S','S'].map(x=>`<div style="text-align:center;color:var(--muted);padding:8px 0">${x}</div>`).join('')}`;for(let i=0;i<42;i++){let n=i-start+1,real=n>0&&n<=days;let date=real?n:n<=0?prev+n:n-days;let events=real&&s.offset===0?s.events.filter(e=>e.day===date):[];html+=`<div class="day ${date===21&&real&&s.offset===0?'today':''}" style="opacity:${real?1:.5}" onclick="modal('day',${date})">${date}${events.slice(0,2).map(e=>`<i style="border-left:3px solid ${e.color}">${esc(e.title)}</i>`).join('')}</div>`}return html+'</div>'}function week(){let weekDate=19+s.offset*7;let grid=`<div class="row between">${button('‹',"s.offset--;render()",'pill')}<b>Oct ${weekDate} to ${weekDate+6}</b>${button('›',"s.offset++;render()",'pill')}${button('Today',"s.offset=0;render()",'pill')}</div><div class="week">`;grid+=`<div></div>${['M','T','W','T','F','S','S'].map((d,i)=>`<div style="text-align:center;color:var(--muted)">${d}<br>${weekDate+i}</div>`).join('')}`;for(let h=12;h<=20;h++){grid+=`<div class="muted tiny">${h>12?h-12:h}${h>=12?'p':'a'}</div>`;for(let i=0;i<7;i++){let matches=s.offset===0&&h===17&&i===4;grid+=`<div class="col ${matches?'has':''}" onclick="modal('day',${weekDate+i})">${matches?'Family dinner':''}</div>`}}return grid+'</div>'}function meals(){return screenTitle('Meals')+seg(['This week','Dishes','Saved meals'],s.mealTab,'mealTab')+(s.mealTab==='This week'?mealWeek():s.mealTab==='Dishes'?dishList():savedMeals())}function mealWeek(){return `<h2 style="margin:0">This week</h2><p class="muted" style="margin:3px 0 13px">Oct 19 to 25</p><div class="row" style="margin-bottom:10px">${['Breakfast','Lunch','Dinner'].map(t=>button(t,`set('mealFilter','${t}')`,'pill '+(t===s.mealFilter?'on':''))).join('')}</div>${button('Plan my week',"modal('plan')",'primary full')}<p class="card small" style="margin-top:12px">Mon and Tue 🍳 Breakfast for dinner, 🌮 Taco night</p>${['Wed','Thu','Fri','Sat','Sun'].map((d,i)=>`<div class="card mealrow" style="margin-top:10px"><div class="day"><b>${d.toUpperCase()}</b><strong>${21+i}</strong></div><div class="mealbody">${esc(['🍝 Spaghetti and meat sauce','🌮 Taco night','🍕 Pizza','Restaurant','🍗 Chicken and rice'][i])}</div><span class="tag">${i===2?'Quick':'Normal'}</span></div>`).join('')}`}function dishList(){return `<p class="muted small">Single items with their own ingredients. Planning one puts them on the grocery list.</p><input class="input" placeholder="Search dishes" oninput="s.query=this.value;filterLive('dishes')"><div class="row wrap" style="margin-top:12px">${['All','Quick','Normal','Slow'].map((x,i)=>button(x,`set('filter','${x}')`,'pill '+((s.filter||'All')===x?'on':''))).join('')}</div><div class="sectionbar"><b class="section">DISHES ${s.dishes.length}</b>${button('+ Add',"modal('dish')",'pill')}</div><div id="dishes">${s.dishes.map(n=>`<div class="listitem dish"><b style="flex:1">${esc(n)}</b><button class="outline" onclick="modal('dish')">Edit</button></div>`).join('')}</div>`}function savedMeals(){return `<p class="muted small">Groups of dishes you plan together. A meal takes its slowest dish.</p>${button('+ Build a meal',"modal('meal')",'primary full')}<input class="input" style="margin-top:13px" placeholder="Search saved meals" oninput="s.query=this.value;filterLive('saved')"><div class="section">LUNCH AND DINNER MEALS ${s.saved.length}</div><div id="saved">${s.saved.map(n=>`<div class="listitem dish" onclick="modal('meal')"><b style="flex:1">${esc(n)}</b><span>›</span></div>`).join('')}</div>`}function filterLive(id){let q=s.query.toLowerCase();document.querySelectorAll('#'+id+' .dish').forEach(el=>el.style.display=el.textContent.toLowerCase().includes(q)?'flex':'none')}function grocery(){let t=s.groceryTab,items=s.grocery[t],left=items.filter(x=>!x[3]).length;let grouped={};items.forEach((v,i)=>{(grouped[v[0]]??=[]).push([v,i])});return screenTitle('Grocery')+`<div class="seg">${['Weekly','One time','Always buy'].map(x=>`<button class="${x===t?'on':''}" onclick="set('groceryTab','${x}')">${x}${x==='One time'?' <span class="badge">4</span>':''}</button>`).join('')}</div><div class="row between" style="margin:23px 0 15px"><b>${t==='Always buy'?items.length+' item joins weekly every week':left+' left of '+items.length+(t==='Weekly'?' this week':' for this trip')}</b>${t!=='Always buy'?button('♧',"modal('share')",'pill'):''}</div><div class="row"><input class="input" id="newitem" placeholder="Add an item">${button('+ Add',"addGrocery()",'primary')}</div>${t==='One time'?'<button class="outline full" style="margin-top:12px" onclick="modal(\'import\')">⊕ Import cart screenshots</button>':''}${Object.entries(grouped).map(([cat,rows])=>`<div class="sectionbar"><div class="section">${cat.toUpperCase()}</div><span class="muted small">${rows.filter(r=>!r[0][3]).length} left</span></div>${rows.map(([v,i])=>`<div class="listitem"><button class="circle ${v[3]?'done':''}" onclick="toggleG(${i})" aria-label="Check item"></button><div style="min-width:0;flex:1"><div class="${v[3]?'cross':''}">${esc(v[1])}</div><div class="muted small">${esc(v[2])}</div></div></div>`).join('')}`).join('')}${button('Done shopping',"modal('shopping')",'outline full')}`}function toggleG(i){s.grocery[s.groceryTab][i][3]=!s.grocery[s.groceryTab][i][3];render()}function addGrocery(){let v=$('newitem').value.trim();if(v){s.grocery[s.groceryTab].push(['Other',v,'',false]);render()}}const taskNames=['Make bed','Get dressed','Dirty clothes in hamper','Brush teeth','Eat breakfast','Clean up plate','Read for 10 minutes','Unpack backpack','Practice music','Put away shoes'];function daily(){return `<div class="row" style="margin-bottom:15px">${['Mia','Leo'].map(n=>button(`${n==='Mia'?'🟦':'🟩'} ${n} ${s.points[n]}`,`set('person','${n}')`,'chip '+(s.person===n?'chosen':''))).join('')}</div>${seg(['Tasks','Rewards'],s.dailyTab,'dailyTab')}${s.dailyTab==='Tasks'?dailyTasks():dailyRewards()}`}function dailyTasks(){
- const done=taskNames.filter(n=>s.tasksDone[n]).length;
- let out='<div class="card" style="margin-bottom:18px"><div class="row between"><div><span style="font-size:38px;font-weight:800">'+s.points[s.person]+'</span> pts<div class="muted small">'+done+' of 41 today</div></div>'+button('● My color','modal("color")','pill')+'</div><div class="progress" style="margin-top:13px"><div style="width:'+(done*10)+'%"></div></div><p class="muted small">Morning done · After school is up now</p>'+button('⭐ Give bonus','modal("bonus")','pill')+'</div>';
- for(let i=0;i<3;i++){
-  let section=['Morning','After school','Evening'][i];
-  out+='<div class="sectionbar"><b>'+section.toUpperCase()+'</b><span class="muted small">'+(i===1?'UP NOW':'Routine')+'</span></div>';
-  for(const n of taskNames.slice(i===0?0:i===1?7:9,i===0?7:i===1?9:10)){
-   let isDone=!!s.tasksDone[n];
-   out+='<div class="listitem" onclick="toggleTask(\''+n+'\')"><button class="circle '+(isDone?'done':'')+'"></button><span style="flex:1" class="'+(isDone?'cross':'')+'">'+esc(n)+'</span><b style="color:var(--gold)">'+(isDone?'✓':'+5')+'</b></div>';
-  }
- }
- return out;
-}
-function toggleTask(n){s.tasksDone[n]=!s.tasksDone[n];s.points[s.person]+=s.tasksDone[n]?5:-5;render()}function dailyRewards(){
- const items=[['Pick the music at dinner',15],['15 extra minutes of screen time',25],['Dessert or small treat',30],['Pick the movie for family movie night',100],['Ice cream outing',150],['Pick the weekend dinner',200],['Small toy or book',400]];
- let out='<div class="section">REWARDS '+s.points[s.person]+' pts to spend</div>';
- for(const item of items){
-  const n=item[0],cost=item[1];
-  const action=s.points[s.person]>=cost?button('Redeem','redeem('+cost+')','primary'):'<span class="muted small">'+(cost-s.points[s.person])+' to go</span>';
-  out+='<div class="listitem reward"><div style="flex:1">'+esc(n)+'</div><span class="pts">'+cost+'</span>'+action+'<span style="color:var(--muted)">★</span></div>';
- }
- return out;
-}
-function redeem(c){s.points[s.person]-=c;modal('redeemed')}function settings(){
- const groups=[['Help and troubleshooting',[['Help and FAQ','Routines, answers, and the tour'],['Firestore reads','Demo only — no live Firestore reads']]],['Household, shared by every device',[['Sync across devices','Demo data only — not connected'],['People and photos','Mia, Leo, Parent A, Parent B'],['Daily list and rewards','Mia, Leo'],['Photo screensaver','Off'],['Manage devices','Demo mode']]],['This device only',[['Appearance and colors',s.appearance+' · '+s.theme],['Profile and tabs','Family, all tabs shown'],['Display and schedule','Night dimming is off'],['Daily list layout','Automatic'],['Keep buttons low','Automatic'],['Home layout','Phone'],['Home agenda','1 week'],['Calendar agenda','30 days'],['Software updates','Not available in web demo']]]];
- let out='<div class="row" style="margin-bottom:27px">'+button('←','s.settings=false;render()','pill')+'<h1 class="page-title" style="margin:0">Settings</h1></div>';
- for(const group of groups){out+='<div class="settings-label">'+esc(group[0])+'</div><div>';
- for(const row of group[1]){const title=row[0],detail=row[1];out+='<button class="setting" onclick="modal(\''+title+'\')"><span class="sq">◉</span><span class="detail">'+esc(title)+'<small>'+esc(detail)+'</small></span><span style="color:var(--muted)">❯</span></button>'}
- out+='</div>';
- }
- return out;
-}
-function overlay(){
- const type=s.modal, evt=s.events[s.selectedEvent]||s.events[0];
- let title=type,body='';
- if(type==='event'){
- title=evt.title;
- body='<p style="color:'+evt.color+'">● '+esc(evt.who)+'</p><p>October '+evt.day+', 2026</p><p>'+esc(evt.when)+' '+esc(evt.to)+'</p>'+button('Count down to this','modal("countdowns")','primary full')+'<p>'+button('Edit event','modal("addEvent")','outline full')+'</p>';
- }else if(type==='addEvent'){
- title='Add event';body='<div class="field"><label>TITLE</label><input id="eventTitle" class="input" placeholder="Cello lesson"></div><div class="field"><label>CALENDAR</label><select id="eventWho" class="input"><option>Family</option><option>Mia</option><option>Leo</option><option>Parent A</option></select></div><div class="field"><label>DAY IN OCTOBER</label><input id="eventDay" type="number" min="1" max="31" value="26" class="input"></div><div class="field"><label>STARTS</label><input id="eventTime" value="5:00 PM" class="input"></div>';
- }else if(type==='dish'||type==='meal'){
- title=type==='dish'?'New dish':'Build a meal';body='<div class="field"><label>NAME</label><input class="input" id="'+(type==='dish'?'newDish':'newMeal')+'" placeholder="Name"></div><div class="field"><label>TYPE</label><select class="input"><option>Main</option><option>Breakfast</option><option>Side</option></select></div>';
- }else if(type==='Appearance and colors'){
- body='<div class="section">APPEARANCE</div>';
- for(const x of ['Dark','Light'])body+=button(x,'s.appearance="'+x+'";render()','pill '+(x===s.appearance?'on':''));
- body+='<div class="section">ACCENT COLOR</div>';
- for(const x of ['Coral','Ocean','Meadow','Plum'])body+=button(x,'s.theme="'+x+'";render()','pill '+(x===s.theme?'on':''));
- }else if(type==='People and photos'){
- body='<p class="muted">Fictional household members. No photos are uploaded.</p>';
- for(const n of ['Mia','Leo','Parent A','Parent B'])body+='<div class="listitem">● '+n+'</div>';
- }else if(type==='day'){
- title='Day '+s.selectedEvent;
- body=s.events.filter(x=>x.day===s.selectedEvent).map(x=>'<p>'+esc(x.when)+' · '+esc(x.title)+'</p>').join('')||'<p>No sample events on this day.</p>';
- }else{
- body='<p class="muted">This is a local-only demonstration. No real account, calendar, album, or device is accessed.</p>';
- }
- const canSave=['addEvent','dish','meal'].includes(type);
- return '<div class="overlay" onclick="if(event.target===this)dismissDemoDialog()"><div class="dialog" role="dialog" aria-modal="true" aria-label="'+esc(title)+'"><div class="dialog-head"><h2>'+esc(title)+'</h2><button class="dialog-x" type="button" aria-label="Close dialog" onclick="dismissDemoDialog()">×</button></div>'+body+'<footer>'+button('Close','dismissDemoDialog()','outline')+(canSave?button('Save','saveModal("'+type+'")','primary'):'')+'</footer></div></div>';
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='Esc'){if(s.modal||s.settings){e.preventDefault();demoGoBack()}}});
-function saveModal(type){if(type==='addEvent'){let title=$('eventTitle').value.trim();if(title){s.events.push({day:Math.max(1,Math.min(31,Number($('eventDay').value)||26)),when:$('eventTime').value||'5:00 PM',to:'6:00 PM',title,who:$('eventWho').value,color:'#b49af1'})}}if(type==='dish'){let v=$('newDish').value.trim();if(v)s.dishes.push(v)}if(type==='meal'){let v=$('newMeal').value.trim();if(v)s.saved.push(v)}dismissDemoDialog()}render();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fbf8f4">
+  <meta name="description" content="The old Family Hub sample demo has been retired. Use the current Family Hub web app instead.">
+  <title>Family Hub — Demo retired</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color-scheme: light; background: #fbf8f4; color: #263140; }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; display: flex; flex-direction: column; }
+    main { flex: 1; width: min(720px, 100%); margin: auto; padding: clamp(32px, 8vw, 80px) 24px; }
+    .brand { font-weight: 800; letter-spacing: .01em; font-size: 1.1rem; }
+    .eyebrow { color: #8c4535; margin: 52px 0 12px; font-size: .83rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+    h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.1; letter-spacing: -.035em; margin: 0 0 20px; }
+    p { max-width: 640px; line-height: 1.7; font-size: 1.05rem; color: #455464; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 30px 0 24px; }
+    .actions a { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; padding: 12px 20px; min-height: 48px; border-radius: 12px; border: 2px solid #263140; }
+    .primary { background: #263140; color: #fff; }
+    .secondary { background: transparent; color: #263140; }
+    a:focus-visible { outline: 3px solid #994a37; outline-offset: 4px; }
+    .note { font-size: .92rem; }
+    footer { padding: 24px; text-align: center; border-top: 1px solid #d1d2d3; font-size: .94rem; }
+    footer a, .guide { color: #263140; }
+    @media (max-width: 480px) { .eyebrow { margin-top: 35px; } .actions { flex-direction: column; } .actions a { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">Family Hub</div>
+    <p class="eyebrow">Interactive demo retired</p>
+    <h1>See the real Family Hub.</h1>
+    <p>This page used to show a fictional, sample-only version of the app. It no longer reflects the current experience, so we've retired it instead of leaving outdated features on display.</p>
+    <nav class="actions" aria-label="Continue to Family Hub">
+      <a class="primary" href="https://family-hub-7cb05.web.app/">Open Family Hub</a>
+      <a class="secondary" href="../get-started.html">Get started</a>
+    </nav>
+    <p class="note">The current web app uses Google sign-in and your real household. The old sample never connected to your household data.</p>
+    <p><a class="guide" href="../web.html">How to use Family Hub on iPhone or computer</a></p>
+  </main>
+  <footer><a href="../index.html">Back to the Family Hub website</a></footer>
+</body>
+</html>

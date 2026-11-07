@@ -1,3 +1,11 @@
+# Family Hub interactive demo — archived specification
+
+**Status (2026-11-06): Retired in proposed website source; publication requires Product Owner approval.** The previous static sample and older preview no longer reflect the real, authenticated browser application. The retirement proposal replaces `/demo/` and `/preview/` with static notices that link to the actual app and onboarding. Preserve the historical implementation in Git history rather than investing in a second parallel app.
+
+The following content records the superseded demo design requirements only. It is **not** an active delivery roadmap.
+
+---
+
 # Family Hub interactive demo — specification
 
 Status: **v1.1 repository integration in progress**. The authoritative v1.0 ZIP has not yet been imported; do not replace it with an earlier prototype.

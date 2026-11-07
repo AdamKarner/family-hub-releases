@@ -1,32 +1,22 @@
 const { test, expect } = require('@playwright/test');
 
-test('phone navigation and no document overflow', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/demo/index.html');
-  await expect(page.locator('#screen')).not.toBeEmpty();
-  for (const label of ['Calendar', 'Meals', 'Grocery', 'Daily list', 'Home']) {
-    await page.locator('#nav').getByText(label, { exact: true }).click();
-    await expect(page.locator('#screen')).not.toBeEmpty();
-  }
-  const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
-  expect(overflowing).toBe(false);
-});
-
-test('reset demo restores Home state', async ({ page }) => {
-  await page.setViewportSize({ width: 1100, height: 900 });
-  await page.goto('/demo/index.html');
-  await page.locator('#nav').getByText('Calendar', { exact: true }).click();
-  const resetButton = page.getByRole('button', { name: /reset demo/i });
-  await expect(resetButton).toBeVisible();
-  await resetButton.click();
-  await expect(page.locator('#screen')).not.toBeEmpty();
-  await expect(page.locator('#nav').getByText('Home', { exact: true })).toBeVisible();
-});
-
-test('fictional portraits load without 404', async ({ page }) => {
-  await page.goto('/demo/index.html');
-  for (const portrait of ['mia.webp','leo.webp']) {
-    const response = await page.request.get('/demo/' + portrait);
-    expect(response.status(), portrait + ' must exist').toBe(200);
-  }
-});
+for (const route of ['/demo/', '/preview/']) {
+  test(`retired demo at ${route} directs visitors to the actual app`, async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    for (const width of [360, 390, 1100]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto(route);
+      await expect(page.getByRole('heading', { name: 'See the real Family Hub.' })).toBeVisible();
+      await expect(page.getByText(/fictional, sample-only/)).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Open Family Hub' }))
+        .toHaveAttribute('href', 'https://family-hub-7cb05.web.app/');
+      await expect(page.getByRole('link', { name: 'Get started' })).toHaveAttribute('href', '../get-started.html');
+      await expect(page.getByRole('link', { name: /How to use Family Hub/ })).toHaveAttribute('href', '../web.html');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
+        `${route} has horizontal overflow at ${width}px`).toBe(false);
+      expect(await page.locator('#nav, #screen').count()).toBe(0);
+    }
+    expect(errors).toEqual([]);
+  });
+}
