@@ -15,3 +15,5 @@ Verification:
 - Independent `curl -I --max-time 15 https://kindlane.app/` blocked at environment proxy CONNECT HTTP403. This is not an origin HTTP response. Public apex/www, Help/download routes and legacy github.io redirect remain unverified.
 
 Remaining: retrieve original Kindlane kit and compare source artwork/social previews against selected references; final tokens/type and legal clearance; real iPhone/Android and Wall checks. Current app Apple touch icon is still a legacy house, and app PWA manifest lacks 192/512 PNG declarations. Owner says they will upload the kit. No substitute logo or website asset was invented. No protected merge, Pages publication, Firebase deployment, release or APK distribution performed. This is not a complete rebrand or production-readiness signoff.
+
+CI follow-through: first Demo browser run 42535805944 failed before tests because ubuntu-latest resolved to Ubuntu26.04, unsupported by pinned Playwright1.56.1. Pin only that browser job to ubuntu-24.04, matching the existing website-checks runner. Demo static checks passed. No test dependencies or runtime assets changed.
