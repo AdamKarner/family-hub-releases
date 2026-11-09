@@ -9,7 +9,7 @@ test('capture retired demo pages for mobile and desktop review', async ({ page }
     for (const viewport of [{ width: 390, height: 844 }, { width: 1100, height: 900 }]) {
       await page.setViewportSize(viewport);
       await page.goto('/' + route + '/');
-      await expect(page.getByRole('heading', { name: 'See the real Family Hub.' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'See the real Kindlane.' })).toBeVisible();
       await page.screenshot({ path: path.join(out, route + '-' + viewport.width + '.png'), fullPage: true });
     }
   }
