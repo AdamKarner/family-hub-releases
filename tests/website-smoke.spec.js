@@ -123,7 +123,7 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
   await expect(page.locator('#hero-wall')).toHaveAttribute('href',/download\.html\?device=wall$/);
   await expect(page.locator('main .hero h1')).toBeVisible();
   const art = page.locator('main .hero picture img');
-  await expect(art).toHaveAttribute('alt', /Family Hub/i);
+  await expect(art).toHaveAttribute('alt', /Kindlane/i);
   for (const width of [360, 390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 860 });
     await expect(page.locator('#hero-android')).toBeVisible();
@@ -387,7 +387,7 @@ test('homepage uses the selected artwork and responsive crop at the approved bre
   const { createHash } = require('node:crypto');
   await page.goto('/');
   const image = page.locator('main .hero picture img');
-  await expect(image).toHaveAttribute('alt', /^Illustration of Family Hub/);
+  await expect(image).toHaveAttribute('alt', /^Illustration of Kindlane/);
   for (const width of [390, 680, 681, 820, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     const phone = width <= 680;
@@ -506,4 +506,16 @@ test('Kindlane domain cutover metadata matches the one-domain Pages CNAME', asyn
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
   await expect(page.locator('a[href="https://family-hub-7cb05.web.app/"]').first()).toBeVisible();
+});
+
+test('Kindlane support pages share the approved tagline and accessible product name', async ({ page }) => {
+  for (const path of ['access.html', 'feedback.html', 'help.html', 'install.html', 'releases.html']) {
+    await page.goto('/' + path);
+    await expect(page.locator('footer, .foot').first()).toContainText('Less chaos. More family.');
+  }
+  await page.goto('/');
+  await expect(page.locator('.art img')).toHaveAttribute('alt', /^Illustration of Kindlane in a warm kitchen:/);
+  await page.goto('/app-check-test.html');
+  await expect(page).toHaveTitle('Kindlane · App Check Diagnostic');
+  await expect(page.getByRole('link', { name: '← Kindlane' })).toBeVisible();
 });
