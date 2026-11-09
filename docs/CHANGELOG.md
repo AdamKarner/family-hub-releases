@@ -1,5 +1,11 @@
 # Family Hub interactive demo changelog
 
+## 2026-11-06 — Demo retirement proposed, not published
+- Supersede the outdated `/demo/` and `/preview/` fictional interactive replicas with clear retirement notices linking to the current authenticated browser app and website onboarding.
+- Preserve history/assets, avoid public landing changes, and replace obsolete demo interaction tests with page-isolation and responsive link checks.
+- This change remains isolated in a review branch; it is **not** live until explicitly approved and published.
+
+
 ## v1.1 — Repository integration (in progress)
 - Verified private/public repository separation and manually gated APK release workflow.
 - Created a feature branch for demo integration without touching public website files.
