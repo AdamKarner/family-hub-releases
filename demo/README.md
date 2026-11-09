@@ -1,24 +1,7 @@
-# Family Hub phone demo — v1.1 staging
+# Family Hub demo — retired
 
-The authoritative source is the supplied `FamilyHub_Phone_Demo_v1.0.zip`. The current `demo/index.html` on this branch is an earlier indexed copy and must **not** be considered source-identical to the ZIP. The two fictional portraits (`mia.webp`, `leo.webp`) are still absent.
+The previous standalone interactive sample at `/demo/` is retired as of November 6, 2026. It was a fictional, unsynced browser replica and no longer represents the working Family Hub application. The older `/preview/` interactive walkthrough is retired for the same reason.
 
-## Verified import workflow
+Both public URLs now show a simple notice with links to the real [Family Hub web app](https://family-hub-7cb05.web.app/), the website's Get Started guide, and iPhone/computer help. The real app requires Google sign-in for household features.
 
-On a computer with a checkout of `feature/interactive-demo-v1.1`:
-
-```bash
-python scripts/import_phone_demo.py "/path/to/FamilyHub_Phone_Demo_v1.0.zip"
-git status --short
-git diff --check
-git add demo/index.html demo/mia.webp demo/leo.webp
-git commit -m "feat(demo): import exact v1.0 source and fictional portraits"
-git push origin feature/interactive-demo-v1.1
-```
-
-The script verifies the original SHA-256 and byte size of all three files, refuses mismatches, and writes original bytes to `demo/`. Do not use real household data or images. Review the diff before pushing.
-
-After pushing, GitHub Actions should run Playwright and the static privacy/website-protection checks. Do not merge until these checks pass and the visual and privacy audits are reviewed.
-
-## Local preview
-
-From repository root, run `python -m http.server 8765` and visit `http://127.0.0.1:8765/demo/`. The demo uses fictional local state and Google Fonts for Figtree, with system fallback. There is no Firebase connection.
+Previous demo versions, scripts and fictional portraits are retained in Git history for traceability. Do not restore or publish the simulated experience without new owner review, current-feature parity and privacy/accessibility acceptance. No authenticated app/Firebase or Android changes are involved in this retirement.
