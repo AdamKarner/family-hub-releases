@@ -506,6 +506,17 @@ test('archived setup concept and download administration point families to the l
   await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
 });
 
+test('social preview image is the Kindlane card at 1200x630', async () => {
+  const fs = require('node:fs');
+  const png = fs.readFileSync('social-preview.png');
+  expect(png.subarray(1, 4).toString()).toBe('PNG');
+  expect(png.readUInt32BE(16)).toBe(1200);
+  expect(png.readUInt32BE(20)).toBe(630);
+  const svg = fs.readFileSync('social-preview.svg', 'utf8');
+  expect(svg).toContain('Less chaos. More family.');
+  expect(svg).not.toMatch(/Family Hub/i);
+});
+
 test('Kindlane domain cutover metadata matches the one-domain Pages CNAME', async ({ page }) => {
   const fs = require('node:fs');
   expect(fs.readFileSync('CNAME', 'utf8').trim()).toBe('kindlane.app');
