@@ -107,6 +107,11 @@ test('privacy describes household membership and private requests', async ({page
   await expect(page.getByText(/Google API Services User Data Policy, including the Limited Use requirements/)).toBeVisible();
 });
 
+test('home page footer links to the privacy policy', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('footer a[href="https://kindlane.app/privacy"]')).toHaveText('Privacy');
+});
+
 test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
   await page.goto('/help.html');
   await page.locator('#search').fill('made-up email');
