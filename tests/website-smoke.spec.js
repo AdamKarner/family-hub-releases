@@ -124,7 +124,8 @@ test('device setup codes are documented in the guide, Help Center and web guide'
   await page.locator('#search').fill('setup code');
   await expect(page.getByText('How do I set up a phone, tablet or wall display with a setup code?')).toBeVisible();
   await page.goto('/get-started.html');
-  await expect(page.locator('a[href="start.html#device-setup"]').first()).toBeVisible();
+  await expect(page.locator('a[href="start.html#device-setup"]').first()).toBeVisible();  await page.goto('/web.html');
+  await expect(page.locator('a[href="start.html#device-setup"]')).toBeVisible();
 });
 
 test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
