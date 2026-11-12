@@ -112,6 +112,21 @@ test('home page footer links to the privacy policy', async ({ page }) => {
   await expect(page.locator('footer a[href="https://kindlane.app/privacy"]')).toHaveText('Privacy');
 });
 
+test('device setup codes are documented in the guide, Help Center and web guide', async ({ page }) => {
+  await page.goto('/start.html');
+  const panel = page.locator('#device-setup');
+  await expect(panel).toContainText('Create setup code');
+  await expect(panel).toContainText('Join with a setup code');
+  await expect(panel).toContainText('K7Q 4MX');
+  await expect(panel).toContainText('14 minutes');
+  await expect(panel).toContainText('Approve');
+  await page.goto('/help.html');
+  await page.locator('#search').fill('setup code');
+  await expect(page.getByText('How do I set up a phone, tablet or wall display with a setup code?')).toBeVisible();
+  await page.goto('/get-started.html');
+  await expect(page.locator('a[href="start.html#device-setup"]').first()).toBeVisible();
+});
+
 test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
   await page.goto('/help.html');
   await page.locator('#search').fill('made-up email');
@@ -453,7 +468,7 @@ test('household and installation guides provide a standalone browser path', asyn
   await expect(page.locator('#create-family')).toContainText('You do not need an Android device');
   await expect(page.locator('#create-family')).not.toContainText('Install Family Hub for Android');
   await expect(page.locator('#join-family')).not.toContainText('Install the Android app');
-  await expect(page.locator('#kids-without-google')).toContainText('The web app uses Google sign-in');
+  await expect(page.locator('#kids-without-google')).toContainText('The easiest way to set up a child without a Google account is a setup code');
   await page.goto('/install.html');
   await expect(page.locator('#browser-install')).toContainText('Your first sign-in creates your Kindlane account');
   await page.getByText('Can I use it on an iPhone or iPad?', {exact:true}).click();
