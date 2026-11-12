@@ -58,7 +58,7 @@ test('feedback form offers the same Notion destination embedded and directly', a
 test('capture public landing pages in phone and desktop viewports', async ({ page }) => {
   for (const viewport of [{ width: 390, height: 844, name: 'mobile' }, { width: 1440, height: 900, name: 'desktop' }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    for (const [name, path] of [['home', '/'], ['downloads', '/download.html'], ['help', '/help.html'], ['feedback', '/feedback.html']]) {
+    for (const [name, path] of [['home', '/'], ['downloads', '/download.html'], ['help', '/help.html'], ['skylight', '/skylight.html'], ['feedback', '/feedback.html']]) {
       await page.goto(path);
       await page.screenshot({ path: 'test-results/' + name + '-' + viewport.name + '.png', fullPage: true });
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
@@ -518,4 +518,28 @@ test('Kindlane support pages share the approved tagline and accessible product n
   await page.goto('/app-check-test.html');
   await expect(page).toHaveTitle('Kindlane · App Check Diagnostic');
   await expect(page.getByRole('link', { name: '← Kindlane' })).toBeVisible();
+});
+
+test('Skylight guide is discoverable, firmware-aware, and narrow-screen safe', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('Skylight');
+  await expect(page.locator('#articles .tile:visible')).toHaveCount(1);
+  await expect(page.locator('#faqgroup details:visible')).toHaveCount(1);
+  await expect(page.getByRole('link', { name: /Install on a Skylight Calendar Max/ })).toHaveAttribute('href', 'skylight.html');
+
+  await page.goto('/install.html');
+  await expect(page.locator('#skylightJump')).toHaveAttribute('href', 'skylight.html');
+
+  await page.goto('/skylight.html');
+  await expect(page.getByRole('heading', { name: /Install Kindlane on a Skylight Calendar Max/ })).toBeVisible();
+  await expect(page.getByText(/original Skylight Calendar Max ADB project/)).toBeVisible();
+  await expect(page.getByText(/updated devices/).first()).toBeVisible();
+  const commands = (await page.locator('pre.command').allTextContents()).join('\n');
+  for (const expected of ['adb devices', 'adb push', 'adb shell pm install -r', 'adb pair', 'adb connect']) expect(commands).toContain(expected);
+  await expect(page.getByText(/not been verified on this hardware/)).toBeVisible();
+  for (const width of [360, 390, 768, 1440]) {
+    await page.setViewportSize({width, height: 844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      'Skylight guide horizontal overflow at '+width).toBe(false);
+  }
 });
