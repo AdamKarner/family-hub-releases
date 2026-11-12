@@ -128,6 +128,17 @@ test('device setup codes are documented in the guide, Help Center and web guide'
   await expect(page.locator('a[href="start.html#device-setup"]')).toBeVisible();
 });
 
+test('main guide pages carry share tags with the Kindlane card', async ({ page }) => {
+  for (const [path, url] of [['/privacy.html', 'https://kindlane.app/privacy'], ['/help.html', 'https://kindlane.app/help'], ['/get-started.html', 'https://kindlane.app/get-started'], ['/web.html', 'https://kindlane.app/web']]) {
+    await page.goto(path);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', url);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /Kindlane/);
+    await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', /.{20}/);
+  }
+});
+
 test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
   await page.goto('/help.html');
   await page.locator('#search').fill('made-up email');
