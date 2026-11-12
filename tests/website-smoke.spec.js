@@ -506,6 +506,20 @@ test('archived setup concept and download administration point families to the l
   await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
 });
 
+test('Google Calendar connection is documented for web and Android', async ({ page }) => {
+  await page.goto('/google-child-calendars.html');
+  await expect(page.getByRole('heading', { name: 'Connect your Google calendars to Kindlane' })).toBeVisible();
+  await expect(page.getByText('Connect Google Calendar').first()).toBeVisible();
+  await expect(page.getByText(/Edit inside Kindlane/).first()).toBeVisible();
+  await expect(page.getByText(/Kindlane Android currently requires/)).toHaveCount(0);
+  await page.goto('/web.html');
+  await expect(page.getByText(/choose Connect Google Calendar/).first()).toBeVisible();
+  await expect(page.getByText(/Android calendar integration continues to use its existing path/)).toHaveCount(0);
+  await page.goto('/help.html');
+  await page.locator('#search').fill('connect google calendar');
+  await expect(page.getByText('How do I connect Google Calendar to Kindlane?')).toBeVisible();
+});
+
 test('social preview image is the Kindlane card at 1200x630', async () => {
   const fs = require('node:fs');
   const png = fs.readFileSync('social-preview.png');
