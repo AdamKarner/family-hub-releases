@@ -101,6 +101,8 @@ test('privacy describes household membership and private requests', async ({page
   await page.goto('/privacy.html');
   await expect(page.getByText('Last reviewed: November 6, 2026')).toBeVisible();
   await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
+  await expect(page.getByText(/Kindlane never changes or deletes anything in Google Calendar/)).toBeVisible();
+  await expect(page.getByText(/Google API Services User Data Policy, including the Limited Use requirements/)).toBeVisible();
 });
 
 test('child-without-Google FAQ distinguishes a created login from a fictitious email', async ({ page }) => {
