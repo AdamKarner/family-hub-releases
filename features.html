@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html data-accent="coral" data-mode="light" lang="en"><head><meta charset="utf-8"/><script>try{const t=JSON.parse(localStorage.getItem("fh_site_theme")||"{}");if(t&&["light","dark"].includes(t.mode))document.documentElement.dataset.mode=t.mode;if(t&&["coral","ocean","meadow","plum"].includes(t.accent))document.documentElement.dataset.accent=t.accent}catch(_){}</script><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Kindlane Features</title><link rel="icon" type="image/svg+xml" href="favicon.svg"/><meta name="theme-color" content="#0b1425"/><link rel="canonical" href="https://kindlane.app/features"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Kindlane"/><meta property="og:title" content="Kindlane Features"/><meta property="og:description" content="Calendar, Daily lists, meals, grocery, Pass the Baton, sticky notes, wall displays and widgets. See everything Kindlane does."/><meta property="og:url" content="https://kindlane.app/features"/><meta property="og:image" content="https://kindlane.app/social-preview.png"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://kindlane.app/social-preview.png"/><meta content="Calendar, Daily lists, meals, grocery, Pass the Baton, sticky notes, wall displays and widgets. See everything Kindlane does." name="description"/>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;--accent:#ff8067;--bg:#0b1425;--surface:#152139;--surface2:#1a2841;--text:#f8f7f5;--muted:#c0c8d9;--line:#3a4760;color-scheme:dark}
+html[data-accent=ocean]{--accent:#48b7f1}html[data-accent=meadow]{--accent:#54d59c}html[data-accent=plum]{--accent:#b38af1}html[data-mode=light]{--bg:#f3f6fc;--surface:#fff;--surface2:#ebeff8;--text:#182039;--muted:#56647c;--line:#d2dbe8;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text)}a{color:inherit}button{font:inherit;cursor:pointer}h1,h2,h3,p{margin-top:0}.wrap{max-width:1450px;padding:0 34px;margin:auto}
+.nav{position:relative;z-index:3;background:#0b1426;border-bottom:1px solid #33405b;color:#fff}.bar{min-height:80px;display:flex;align-items:center;gap:30px;justify-content:space-between}.logo{text-decoration:none;font-weight:900;font-size:1.55rem;white-space:nowrap}.logo span{color:var(--accent)}.links{display:flex;gap:23px}.links a{text-decoration:none;font-size:.92rem;color:#d3d8e6}.controls{display:flex;gap:10px;align-items:center}.toggle{border:1px solid #526079;border-radius:40px;display:flex;padding:3px}.toggle button{border:0;background:transparent;color:#dce4f4;padding:6px 12px;border-radius:30px;font-size:.85rem}.toggle button[aria-pressed=true]{background:var(--accent);color:#11172a;font-weight:750}.swatches{display:flex;gap:9px}.swatches button{width:22px;height:22px;border-radius:50%;border:0}.swatches button[aria-pressed=true]{outline:2px solid #fff;outline-offset:3px}
+.hero{min-height:680px;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 68% 35%,#60412b 0%,transparent 48%),linear-gradient(110deg,#0c1729 10%,#101b30 57%,#3d2d27 100%);color:#f8f7fa}.hero:after{content:"";position:absolute;inset:auto 0 0;height:125px;background:linear-gradient(0deg,#0b1425,transparent);z-index:-1}.hero-inner{min-height:680px;display:grid;grid-template-columns:43% 57%;align-items:center;position:relative}.hero-copy{position:relative;z-index:2;padding:35px 0 65px}.kicker{color:var(--accent);font-weight:750;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:22px}.hero h1{font-size:clamp(3rem,5vw,5.3rem);line-height:1.03;letter-spacing:-.06em;margin-bottom:26px;max-width:610px}.hero h1 em{color:var(--accent);font-style:normal}.hero .lead{font-size:1.14rem;color:#c4cce0;max-width:470px;line-height:1.65;margin-bottom:26px}.btns{display:flex;flex-wrap:wrap;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:53px;border-radius:13px;padding:12px 18px;font-weight:800;font-size:.92rem;text-decoration:none;background:var(--accent);color:#101625;border:1px solid transparent}.btn.outline{background:#101d32b8;border-color:#aebad1;color:#fff}.btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.subline{font-size:.8rem;color:#acb8d0;margin-top:15px}.art{position:absolute;right:-40px;top:17px;bottom:10px;width:67%;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none}.art:before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:34%;background:linear-gradient(to right,#0c1729 0%,#0c1729 70%,transparent 100%);z-index:2;pointer-events:none}.art img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 17px 23px #05091499)}.hero-benefits{display:flex;flex-wrap:wrap;gap:19px;margin-top:39px;font-size:.86rem;color:#dce3ef}.hero-benefits span:before{content:'✓';color:var(--accent);margin-right:8px}
+.section{padding:70px 0}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-weight:850;font-size:.7rem}.section h2{font-size:clamp(2rem,3vw,2.7rem);letter-spacing:-.04em;margin:10px 0 12px}.section p{color:var(--muted);line-height:1.65}.cards{display:grid;grid-template-columns:1fr 1fr;gap:19px;margin:25px 0 10px}.card{border:1px solid var(--line);background:var(--surface);border-radius:22px;padding:27px}.card h3{margin-bottom:9px}.card .glyph{color:var(--accent);font-size:2rem}.card .btn{margin:8px 0 10px}.card small{color:var(--muted);display:block}.featuregrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.feature{padding:18px;border-top:1px solid var(--line)}.feature i{font-style:normal;color:var(--accent);font-size:1.4rem}.feature h3{font-size:1rem;margin:12px 0 4px}.feature p{font-size:.86rem}.feature-styles{margin:22px 0 0;font-size:.92rem;text-align:center}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:25px}.step b{font-size:1.2rem;color:var(--accent)}.footer{padding:25px 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}.footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:1060px){.links{display:none}.hero-inner{grid-template-columns:1fr;min-height:0;padding-top:65px}.hero{min-height:0}.hero-copy{padding:0;text-align:center}.hero h1,.hero .lead{margin-left:auto;margin-right:auto}.hero .btns,.hero-benefits{justify-content:center}.art{position:relative;right:auto;top:auto;bottom:auto;width:min(100%,780px);height:460px;margin:0 auto -12px}.featuregrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.wrap{padding:0 20px}.bar{min-height:67px;flex-wrap:wrap;gap:9px;padding:12px 0}.logo{font-size:1.16rem}.controls{gap:8px}.toggle button{padding:5px 9px;font-size:.72rem}.swatches{gap:7px}.swatches button{width:15px;height:15px}.hero-inner{padding-top:45px}.kicker{font-size:.61rem}.hero h1{font-size:clamp(2.7rem,11vw,4rem);line-height:1.07}.hero .lead{font-size:1rem}.btns{display:grid;grid-template-columns:1fr 1fr}.btn{font-size:.77rem;padding:11px 8px;min-height:54px}.hero-benefits{margin-top:25px;gap:10px;font-size:.77rem}.art{width:125%;margin-left:-12%;height:340px;margin-top:15px;margin-bottom:0}.section{padding:50px 0}.cards,.steps{grid-template-columns:1fr}.featuregrid{grid-template-columns:1fr 1fr}.card{padding:23px}}
+ .fh-icon{display:inline-block;vertical-align:-.17em;flex:none}.btn .fh-icon{width:17px;height:17px}.glyph .fh-icon{width:32px;height:32px}.feature i .fh-icon{width:23px;height:23px} .art img{font-size:0} 
+/* Review v2: keep the deep navy background continuous, use coral as light rather than a hard gradient. */
+.hero{background:radial-gradient(ellipse 60% 76% at 78% 43%,rgba(119,70,43,.42),transparent 78%),linear-gradient(115deg,#0b1628 0%,#101a2c 64%,#182031 100%)}
+.hero:after{height:100px;background:linear-gradient(to top,var(--bg),transparent)}
+@media(max-width:1060px){
+  .hero{background:radial-gradient(ellipse 85% 43% at 77% 50%,rgba(111,66,43,.42),transparent 90%),linear-gradient(180deg,#0b1628 0%,#101b2e 68%,var(--bg) 100%)}
+  .hero-inner{padding-top:49px}
+  .art{height:390px;margin-top:0;margin-bottom:-14px}
+}
+@media(max-width:680px){
+  .hero-inner{padding-top:37px}
+  .hero-benefits{margin-top:20px}
+  .art{height:264px;width:132%;margin-left:-16%;margin-top:2px;margin-bottom:-4px}
+  .section{padding-top:41px}
+  .hero:after{height:45px}
+}
+@media(max-width:380px){.art{height:248px}}
+
+/* Help discovery, isolated from approved hero and downloads */
+.help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:28px}.help-tile{display:flex;flex-direction:column;gap:12px;padding:26px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-decoration:none;transition:transform .2s,border-color .2s}.help-tile:hover,.help-tile:focus-visible{border-color:var(--accent);transform:translateY(-2px)}.help-tile .help-symbol{color:var(--accent);font-size:1.55rem}.help-tile h3{margin:0;font-size:1.35rem}.help-tile p{color:var(--muted);margin:0;line-height:1.55}.help-tile .help-action{color:var(--accent);font-weight:750;margin-top:auto;padding-top:10px}@media(max-width:680px){.help-grid{grid-template-columns:1fr;gap:12px}.help-tile{padding:20px}}
+</style><style>
+/* v3: preserve desktop approval composition; remove desktop-only blending mask on stacked mobile art */
+@media(max-width:1060px){
+ .art:before{display:none!important}
+ .art{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:100%;height:auto;min-height:0;margin:16px auto 0;display:block;overflow:hidden}
+ .art picture,.art img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;filter:none}
+ .hero-inner{overflow:visible}
+}
+@media(max-width:680px){
+ html,body{max-width:100%;overflow-x:clip}
+ .hero-inner{padding-top:37px}
+ .art{width:calc(100% + 40px);max-width:none;margin-left:-20px;margin-right:-20px;margin-top:14px;margin-bottom:0}
+ .hero-benefits{position:relative;z-index:2}
+ .hero{overflow:hidden}
+ .btns{min-width:0}
+ .btn{min-width:0}
+ .section{padding-top:42px}
+}
+
+/* Hero artwork mask — reviewed mobile refinement.
+   Gentle left reveal + bottom dissolve, preserve the device faces. */
+.art picture{
+  -webkit-mask-image:
+    linear-gradient(to right,transparent 0%,#000 8%,#000 92%,transparent 100%),
+    linear-gradient(to bottom,#000 0%,#000 85%,transparent 100%);
+  mask-image:
+    linear-gradient(to right,transparent 0%,#000 8%,#000 92%,transparent 100%),
+    linear-gradient(to bottom,#000 0%,#000 85%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-composite:intersect;
+}
+@media(max-width:1060px){
+  .art picture{
+    -webkit-mask-image:
+      linear-gradient(to right,transparent 0%,#000 10%,#000 97%,transparent 100%),
+      linear-gradient(to bottom,#000 0%,#000 88%,transparent 100%);
+    mask-image:
+      linear-gradient(to right,transparent 0%,#000 10%,#000 97%,transparent 100%),
+      linear-gradient(to bottom,#000 0%,#000 88%,transparent 100%);
+  }
+}
+
+/* Hero seam correction: feather the embedded artwork edges instead of
+   revealing its rectangular background against the site gradient. */
+@media(min-width:1061px){
+ .art:before{display:none!important}
+ .art picture{
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 21%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 7%,#000 76%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 21%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 7%,#000 76%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+ }
+}
+
+/* Mobile-only shortcuts: visible above the long landing page content. */
+.mobile-shortcuts{display:none}
+@media(max-width:680px){
+ .mobile-shortcuts{display:flex;gap:8px;overflow-x:auto;padding:4px 20px 13px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .mobile-shortcuts::-webkit-scrollbar{display:none}
+ .mobile-shortcuts a{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;flex:0 0 auto;border:1px solid #526079;border-radius:12px;background:#18263d;color:#f3f5fb;text-decoration:none;font-size:.82rem;font-weight:750;padding:10px 13px;white-space:nowrap}
+ .mobile-shortcuts a:first-child{border-color:var(--accent)}
+ .mobile-shortcuts a span{color:var(--accent)}
+ .mobile-shortcuts a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+}
+
+/* Keep all three top-level mobile help links visible, without horizontal scrolling. */
+@media(max-width:680px){
+ .mobile-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:4px 20px 13px}
+ .mobile-shortcuts a{min-width:0;flex:auto;white-space:normal;text-align:center;line-height:1.15;gap:4px;padding:9px 6px;font-size:clamp(.73rem,3vw,.82rem)}
+}
+<style id="lumen-tablet-direct-link">
+.nav .links #nav-web-guide{display:none}
+@media(min-width:1200px){.nav .links #nav-web-guide{display:inline}}
+@media(min-width:681px) and (max-width:1060px){.nav .bar{flex-wrap:wrap}}
+</style><style>
+@media(min-width:681px) and (max-width:1060px){
+  .nav .mobile-shortcuts{display:flex!important;visibility:visible;justify-content:center;flex-wrap:wrap;gap:10px;padding:12px 24px}
+  .nav .mobile-shortcuts a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none;font-weight:750;padding:10px 18px}
+  .nav .mobile-shortcuts a:last-child{border-color:var(--accent)}
+  .nav .mobile-shortcuts a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+}
+</style><style>
+/* Sign In (secondary) and Get Started (primary): header from 681px up, shortcuts and hero below. */
+.hdr-signin,.hdr-cta{display:none}
+.m-cta{display:none}
+.help-ctas{display:flex;flex-wrap:wrap;gap:12px}
+@media(min-width:681px){
+  .hdr-signin,.hdr-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border-radius:12px;font-size:.9rem;font-weight:800;text-decoration:none;white-space:nowrap}
+  .hdr-signin{color:#e8edf8;border:1px solid #526079;background:transparent}
+  .hdr-cta{color:#11172a;background:var(--accent);border:1px solid var(--accent)}
+  .hdr-signin:focus-visible,.hdr-cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  #mobile-get-started,#mobile-sign-in{display:none!important}
+}
+@media(min-width:1061px) and (max-width:1199px){
+  .bar{gap:14px}.links{gap:14px}.links a{font-size:.86rem}.controls{gap:8px}.hdr-signin,.hdr-cta{padding:8px 12px;font-size:.86rem}.toggle button{padding:6px 9px;font-size:.8rem}.swatches{gap:7px}
+}
+/* Bigger tap area for the colour swatches without changing how they look. */
+.swatches button{position:relative}
+.swatches button::after{content:"";position:absolute;inset:-11px -3px}
+@media(max-width:680px){
+  .bar{padding:12px 20px}
+  .swatches{gap:6px}.swatches button{width:20px;height:20px}
+  .mobile-shortcuts a.m-cta{display:inline-flex;grid-column:1/-1;background:var(--accent);color:#11172a;border-color:var(--accent);font-weight:850}
+  #hero-get-started{grid-column:1/-1}
+}
+</style><style>
+@media(max-width:680px){
+  .mobile-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mobile-shortcuts a{min-height:48px;line-height:1.2;font-size:.83rem;padding:11px 8px}
+  .mobile-shortcuts a:last-child{border-color:var(--accent)}
+}
+</style><style>
+/* Scoped hero presentation: retains all current site functionality and styling elsewhere. */
+.hero{min-height:auto;background:var(--bg);color:var(--text)}
+html[data-mode="light"] .hero{background:linear-gradient(180deg,#fffaf5 0%,#f9f2eb 100%);color:#27333b}
+html[data-mode="dark"] .hero{background:linear-gradient(180deg,#0b1425 0%,#152239 100%);color:#f8f7f5}
+.hero:after{display:none}
+.hero-inner{min-height:0;display:flex;flex-direction:column;align-items:stretch;padding-top:48px}
+.hero-copy{width:100%;max-width:920px;text-align:center;margin:0 auto;padding:0;position:relative;z-index:2}
+.hero .kicker{color:var(--accent)}
+.hero h1{font-family:Georgia,serif;font-weight:500;max-width:920px;margin:0 auto 24px;font-size:clamp(2.8rem,5.4vw,5.7rem)}
+.hero h1 em{color:var(--accent)}
+.hero .lead{max-width:650px;color:var(--muted);margin:0 auto 24px}
+.hero .btns,.hero-benefits{justify-content:center}
+.hero .subline{color:var(--muted)}
+.hero .hero-benefits{color:var(--muted);margin-top:20px}
+.hero .art{position:relative;inset:auto;width:100%;height:auto;max-width:none;display:block;margin:20px auto 0;pointer-events:none;overflow:visible}
+.hero .art:before{display:none!important}
+.hero .art picture,.hero .art img{display:block;max-width:100%;width:100%;height:auto;object-fit:contain;filter:none;mask-image:none!important;-webkit-mask-image:none!important}
+.hero .btn.outline{background:var(--surface);border-color:var(--line);color:var(--text)}
+/* Frame the artwork so it sits well on both the Light and Dark hero backgrounds. */
+.hero .art{margin:28px auto 64px}
+.hero .art picture{border-radius:24px;overflow:hidden;background:#1a1f2b;box-shadow:0 34px 70px -30px rgba(5,10,22,.7),0 0 0 1px rgba(255,255,255,.07)}
+html[data-mode="light"] .hero .art picture{box-shadow:0 30px 60px -30px rgba(70,45,25,.38),0 0 0 1px rgba(39,51,59,.1)}
+@media(max-width:1060px){.hero-inner{padding-top:40px}.hero .art{height:auto;margin:16px auto 0;width:100%}}
+@media(max-width:680px){.hero-inner{padding-top:28px}.hero h1{font-size:clamp(2.5rem,10.8vw,4rem)}.hero .lead{font-size:1rem}.hero .art{width:100%;margin:16px auto 0;left:auto;right:auto}.hero .art img{width:100%}.hero .hero-benefits{margin-top:18px}.hero .btns{grid-template-columns:1fr 1fr}.hero{overflow:hidden}}
+@media(max-width:680px){.hero .art{margin:20px auto 40px}.hero .art picture{border-radius:18px}}
+</style><style>
+/* Light mode: accent-coloured small text darkened to meet WCAG AA (4.5:1). Hue is kept. */
+html[data-mode="light"]{--accent-ink:color-mix(in srgb,var(--accent) 55%,#000)}
+html[data-mode="light"] .eyebrow,
+html[data-mode="light"] .step b,
+html[data-mode="light"] .help-action{color:var(--accent-ink)}
+/* Kindlane brand-only header mark — no layout/hero changes */
+.nav .logo{display:inline-flex;align-items:center;gap:9px}.nav .logo .kindlane-icon{width:34px;height:34px;flex:none}.nav .logo .kindlane-wordmark{color:#f4ead5;font-weight:850}@media(max-width:680px){.nav .logo .kindlane-icon{width:28px;height:28px}}
+</style><style>html[data-mode=light] .only-dark,html[data-mode=dark] .only-light{display:none}
+.fhero{padding:64px 0 28px}.fhero h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;letter-spacing:-.05em;margin:12px 0 18px;max-width:960px}
+.fhero .lead{font-size:1.12rem;color:var(--muted);max-width:640px;line-height:1.65}
+.fchips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}.fchips a{text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:40px;padding:9px 15px;font-size:.88rem;font-weight:650;min-height:44px;display:inline-flex;align-items:center}
+.fchips a:hover{border-color:var(--accent)}
+.fsec{padding:56px 0;scroll-margin-top:12px}.fsec+.fsec{border-top:1px solid var(--line)}
+.fgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:52px;align-items:center}.fsec.flip .fgrid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}.fsec.flip .ftext{order:2}
+.fsec h2{font-size:clamp(1.8rem,2.8vw,2.5rem);letter-spacing:-.04em;margin:10px 0 12px;line-height:1.12}.fsec p{color:var(--muted);line-height:1.65}
+.fpoints{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}.fpoints li{position:relative;padding-left:28px;line-height:1.5}
+.fpoints li:before{content:"";position:absolute;left:2px;top:.3em;width:15px;height:15px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,transparent);box-shadow:inset 0 0 0 2px var(--accent)}
+.fwhere{font-size:.82rem;margin-top:18px;font-weight:650}
+.fshot{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:0 18px 50px -24px #0008;aspect-ratio:4/3}
+.fshot picture{display:block;width:100%;height:100%}.fshot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
+.fcta{text-align:center}.fcta p{max-width:560px;margin:0 auto 22px}.ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--text)}
+/* Drawn previews (Android-only features). Made-up content. */
+.drawn{--ink:var(--text);--soft:var(--muted);font-size:clamp(.6rem,1.05vw,.9rem);display:flex;flex-direction:column;padding:1.6em;gap:1.2em;background:var(--surface2)}
+.drawn .dtop{display:flex;justify-content:space-between;align-items:center}.drawn .dtop b{font-size:1.6em}
+.seg{display:flex;border:1px solid var(--line);border-radius:30px;padding:.25em}.seg i{font-style:normal;padding:.35em 1em;border-radius:30px;color:var(--soft)}.seg i.on{background:var(--accent);color:#141a28;font-weight:700}
+.board{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1.1em;padding:1.2em;border-radius:12px;background:color-mix(in srgb,#b88a5a 30%,var(--surface2))}
+.sticky{transform:rotate(var(--r,0));border-radius:6px;padding:.9em;color:#2b2a26;line-height:1.35;box-shadow:0 6px 14px -8px #0007}.sticky b{display:block;margin-bottom:.3em}
+.sticky.y{background:#fde68a}.sticky.p{background:#fbcfe8}.sticky.b{background:#bfdbfe}.sticky.g{background:#bbf7d0}
+.sticky.add{background:transparent;border:2px dashed color-mix(in srgb,var(--text) 35%,transparent);color:var(--text);display:flex;align-items:center;justify-content:center;box-shadow:none;font-weight:700}
+.drawn.wall{flex-direction:row;align-items:stretch}
+.wallframe{flex:1.25;border:.6em solid #1d2433;border-radius:16px;background:var(--surface);padding:1.3em;display:flex;flex-direction:column;gap:.8em}
+.wtime{font-size:3.2em;font-weight:300;line-height:1}.wtime small{font-size:.32em;margin-left:.3em}.wdate{color:var(--soft)}
+.wcols{display:grid;grid-template-columns:1fr 1fr;gap:.8em;flex:1}.wcol{border:1px solid var(--line);border-radius:10px;padding:.8em;display:flex;flex-direction:column;gap:.5em;border-top:.35em solid var(--c)}
+.wcol span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wcol span:before{content:"○ ";color:var(--c)}.wcol span.done{color:var(--soft);text-decoration:line-through}.wcol span.done:before{content:"✓ "}
+.wnext{border-radius:10px;padding:.7em .9em;background:color-mix(in srgb,var(--accent) 16%,var(--surface))}.wnext small{display:block;color:var(--soft);letter-spacing:.12em;font-size:.75em}
+.wallside{flex:1;display:flex;flex-direction:column;gap:1em}.mini{flex:1;border-radius:12px;display:flex;flex-direction:column;justify-content:flex-end;padding:.9em;color:#e8ecf4;position:relative;overflow:hidden}
+.mini small{position:relative}.mini.night{background:#000}.mini.night span{position:absolute;top:35%;left:30%;font-size:2em;color:#5b6475;font-weight:300}
+.mini.photo{background:linear-gradient(160deg,#f6c38b 0%,#e8956b 35%,#5b7fa6 70%,#2c3e5c 100%)}.mini.photo span{position:absolute;bottom:38%;left:0;right:0;height:30%;background:linear-gradient(180deg,transparent,#1f2d44 70%);clip-path:polygon(0 60%,20% 20%,38% 55%,58% 10%,80% 50%,100% 25%,100% 100%,0 100%)}
+.drawn.widgets{padding:0;background:linear-gradient(150deg,#3b4f7a,#7d5a8c 55%,#c27c6a)}
+.hs{flex:1;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:1em;padding:1.6em 18%}
+.wg{background:color-mix(in srgb,var(--surface) 92%,transparent);border-radius:16px;padding:.9em 1em;display:flex;flex-direction:column;gap:.2em;color:var(--text)}.wg.wide{grid-column:span 2}
+.wg small{color:var(--soft);letter-spacing:.1em;font-size:.72em;font-weight:700}.wg b{font-size:1.2em}.wg span{color:var(--soft)}
+.wg.kids div{display:flex;align-items:center;gap:.5em}.wg.kids i{width:.8em;height:.8em;border-radius:50%;background:var(--c)}.wg.kids em{margin-left:auto;font-style:normal;color:var(--soft)}
+.apps{grid-column:span 2;display:flex;justify-content:space-around;margin-top:.6em}.apps i{width:2.6em;height:2.6em;border-radius:30%;background:#ffffff40}
+@media(max-width:900px){.fgrid,.fsec.flip .fgrid{grid-template-columns:1fr;gap:26px}.fsec.flip .ftext{order:0}.drawn{font-size:clamp(.55rem,2.2vw,.9rem)}.fsec{padding:44px 0}}
+@media(max-width:680px){.fshot:not(.drawn){aspect-ratio:1/2;max-width:300px;margin:0 auto;border-radius:26px}.fhero{padding:40px 0 16px}.hs{padding:1.2em 8%}.board{grid-template-columns:repeat(2,1fr)}.board .sticky:nth-child(n+5){display:none}}
+</style></head><body><div class="nav"><nav aria-label="Main navigation" class="wrap bar"><a class="logo" href="index.html" aria-label="Kindlane — by Adaver Technologies"><img class="kindlane-icon" src="kindlane-brand-mark.svg" width="34" height="34" alt="" aria-hidden="true"/><span class="kindlane-wordmark">Kindlane</span></a><div class="links"><a href="features.html" aria-current="page">Features</a><a href="index.html#downloads">Download</a><a href="releases.html">Release Center</a><a href="index.html#help">Help &amp; Support</a><a href="web.html" id="nav-web-guide">Device guide</a></div><div class="controls"><a class="hdr-signin" id="header-sign-in" href="https://family-hub-7cb05.web.app/">Sign In</a><a class="hdr-cta" id="header-get-started" href="get-started.html">Get Started</a><div aria-label="Color mode" class="toggle" role="group"><button aria-pressed="true" data-mode-choice="dark" type="button">Dark</button><button aria-pressed="false" data-mode-choice="light" type="button">Light</button></div><div aria-label="Accent color" class="swatches" role="group"><button aria-label="Coral" aria-pressed="true" data-color="coral" style="background:#ff8067" type="button"></button><button aria-label="Ocean" aria-pressed="false" data-color="ocean" style="background:#48b7f1" type="button"></button><button aria-label="Meadow" aria-pressed="false" data-color="meadow" style="background:#54d59c" type="button"></button><button aria-label="Plum" aria-pressed="false" data-color="plum" style="background:#b38af1" type="button"></button></div></div></nav><div class="mobile-shortcuts" aria-label="Quick help links"><a class="m-cta" href="get-started.html" id="mobile-get-started">Get Started</a><a href="install.html">Install <span aria-hidden="true">↗</span></a><a href="hearth.html">Hearth <span aria-hidden="true">↗</span></a><a href="help.html">Help Center <span aria-hidden="true">↗</span></a><a href="https://family-hub-7cb05.web.app/" id="mobile-sign-in">Sign In <span aria-hidden="true">↗</span></a></div></div>
+
+<main id="top"><section class="fhero"><div class="wrap"><div class="eyebrow">Features</div><h1>Everything your family runs on.</h1><p class="lead">One home for the calendar, routines, meals, groceries and the little jobs in between. Here is what each part does.</p>
+<nav class="fchips" aria-label="Jump to a feature"><a href="#home">Home</a><a href="#calendar">Calendar</a><a href="#daily">Daily lists</a><a href="#meals">Meals</a><a href="#grocery">Grocery</a><a href="#baton">Pass the Baton</a><a href="#notes">Sticky notes</a><a href="#wall">Wall display</a><a href="#widgets">Widgets</a><a href="#styles">Make it yours</a></nav></div></section>
+<section class="fsec" id="home" aria-labelledby="home-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Home</div><h2 id="home-h">Your day at a glance.</h2><p>Open Kindlane and the important things are already there.</p><ul class="fpoints"><li>What is up next, and what is for dinner tonight</li><li>Countdowns to the days everyone is waiting for</li><li>The next few days of the family calendar</li><li>My Day: one person's events, tasks and requests in one card</li></ul><p class="fwhere">Phone, tablet, Wall and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/overview-light-phone.webp" width="600" height="1200"><img src="features/overview-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Kindlane Overview with up next, tonight's dinner, a countdown and the next three days, for a made-up family."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/overview-dark-phone.webp" width="600" height="1200"><img src="features/overview-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Kindlane Overview with up next, tonight's dinner, a countdown and the next three days, for a made-up family."></picture></div></div></div></section>
+<section class="fsec flip" id="calendar" aria-labelledby="calendar-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Calendar</div><h2 id="calendar-h">Every family calendar in one place.</h2><p>Everyone's schedule, merged and color coded, so nothing sneaks up on you.</p><ul class="fpoints"><li>Agenda, Week and Month views</li><li>Connect Google Calendar, or add calendars by link</li><li>Add and edit events in the app</li><li>Countdowns to trips, birthdays and holidays</li></ul><p class="fwhere">Phone, tablet, Wall and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/calendar-light-phone.webp" width="600" height="1200"><img src="features/calendar-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Kindlane Calendar week view with school, sports, family and work events in different colors."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/calendar-dark-phone.webp" width="600" height="1200"><img src="features/calendar-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Kindlane Calendar week view with school, sports, family and work events in different colors."></picture></div></div></div></section>
+<section class="fsec" id="daily" aria-labelledby="daily-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Daily lists</div><h2 id="daily-h">Routines kids can actually follow.</h2><p>Each kid gets their own list, split into parts of the day, with points to earn.</p><ul class="fpoints"><li>Morning, After school, Evening and Bedtime</li><li>Points, streaks and rewards to save for</li><li>Grown ups can give a bonus or take points away</li><li>Kids only see their own list</li></ul><p class="fwhere">Phone, tablet, Wall and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/daily-light-phone.webp" width="600" height="1200"><img src="features/daily-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Two kids' Daily lists side by side with checked tasks, points, a streak and rewards."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/daily-dark-phone.webp" width="600" height="1200"><img src="features/daily-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Two kids' Daily lists side by side with checked tasks, points, a streak and rewards."></picture></div></div></div></section>
+<section class="fsec flip" id="meals" aria-labelledby="meals-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Meals</div><h2 id="meals-h">Dinner, planned.</h2><p>Pick a meal for each day and the week takes care of itself.</p><ul class="fpoints"><li>Breakfast, lunch and dinner for every day</li><li>Plan weeks ahead and save favorite weeks</li><li>Saved meals with their ingredients</li><li>Monday brings the next plan forward on its own</li></ul><p class="fwhere">Phone, tablet and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/meals-light-phone.webp" width="600" height="1200"><img src="features/meals-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Meal planner with a dinner chosen for each day of the week."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/meals-dark-phone.webp" width="600" height="1200"><img src="features/meals-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Meal planner with a dinner chosen for each day of the week."></picture></div></div></div></section>
+<section class="fsec" id="grocery" aria-labelledby="grocery-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Grocery</div><h2 id="grocery-h">A list that writes itself.</h2><p>Ingredients from the week's meals land on the list, sorted by aisle.</p><ul class="fpoints"><li>This week, One time and Always buy lists</li><li>Items grouped by aisle, and you can move them</li><li>Check things off together in the store</li><li>Share the list as text</li></ul><p class="fwhere">Phone, tablet and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/grocery-light-phone.webp" width="600" height="1200"><img src="features/grocery-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Grocery shopping board with the week's ingredients and amounts."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/grocery-dark-phone.webp" width="600" height="1200"><img src="features/grocery-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="The Grocery shopping board with the week's ingredients and amounts."></picture></div></div></div></section>
+<section class="fsec flip" id="baton" aria-labelledby="baton-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Pass the Baton</div><h2 id="baton-h">Ask without the nagging.</h2><p>Hand a job to someone else in the family and see when it is handled.</p><ul class="fpoints"><li>Send a request with a note and a due time</li><li>They can accept, decline or mark it done</li><li>Requests stay between the two of you</li><li>Kids can send and get requests too</li></ul><p class="fwhere">Phone, tablet and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/baton-light-phone.webp" width="600" height="1200"><img src="features/baton-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Pass the Baton with a request to bring soccer cleats, waiting for an answer."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/baton-dark-phone.webp" width="600" height="1200"><img src="features/baton-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Pass the Baton with a request to bring soccer cleats, waiting for an answer."></picture></div></div></div></section>
+<section class="fsec" id="notes" aria-labelledby="notes-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Sticky notes</div><h2 id="notes-h">A corkboard for the whole family.</h2><p>Leave a quick note for yourself or for everyone.</p><ul class="fpoints"><li>My board for private notes</li><li>Family board everyone can see</li><li>Notes match your colors and style</li><li>Starting on Android, coming to the web</li></ul><p class="fwhere">Android</p></div><div class="fmedia"><div class="fshot drawn notes" role="img" aria-label="Drawing of the Notes tab on an Android tablet: a Family board with sticky notes for a school form, a grocery reminder and a weekend plan, using made-up content.">
+<div class="dtop"><b>Notes</b><span class="seg"><i>My board</i><i class="on">Family board</i></span></div>
+<div class="board"><div class="sticky y" style="--r:-2deg"><b>Permission slip</b>Sign and send back with Mia by Friday</div>
+<div class="sticky p" style="--r:1.5deg"><b>Out of coffee</b>Grab the big bag this time</div>
+<div class="sticky b" style="--r:-1deg"><b>Saturday</b>Swim class 10:00, then picnic at the lake if it is sunny</div>
+<div class="sticky g" style="--r:2deg"><b>Leo</b>Library books are due Tuesday</div>
+<div class="sticky y" style="--r:-1.5deg"><b>Wifi for guests</b>On the fridge card</div>
+<div class="sticky add">+ New note</div></div></div></div></div></section>
+<section class="fsec flip" id="wall" aria-labelledby="wall-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Wall display</div><h2 id="wall-h">Made for the kitchen wall.</h2><p>Mount a tablet and Kindlane becomes the family's home base.</p><ul class="fpoints"><li>A morning screen with each kid's tasks</li><li>Dims to a quiet clock at night</li><li>Photo screensaver from your shared album</li><li>Big, easy to read cards from across the room</li></ul><p class="fwhere">Android tablets and wall displays</p></div><div class="fmedia"><div class="fshot drawn wall" role="img" aria-label="Drawing of a wall-mounted tablet showing the morning screen with each kid's morning tasks, the time and the weather, using made-up content.">
+<div class="wallframe"><div class="wtime">7:42<small>AM</small></div><div class="wdate">Monday, November 16 · ☀ 41°</div>
+<div class="wcols"><div class="wcol" style="--c:#B9A2FF"><b>Mia</b><span class="done">Make bed</span><span class="done">Brush teeth</span><span>Get dressed</span></div>
+<div class="wcol" style="--c:#4FD3CC"><b>Leo</b><span class="done">Make bed</span><span>Brush teeth</span><span>Get dressed</span></div></div>
+<div class="wnext"><small>UP NEXT</small>School drop-off · 8:05 AM</div></div>
+<div class="wallside"><div class="mini night"><span>11:20</span><small>Night: a dim clock that drifts across the screen</small></div>
+<div class="mini photo"><span></span><small>Photo screensaver from your shared album</small></div></div></div></div></div></section>
+<section class="fsec" id="widgets" aria-labelledby="widgets-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Widgets</div><h2 id="widgets-h">Kindlane on your home screen.</h2><p>See what matters without opening the app.</p><ul class="fpoints"><li>Next up on the calendar</li><li>Tonight's dinner</li><li>The grocery list</li><li>The kids' Daily lists</li></ul><p class="fwhere">Android</p></div><div class="fmedia"><div class="fshot drawn widgets" role="img" aria-label="Drawing of an Android home screen with four Kindlane widgets: Next up, tonight's dinner, the grocery list and the kids' Daily lists, using made-up content.">
+<div class="hs"><div class="wg wide"><small>NEXT UP</small><b>Soccer practice</b><span>5:00 PM · Riverside Park</span></div>
+<div class="wg"><small>DINNER</small><b>Taco night</b><span>Tomorrow: Spaghetti</span></div>
+<div class="wg"><small>GROCERY · 8 LEFT</small><span>□ Milk</span><span>□ Tortillas</span><span>□ Bananas</span></div>
+<div class="wg wide kids"><small>DAILY LISTS</small><div><i style="--c:#B9A2FF"></i>Mia <em>7 of 10</em></div><div><i style="--c:#4FD3CC"></i>Leo <em>4 of 10</em></div></div>
+<div class="apps"><i></i><i></i><i></i><i></i><i></i></div></div></div></div></div></section>
+<section class="fsec flip" id="styles" aria-labelledby="styles-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Make it yours</div><h2 id="styles-h">Your look, on every device.</h2><p>Each device picks its own style, so the wall and your phone can differ.</p><ul class="fpoints"><li>Classic, Modern and Matte styles</li><li>Light or Dark</li><li>Accent colors to match your home</li><li>Choose which Home cards show, and their order</li></ul><p class="fwhere">Phone, tablet, Wall and web</p></div><div class="fmedia"><div class="fshot"><picture class="only-light"><source media="(max-width:680px)" srcset="features/styles-light-phone.webp" width="600" height="1200"><img src="features/styles-light.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Preferences with style, Light or Dark, and accent color choices."></picture><picture class="only-dark"><source media="(max-width:680px)" srcset="features/styles-dark-phone.webp" width="600" height="1200"><img src="features/styles-dark.webp" width="1440" height="1080" loading="lazy" decoding="async" alt="Preferences with style, Light or Dark, and accent color choices."></picture></div></div></div></section>
+<section class="fsec fcta"><div class="wrap"><h2>Ready to try it?</h2><p>Start on any phone or computer. Add Android tablets and wall displays when you are ready.</p><div class="ctas"><a class="btn" href="get-started.html">Get Started</a><a class="btn ghost" href="index.html#downloads">Download for Android</a></div></div></section></main>
+<footer class="footer"><div class="wrap"><span>Kindlane by Adaver Technologies — Less chaos. More family.</span><span>Screens show a made-up family · <a href="releases.html">Release Center</a> · <a href="start.html">Setup Guide</a> · <a href="https://kindlane.app/privacy">Privacy</a></span></div></footer>
+<script>(()=>{const root=document.documentElement;let saved={};try{saved=JSON.parse(localStorage.getItem('fh_site_theme')||'{}')}catch(_){}function set(mode,color){mode=['dark','light'].includes(mode)?mode:'light';color=['coral','ocean','meadow','plum'].includes(color)?color:'coral';root.dataset.mode=mode;root.dataset.accent=color;document.querySelectorAll('[data-mode-choice]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.modeChoice===mode));document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.color===color));try{localStorage.setItem('fh_site_theme',JSON.stringify({mode,accent:color}))}catch(e){}}set(saved.mode,saved.accent);document.querySelectorAll('[data-mode-choice]').forEach(b=>b.addEventListener('click',()=>set(b.dataset.modeChoice,root.dataset.accent)));document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>set(root.dataset.mode,b.dataset.color)))})();</script></body></html>

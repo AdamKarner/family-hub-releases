@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.route(url => !/^https?:\/\/(127\.0\.0\.1|localhost)(:|\/)/.test(url.href), route => route.abort());
 });
 
-const pages = ['index','get-started','web','help','start','download','install','hearth','releases','privacy','feedback','skylight'];
+const pages = ['index','get-started','web','help','start','download','install','hearth','releases','privacy','feedback','skylight','features'];
 
 // WCAG 2.x AA text contrast on every public page, in Light (all four accents) and Dark.
 for (const name of pages) {
