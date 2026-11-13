@@ -635,3 +635,23 @@ test('home page feature cards and the Features menu link open the Features page'
   await expect(page).toHaveURL(/features\.html#notes$/);
   await expect(page.locator('#notes')).toBeInViewport();
 });
+
+test('hero carousel starts on the original artwork, never moves on its own, and steps through every feature', async ({ page }) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const dots = page.locator('.hcar .hdots button');
+    await expect(dots).toHaveCount(9);
+    await expect(dots.nth(0)).toHaveAttribute('aria-current', 'true');
+    await page.waitForTimeout(3000);
+    await expect(dots.nth(0)).toHaveAttribute('aria-current', 'true');
+    await page.locator('.hcar .hnext').click();
+    await expect(dots.nth(1)).toHaveAttribute('aria-current', 'true');
+    await expect(page.locator('.hslide').nth(1).getByRole('link', { name: /See more/ })).toHaveAttribute('href', 'features.html#calendar');
+    await dots.nth(8).click();
+    await expect(dots.nth(8)).toHaveAttribute('aria-current', 'true');
+    await page.locator('.hcar .hnext').click();
+    await expect(dots.nth(0)).toHaveAttribute('aria-current', 'true');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
