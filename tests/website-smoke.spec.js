@@ -655,3 +655,17 @@ test('hero carousel starts on the original artwork, never moves on its own, and 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
+
+test('tester page links to the Play opt-in and store, and the home page links to it', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#download-play-test')).toHaveAttribute('href', 'testers.html');
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/testers.html');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Become a Kindlane tester.');
+    await expect(page.locator('#tester-optin')).toHaveAttribute('href', 'https://play.google.com/apps/testing/com.karner.familyhub');
+    await expect(page.locator('#tester-store')).toHaveAttribute('href', 'https://play.google.com/store/apps/details?id=com.karner.familyhub');
+    await expect(page.locator('#tester-group')).toHaveAttribute('href', 'https://groups.google.com/g/kindlane-testers');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
