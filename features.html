@@ -196,15 +196,15 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 .sticky{transform:rotate(var(--r,0));border-radius:6px;padding:.9em;color:#2b2a26;line-height:1.35;box-shadow:0 6px 14px -8px #0007}.sticky b{display:block;margin-bottom:.3em}
 .sticky.y{background:#fde68a}.sticky.p{background:#fbcfe8}.sticky.b{background:#bfdbfe}.sticky.g{background:#bbf7d0}
 .sticky.add{background:transparent;border:2px dashed color-mix(in srgb,var(--text) 35%,transparent);color:var(--text);display:flex;align-items:center;justify-content:center;box-shadow:none;font-weight:700}
-.drawn.wall{flex-direction:row;align-items:stretch}
-.wallframe{flex:1.25;border:.6em solid #1d2433;border-radius:16px;background:var(--surface);padding:1.3em;display:flex;flex-direction:column;gap:.8em}
-.wtime{font-size:3.2em;font-weight:300;line-height:1}.wtime small{font-size:.32em;margin-left:.3em}.wdate{color:var(--soft)}
-.wcols{display:grid;grid-template-columns:1fr 1fr;gap:.8em;flex:1}.wcol{border:1px solid var(--line);border-radius:10px;padding:.8em;display:flex;flex-direction:column;gap:.5em;border-top:.35em solid var(--c)}
-.wcol span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wcol span:before{content:"○ ";color:var(--c)}.wcol span.done{color:var(--soft);text-decoration:line-through}.wcol span.done:before{content:"✓ "}
-.wnext{border-radius:10px;padding:.7em .9em;background:color-mix(in srgb,var(--accent) 16%,var(--surface))}.wnext small{display:block;color:var(--soft);letter-spacing:.12em;font-size:.75em}
-.wallside{flex:1;display:flex;flex-direction:column;gap:1em}.mini{flex:1;border-radius:12px;display:flex;flex-direction:column;justify-content:flex-end;padding:.9em;color:#e8ecf4;position:relative;overflow:hidden}
-.mini small{position:relative}.mini.night{background:#000}.mini.night span{position:absolute;top:35%;left:30%;font-size:2em;color:#5b6475;font-weight:300}
-.mini.photo{background:linear-gradient(160deg,#f6c38b 0%,#e8956b 35%,#5b7fa6 70%,#2c3e5c 100%)}.mini.photo span{position:absolute;bottom:38%;left:0;right:0;height:30%;background:linear-gradient(180deg,transparent,#1f2d44 70%);clip-path:polygon(0 60%,20% 20%,38% 55%,58% 10%,80% 50%,100% 25%,100% 100%,0 100%)}
+
+
+
+
+
+
+
+
+
 .drawn.widgets{padding:0;background:linear-gradient(150deg,#3b4f7a,#7d5a8c 55%,#c27c6a)}
 .hs{flex:1;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:1em;padding:1.6em 18%}
 .wg{background:color-mix(in srgb,var(--surface) 92%,transparent);border-radius:16px;padding:.9em 1em;display:flex;flex-direction:column;gap:.2em;color:var(--text)}.wg.wide{grid-column:span 2}
@@ -213,6 +213,26 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 .apps{grid-column:span 2;display:flex;justify-content:space-around;margin-top:.6em}.apps i{width:2.6em;height:2.6em;border-radius:30%;background:#ffffff40}
 @media(max-width:900px){.fgrid,.fsec.flip .fgrid{grid-template-columns:1fr;gap:26px}.fsec.flip .ftext{order:0}.drawn{font-size:clamp(.55rem,2.2vw,.9rem)}.fsec{padding:44px 0}}
 @media(max-width:680px){.fshot:not(.drawn){aspect-ratio:1/2;max-width:300px;margin:0 auto;border-radius:26px}.fhero{padding:40px 0 16px}.hs{padding:1.2em 8%}.board{grid-template-columns:repeat(2,1fr)}.board .sticky:nth-child(n+5){display:none}}
+
+.drawn.wallp{align-items:center;aspect-ratio:auto;background:transparent;border:0;box-shadow:none;padding:0;display:flex;justify-content:center;overflow:visible}
+.ws{container-type:inline-size;width:min(100%,400px);aspect-ratio:1080/1840;border:12px solid #151a24;border-radius:26px;background:var(--bg);box-shadow:0 30px 60px -28px #000a;overflow:hidden}.wsi{height:100%;color:var(--text);padding:5cqw 4.6cqw 0;display:flex;flex-direction:column;gap:2.6cqw;font-size:3.5cqw;line-height:1.28}
+.ws small{display:block;font-size:.72em;letter-spacing:.12em;font-weight:750;color:var(--muted)}
+.wshead{display:flex;justify-content:space-between;align-items:flex-start}
+.wst{font-size:4.1em;font-weight:300;line-height:.95;letter-spacing:-.03em}.wst small{display:inline;font-size:.24em;letter-spacing:0;margin-left:.3em;color:var(--text)}
+.wsd{color:var(--muted);margin-top:.4em}.wsw{text-align:right;font-size:1.7em;font-weight:300}.wsw small{letter-spacing:0;font-size:.45em;font-weight:500}
+.wscard{background:var(--surface);border:1px solid var(--line);border-radius:3.5cqw;padding:3cqw 3.4cqw;display:flex;flex-direction:column;gap:.35em}
+.wscard b{font-size:1.25em}.wscard span{color:var(--muted)}.wsup{border-left:1.2cqw solid var(--accent)}
+.wsev{display:grid;grid-template-columns:5.6em 1fr;align-items:center;padding-left:.7em;border-left:.3em solid var(--c)}.wsev em{font-style:normal;color:var(--muted)}.wsev span{color:var(--text)}
+.wskids{display:grid;grid-template-columns:1fr 1fr;gap:3cqw;flex:1;min-height:0}
+.wskid{background:var(--surface);border:1px solid var(--line);border-top:1.4cqw solid var(--c);border-radius:3.5cqw;padding:2.6cqw 3cqw;display:flex;flex-direction:column;gap:.45em;overflow:hidden}
+.wskh{display:flex;justify-content:space-between;align-items:baseline}.wskh b{font-size:1.2em}.wskh em{font-style:normal;font-weight:700;color:var(--text)}
+.wskid small{margin-top:.5em}.wskid span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wskid span:before{content:"";display:inline-block;width:.85em;height:.85em;border-radius:50%;border:.13em solid var(--c);margin-right:.5em;vertical-align:-.1em;box-sizing:border-box}
+.wskid span.d{color:var(--muted);text-decoration:line-through}.wskid span.d:before{background:var(--c)}
+.wsrow{display:grid;grid-template-columns:1fr 1fr;gap:3cqw}.wsrow i{font-style:normal;color:var(--accent-ink,var(--accent));font-size:1.3em}
+.wstabs{display:flex;justify-content:space-around;margin:auto -4.6cqw 0;padding:2.6cqw 0 3.2cqw;border-top:1px solid var(--line);background:var(--surface);font-size:.85em;color:var(--muted)}
+.wstabs i{font-style:normal}.wstabs i.on{color:var(--accent-ink,var(--accent));font-weight:750}
+@media(max-width:680px){.ws{width:min(100%,320px)}}
 </style></head><body><div class="nav"><nav aria-label="Main navigation" class="wrap bar"><a class="logo" href="index.html" aria-label="Kindlane — by Adaver Technologies"><img class="kindlane-icon" src="kindlane-brand-mark.svg" width="34" height="34" alt="" aria-hidden="true"/><span class="kindlane-wordmark">Kindlane</span></a><div class="links"><a href="features.html" aria-current="page">Features</a><a href="index.html#downloads">Download</a><a href="releases.html">Release Center</a><a href="index.html#help">Help &amp; Support</a><a href="web.html" id="nav-web-guide">Device guide</a></div><div class="controls"><a class="hdr-signin" id="header-sign-in" href="https://family-hub-7cb05.web.app/">Sign In</a><a class="hdr-cta" id="header-get-started" href="get-started.html">Get Started</a><div aria-label="Color mode" class="toggle" role="group"><button aria-pressed="true" data-mode-choice="dark" type="button">Dark</button><button aria-pressed="false" data-mode-choice="light" type="button">Light</button></div><div aria-label="Accent color" class="swatches" role="group"><button aria-label="Coral" aria-pressed="true" data-color="coral" style="background:#ff8067" type="button"></button><button aria-label="Ocean" aria-pressed="false" data-color="ocean" style="background:#48b7f1" type="button"></button><button aria-label="Meadow" aria-pressed="false" data-color="meadow" style="background:#54d59c" type="button"></button><button aria-label="Plum" aria-pressed="false" data-color="plum" style="background:#b38af1" type="button"></button></div></div></nav><div class="mobile-shortcuts" aria-label="Quick help links"><a class="m-cta" href="get-started.html" id="mobile-get-started">Get Started</a><a href="install.html">Install <span aria-hidden="true">↗</span></a><a href="hearth.html">Hearth <span aria-hidden="true">↗</span></a><a href="help.html">Help Center <span aria-hidden="true">↗</span></a><a href="https://family-hub-7cb05.web.app/" id="mobile-sign-in">Sign In <span aria-hidden="true">↗</span></a></div></div>
 
 <main id="top"><section class="fhero"><div class="wrap"><div class="eyebrow">Features</div><h1>Everything your family runs on.</h1><p class="lead">One home for the calendar, routines, meals, groceries and the little jobs in between. Here is what each part does.</p>
@@ -231,13 +251,17 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 <div class="sticky g" style="--r:2deg"><b>Leo</b>Library books are due Tuesday</div>
 <div class="sticky y" style="--r:-1.5deg"><b>Wifi for guests</b>On the fridge card</div>
 <div class="sticky add">+ New note</div></div></div></div></div></section>
-<section class="fsec flip" id="wall" aria-labelledby="wall-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Wall display</div><h2 id="wall-h">Made for the kitchen wall.</h2><p>Mount a tablet and Kindlane becomes the family's home base.</p><ul class="fpoints"><li>A morning screen with each kid's tasks</li><li>Dims to a quiet clock at night</li><li>Photo screensaver from your shared album</li><li>Big, easy to read cards from across the room</li></ul><p class="fwhere">Android tablets and wall displays</p></div><div class="fmedia"><div class="fshot drawn wall" role="img" aria-label="Drawing of a wall-mounted tablet showing the morning screen with each kid's morning tasks, the time and the weather, using made-up content.">
-<div class="wallframe"><div class="wtime">7:42<small>AM</small></div><div class="wdate">Monday, November 16 · ☀ 41°</div>
-<div class="wcols"><div class="wcol" style="--c:#B9A2FF"><b>Mia</b><span class="done">Make bed</span><span class="done">Brush teeth</span><span>Get dressed</span></div>
-<div class="wcol" style="--c:#4FD3CC"><b>Leo</b><span class="done">Make bed</span><span>Brush teeth</span><span>Get dressed</span></div></div>
-<div class="wnext"><small>UP NEXT</small>School drop-off · 8:05 AM</div></div>
-<div class="wallside"><div class="mini night"><span>11:20</span><small>Night: a dim clock that drifts across the screen</small></div>
-<div class="mini photo"><span></span><small>Photo screensaver from your shared album</small></div></div></div></div></div></section>
+<section class="fsec flip" id="wall" aria-labelledby="wall-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Wall display</div><h2 id="wall-h">Made for the kitchen wall.</h2><p>Mount a tablet and Kindlane becomes the family's home base.</p><ul class="fpoints"><li>A morning screen with each kid's tasks</li><li>Dims to a quiet clock at night</li><li>Photo screensaver from your shared album</li><li>Big, easy to read cards from across the room</li></ul><p class="fwhere">Android tablets and wall displays</p></div><div class="fmedia"><div class="fshot drawn wallp" role="img" aria-label="Drawing of the Kindlane Wall home screen on a tall wall-mounted tablet: the time and weather, up next, today's events, Mia and Leo's Daily lists with points, tonight's dinner and a countdown, for a made-up family.">
+<div class="ws"><div class="wsi"><div class="wshead"><div><div class="wst">7:42<small>AM</small></div><div class="wsd">Monday, November 16</div></div><div class="wsw"><span aria-hidden="true">☀</span> 41°<small>Sunny</small></div></div>
+<div class="wscard wsup"><small>UP NEXT</small><b>School drop-off</b><span>8:05 AM · Maple Elementary</span></div>
+<div class="wscard"><small>TODAY</small>
+<div class="wsev" style="--c:#48B7F1"><em>3:10 PM</em><span>School pickup</span></div>
+<div class="wsev" style="--c:#54D59C"><em>5:00 PM</em><span>Soccer practice</span></div>
+<div class="wsev" style="--c:#FF8067"><em>7:00 PM</em><span>Family movie night</span></div></div>
+<div class="wskids"><div class="wskid" style="--c:#B9A2FF"><div class="wskh"><b>Mia</b><em>57 pts</em></div><small>MORNING</small><span class="d">Make bed</span><span class="d">Brush teeth</span><span>Get dressed</span><span>Pack backpack</span><small>AFTER SCHOOL</small><span>Homework</span></div>
+<div class="wskid" style="--c:#4FD3CC"><div class="wskh"><b>Leo</b><em>38 pts</em></div><small>MORNING</small><span class="d">Make bed</span><span>Brush teeth</span><span>Get dressed</span><span>Shoes on</span><small>AFTER SCHOOL</small><span>Reading</span></div></div>
+<div class="wsrow"><div class="wscard"><small>TONIGHT</small><b>Taco night</b></div><div class="wscard"><small>COUNTDOWN</small><b><i>12</i> days</b><span>Beach vacation</span></div></div>
+<div class="wstabs" aria-hidden="true"><i class="on">Home</i><i>Calendar</i><i>Meals</i><i>Grocery</i><i>Daily</i></div></div></div></div></div></div></section>
 <section class="fsec" id="widgets" aria-labelledby="widgets-h"><div class="wrap fgrid"><div class="ftext"><div class="eyebrow">Widgets</div><h2 id="widgets-h">Kindlane on your home screen.</h2><p>See what matters without opening the app.</p><ul class="fpoints"><li>Next up on the calendar</li><li>Tonight's dinner</li><li>The grocery list</li><li>The kids' Daily lists</li></ul><p class="fwhere">Android</p></div><div class="fmedia"><div class="fshot drawn widgets" role="img" aria-label="Drawing of an Android home screen with four Kindlane widgets: Next up, tonight's dinner, the grocery list and the kids' Daily lists, using made-up content.">
 <div class="hs"><div class="wg wide"><small>NEXT UP</small><b>Soccer practice</b><span>5:00 PM · Riverside Park</span></div>
 <div class="wg"><small>DINNER</small><b>Taco night</b><span>Tomorrow: Spaghetti</span></div>
