@@ -624,3 +624,14 @@ test('features page has a section with a picture for every module, in Light and 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
+
+test('home page feature cards and the Features menu link open the Features page', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('.nav .links a[href="features.html"]')).toHaveText('Features');
+  await expect(page.locator('#features a.feature')).toHaveCount(10);
+  await expect(page.locator('#setup, #updates')).toHaveCount(0);
+  await page.locator('#features a.feature', { hasText: 'Sticky notes' }).click();
+  await expect(page).toHaveURL(/features\.html#notes$/);
+  await expect(page.locator('#notes')).toBeInViewport();
+});
