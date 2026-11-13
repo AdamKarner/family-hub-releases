@@ -604,3 +604,23 @@ test('Skylight guide is discoverable, firmware-aware, and narrow-screen safe', a
       'Skylight guide horizontal overflow at '+width).toBe(false);
   }
 });
+
+test('features page has a section with a picture for every module, in Light and Dark', async ({ page }) => {
+  for (const mode of ['light', 'dark']) {
+    await page.addInitScript(m => { try { localStorage.setItem('fh_site_theme', JSON.stringify({mode:m,accent:'coral'})); } catch (_) {} }, mode);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/features.html');
+    const ids = ['home','calendar','daily','meals','grocery','baton','notes','wall','widgets','styles'];
+    for (const id of ids) {
+      const section = page.locator('#' + id);
+      await expect(section).toHaveCount(1);
+      await expect(page.locator('.fchips a[href="#' + id + '"]')).toHaveCount(1);
+      await section.scrollIntoViewIfNeeded();
+      const shot = section.locator('.fshot');
+      await expect(shot).toBeVisible();
+      const img = shot.locator('picture.only-' + mode + ' img');
+      if (await img.count()) await expect.poll(() => img.evaluate(i => i.complete && i.naturalWidth > 0)).toBe(true);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});

@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'features.html'
+      - 'features/**'
       - 'download.html'
       - 'releases.html'
       - 'install.html'
@@ -28,6 +30,8 @@ on:
   pull_request:
     paths:
       - 'index.html'
+      - 'features.html'
+      - 'features/**'
       - 'download.html'
       - 'releases.html'
       - 'install.html'
