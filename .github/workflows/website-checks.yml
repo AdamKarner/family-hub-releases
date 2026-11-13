@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'features.html'
+      - 'testers.html'
       - 'features/**'
       - 'download.html'
       - 'releases.html'
@@ -31,6 +32,7 @@ on:
     paths:
       - 'index.html'
       - 'features.html'
+      - 'testers.html'
       - 'features/**'
       - 'download.html'
       - 'releases.html'
