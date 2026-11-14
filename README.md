@@ -8,7 +8,8 @@ This **public** repository hosts the existing approved landing page, setup instr
 - `index.html` — public landing page with Sign In and Get Started.
 - `features.html`, `features/` — one section per feature. Screenshots come from the real web app with a made-up family (the Riveras) on the local Firebase emulator, Light and Dark, computer and phone. Sticky notes, Wall display and Widgets are Android only, so they are drawn in HTML with made-up content. Never use screenshots from a real household.
 - `get-started.html`, `start.html`, `web.html` — current Google signup, household creation/joining and iPhone/computer setup.
-- `setup.html`, `setup/`, `setup-demo.html` — retained legacy custom Firebase guides, with links to current web signup.
+- `setup.html`, `setup/` — short "Set up Kindlane" page that points to Google sign-in, invite codes and setup codes.
+- `setup-demo.html` — retained legacy custom Firebase guide, with links to current web signup.
 - `demo/` and `preview/` — retired sample-only demos; visitors are directed to the current authenticated web app.
 - `docs/` — canonical demo specification, inventory, roadmap, changelog and test plan.
 - `tests/` — browser smoke, accessibility, screenshot and onboarding regression checks.

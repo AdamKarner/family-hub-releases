@@ -79,12 +79,16 @@ test('recent Family Hub workflows are searchable and available under Everyday us
   await expect(page.getByText('Where did the Calendar controls go on a tablet?')).toBeVisible();
 });
 
-test('current household help keeps a clearly labeled legacy setup path', async ({ page }) => {
+test('current household help no longer sends people to a legacy Firebase guide', async ({ page }) => {
   await page.goto('/help.html');
   const q = page.getByText('How do I create or join a household?');
   await expect(q).toBeVisible();
   await q.click();
-  await expect(page.getByRole('link', { name: 'legacy Firebase setup guide' })).toHaveAttribute('href', 'setup.html');
+  await expect(page.locator('a[href="setup.html"], a[href$="/setup.html"], a[href="setup/"]')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /legacy|firebase/i })).toHaveCount(0);
+  await expect(page.getByText('How do I preserve an older family login while moving to a household?')).toHaveCount(0);
+  await page.locator('#search').fill('firebase');
+  await expect(page.locator('#faqgroup details:visible', { hasText: /legacy|older family login|custom Firebase project/i })).toHaveCount(0);
 });
 
 test('updated household guidance and Baton feature are discoverable', async ({page}) => {
@@ -95,7 +99,9 @@ test('updated household guidance and Baton feature are discoverable', async ({pa
   await expect(page.getByRole('link', {name: /Set up or join a household/}).first()).toHaveAttribute('href', 'start.html');
   await page.goto('/start.html');
   await expect(page.getByRole('heading', {name: 'Get your household connected.'})).toBeVisible();
-  await expect(page.getByRole('link', {name: 'Legacy Firebase walkthrough'})).toHaveAttribute('href', 'setup.html');
+  await expect(page.locator('a[href="setup.html"]')).toHaveCount(0);
+  await expect(page.getByRole('link', {name: /legacy|firebase/i})).toHaveCount(0);
+  await expect(page.locator('#device-setup')).toBeVisible();
 });
 test('privacy describes household membership and private requests', async ({page}) => {
   await page.goto('/privacy.html');
@@ -505,9 +511,29 @@ test('Help Center explains browser signup, invitations and current Settings', as
   await expect(appearance).toContainText('Light is the default');
 });
 
-test('old Firebase guide URLs clearly identify their legacy scope and lead new families to signup', async ({ page }) => {
+test('setup URLs point to Google sign-in, invite codes and setup codes', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
-  for(const url of ['/setup.html','/setup/','/setup-demo.html']) {
+  for(const url of ['/setup.html','/setup/']) {
+    await page.goto(url);
+    await expect(page).toHaveTitle('Set up Kindlane');
+    await expect(page.getByRole('heading',{level:1})).toHaveText('Set up Kindlane');
+    const notice=page.locator('#current-web-setup');
+    await expect(notice).toBeVisible();
+    await expect(notice).toContainText('signing in with Google');
+    await expect(notice).toContainText('invite code');
+    await expect(notice).toContainText('setup code');
+    await expect(page.locator('body')).not.toContainText(/firebase|migrat|legacy/i);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+    const device=notice.getByRole('link',{name:'Add a device'});
+    expect(new URL(await device.evaluate(a=>a.href)).pathname+new URL(await device.evaluate(a=>a.href)).hash).toBe('/start.html#device-setup');
+    await notice.getByRole('link',{name:'Start a household'}).click();
+    await expect(page).toHaveURL(/\/get-started\.html$/);
+  }
+});
+
+test('old Firebase demo guide still identifies its legacy scope and leads new families to signup', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  for(const url of ['/setup-demo.html']) {
     await page.goto(url);
     await expect(page).toHaveTitle('Legacy Firebase Setup — Kindlane');
     const notice=page.locator('#current-web-setup');
