@@ -243,6 +243,7 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 .tstep:before{content:counter(s);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;background:var(--accent);color:#101625}
 .tstep h2{font-size:1.25rem;margin:4px 0 6px;letter-spacing:-.02em}.tstep p{color:var(--muted);line-height:1.6;margin:0 0 14px}
 .tstep .btn{margin-top:2px}.tsoon{display:inline-block;font-weight:700;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:12px 16px}
+.tabout{margin-top:12px}.tmore .tios{grid-column:1/-1}.tshot{margin:26px 0 30px}.tshot img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line)}
 .tnote{margin-top:30px;border-radius:20px;padding:22px 24px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
 .tnote h2{font-size:1.15rem;margin:0 0 8px}.tnote p{margin:0 0 8px;line-height:1.6;color:var(--text)}.tnote p:last-child{margin:0}
 .tmore{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:16px}.tmore div{border:1px solid var(--line);border-radius:20px;padding:20px 22px}
@@ -253,6 +254,8 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 <main class="tmain" id="top"><div class="wrap">
 <div class="eyebrow">Google Play testing</div><h1>Become a Kindlane tester.</h1>
 <p class="tlead">Try new versions of Kindlane on Android before everyone else, straight from the Play Store, and help us find what needs fixing.</p>
+<p class="tlead tabout">Kindlane keeps your family's calendars, each kid's Daily list, dinners and groceries together. It is free while it's in testing. The family in the picture is made up.</p>
+<figure class="tshot"><img class="only-light" src="features/hero/daily-light.webp" width="1672" height="941" decoding="async" alt="Kindlane Daily lists: two kids' Daily lists with points and a streak, for a made-up family."><img class="only-dark" src="features/hero/daily-dark.webp" width="1672" height="941" decoding="async" alt="Kindlane Daily lists: two kids' Daily lists with points and a streak, for a made-up family."></figure>
 <ul class="twho" aria-label="Who can test"><li>Android phones and tablets</li><li>Android 8 or newer</li><li>A Google account</li></ul>
 <ol class="tsteps">
 <li class="tstep"><div><h2>Join the testers group</h2><p>Use the same Google account that your phone's Play Store uses. Joining is free and you can leave any time.</p><a class="btn" id="tester-group" href="https://groups.google.com/g/kindlane-testers">Join the testers group</a></div></li>
@@ -263,7 +266,8 @@ html[data-mode="light"] .help-action{color:var(--accent-ink)}
 <p>Uninstall it before you install from Google Play. Google signs Play versions with a different key, so they can't install over the website version.</p>
 <p>Your household is saved online and comes back when you sign in. Settings kept only on that device, like your style and Home layout, start fresh.</p></section>
 <div class="tmore"><div><h2>Wall displays</h2><p>Keep wall displays on the <a href="index.html#downloads">Wall APK</a>. The Play test is for phones and tablets.</p></div>
-<div><h2>Found a problem?</h2><p>Tell us on the <a href="feedback.html">feedback page</a>. You can leave the test any time from the Accept the test page.</p></div></div>
+<div><h2>Found a problem?</h2><p>Tell us on the <a href="feedback.html">feedback page</a>. You can leave the test any time from the Accept the test page.</p></div>
+<div class="tios"><h2>On iPhone or a computer?</h2><p>Kindlane works in your browser. <a href="get-started.html">Create your household</a> there, no testing needed.</p></div></div>
 </div></main>
 <footer class="footer"><div class="wrap"><span>Kindlane by Adaver Technologies — Less chaos. More family.</span><span><a href="releases.html">Release Center</a> · <a href="start.html">Setup Guide</a> · <a href="https://kindlane.app/privacy">Privacy</a></span></div></footer>
 <script>(()=>{const root=document.documentElement;let saved={};try{saved=JSON.parse(localStorage.getItem('fh_site_theme')||'{}')}catch(_){}function set(mode,color){mode=['dark','light'].includes(mode)?mode:'light';color=['coral','ocean','meadow','plum'].includes(color)?color:'coral';root.dataset.mode=mode;root.dataset.accent=color;document.querySelectorAll('[data-mode-choice]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.modeChoice===mode));document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.color===color));try{localStorage.setItem('fh_site_theme',JSON.stringify({mode,accent:color}))}catch(e){}}set(saved.mode,saved.accent);document.querySelectorAll('[data-mode-choice]').forEach(b=>b.addEventListener('click',()=>set(b.dataset.modeChoice,root.dataset.accent)));document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>set(root.dataset.mode,b.dataset.color)))})();</script></body></html>
