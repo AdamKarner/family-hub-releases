@@ -43,7 +43,7 @@ test('homepage text contrast passes on a phone in Light and Dark', async ({ page
 });
 
 
-test('signup notices and links remain readable on legacy and administration pages', async ({ page }) => {
+test('setup notices and links remain readable on setup and administration pages', async ({ page }) => {
   for (const [url,selector] of [['/setup.html','#current-web-setup'],['/setup/','#current-web-setup'],['/setup-demo.html','#current-web-setup'],['/access.html','.intro']]) {
     for(const mode of ['light','dark']) {
       await page.addInitScript(m=>localStorage.setItem('fh_site_theme',JSON.stringify({mode:m,accent:'coral'})),mode);
