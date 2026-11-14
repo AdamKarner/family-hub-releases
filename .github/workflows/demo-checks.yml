@@ -32,7 +32,7 @@ jobs:
             const html = fs.readFileSync(file, 'utf8');
             assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
             assert.match(html, /Interactive demo retired/);
-            assert.match(html, /https:\/\/family-hub-7cb05\.web\.app\//);
+            assert.match(html, /https:\/\/app\.kindlane\.app\//);
             assert.match(html, /\.\.\/get-started\.html/);
             assert.match(html, /\.\.\/web\.html/);
             for (const unsafe of [/<script/i, /firebaseConfig/i, /AIza[0-9A-Za-z_-]{35}/, /<form/i, /id="screen"/, /id="nav"/]) {

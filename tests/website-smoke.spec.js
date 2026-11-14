@@ -175,17 +175,17 @@ test('homepage preserves working Android and Wall actions plus accessible hero',
 
 test('iPhone and computer entry points do not create a second sign-in site', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#header-sign-in')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#header-sign-in')).toHaveAttribute('href','https://app.kindlane.app/');
   await expect(page.locator('#header-get-started')).toHaveAttribute('href','get-started.html');
   await expect(page.locator('#nav-web-guide')).toHaveAttribute('href','web.html');
   for (const id of ['web-iphone','web-computer']) {
-    await expect(page.locator('#' + id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+    await expect(page.locator('#' + id)).toHaveAttribute('href','https://app.kindlane.app/');
   }
   await expect(page.locator('#web-guide')).toHaveAttribute('href','web.html');
   await page.goto('/web.html');
   await expect(page.getByRole('heading',{name:/One family workspace/})).toBeVisible();
   for (const id of ['open-iphone','open-computer']) {
-    await expect(page.locator('#'+id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+    await expect(page.locator('#'+id)).toHaveAttribute('href','https://app.kindlane.app/');
   }
   await expect(page.locator('#android-download')).toHaveAttribute('href','download.html?device=android');
   await expect(page.locator('#wall-download')).toHaveAttribute('href','download.html?device=wall');
@@ -238,7 +238,7 @@ test('web guide theme controls are keyboard accessible and persist back to homep
 test('mobile navigation has Get Started and Sign In inside the screen at 390px', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
-  for (const [id,href] of [['#mobile-get-started','get-started.html'],['#mobile-sign-in','https://family-hub-7cb05.web.app/'],['#hero-get-started','get-started.html']]) {
+  for (const [id,href] of [['#mobile-get-started','get-started.html'],['#mobile-sign-in','https://app.kindlane.app/'],['#hero-get-started','get-started.html']]) {
     const link=page.locator(id);
     await expect(link, id).toBeVisible();
     await expect(link, id).toHaveAttribute('href',href);
@@ -274,7 +274,7 @@ test('header Sign In and Get Started sit at the right of the header with 44px ta
     await page.goto('/');
     const signIn=page.locator('#header-sign-in');
     const start=page.locator('#header-get-started');
-    await expect(signIn).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+    await expect(signIn).toHaveAttribute('href','https://app.kindlane.app/');
     await expect(start).toHaveAttribute('href','get-started.html');
     for (const link of [signIn,start]) {
       const box=await link.boundingBox();
@@ -302,9 +302,9 @@ test('Get Started page routes new, invited and returning families to browser sig
   await page.locator('#hero-get-started').click();
   await expect(page).toHaveURL(/\/get-started\.html$/);
   await expect(page.getByRole('heading',{level:1,name:/Get your family started/})).toBeVisible();
-  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://app.kindlane.app/');
   await expect(page.locator('#start-android')).toHaveAttribute('href','download.html?device=android');
-  for (const id of ['#start-join','#start-sign-in']) await expect(page.locator(id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  for (const id of ['#start-join','#start-sign-in']) await expect(page.locator(id)).toHaveAttribute('href','https://app.kindlane.app/');
   await expect(page.getByText(/never asks for your password/)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(false);
   await page.setViewportSize({width:1440,height:900});
@@ -469,14 +469,14 @@ test('homepage welcomes new web households and routes them through current signu
   await entry.screenshot({path:'test-results/web-signup-mobile.png'});
   await entry.locator('#web-get-started').click();
   await expect(page).toHaveURL(/get-started\.html$/);
-  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#start-browser')).toHaveAttribute('href','https://app.kindlane.app/');
   await expect(page.locator('#new-title').locator('..')).toContainText('Your first sign-in creates your account');
   await expect(page.locator('#new-title').locator('..')).toContainText('Create household');
 });
 
 test('household and installation guides provide a standalone browser path', async ({ page }) => {
   await page.goto('/start.html');
-  for(const id of ['#household-create-app','#household-join-app']) await expect(page.locator(id)).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  for(const id of ['#household-create-app','#household-join-app']) await expect(page.locator(id)).toHaveAttribute('href','https://app.kindlane.app/');
   await expect(page.locator('#create-family')).toContainText('You do not need an Android device');
   await expect(page.locator('#create-family')).not.toContainText('Install Family Hub for Android');
   await expect(page.locator('#join-family')).not.toContainText('Install the Android app');
@@ -485,7 +485,7 @@ test('household and installation guides provide a standalone browser path', asyn
   await expect(page.locator('#browser-install')).toContainText('Your first sign-in creates your Kindlane account');
   await page.getByText('Can I use it on an iPhone or iPad?', {exact:true}).click();
   await expect(page.getByText('An iPhone-friendly web companion is a separate development effort', {exact:false})).toHaveCount(0);
-  await expect(page.locator('#browser-install a').filter({hasText:'Sign in with Google'})).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#browser-install a').filter({hasText:'Sign in with Google'})).toHaveAttribute('href','https://app.kindlane.app/');
 });
 
 test('Help Center explains browser signup, invitations and current Settings', async ({ page }) => {
@@ -528,9 +528,9 @@ test('archived setup concept and download administration point families to the l
   await expect(page.locator('.notice a')).toHaveAttribute('href','get-started.html');
   await page.goto('/access.html');
   await expect(page.getByRole('heading',{level:1})).toHaveText('Manage download access.');
-  await expect(page.locator('#access-family-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#access-family-app')).toHaveAttribute('href','https://app.kindlane.app/');
   await page.goto('/download.html');
-  await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://family-hub-7cb05.web.app/');
+  await expect(page.locator('#download-web-app')).toHaveAttribute('href','https://app.kindlane.app/');
 });
 
 test('Google Calendar connection is documented for web and Android', async ({ page }) => {
@@ -566,7 +566,7 @@ test('Kindlane domain cutover metadata matches the one-domain Pages CNAME', asyn
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://kindlane.app/');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kindlane.app/social-preview.png');
-  await expect(page.locator('a[href="https://family-hub-7cb05.web.app/"]').first()).toBeVisible();
+  await expect(page.locator('a[href="https://app.kindlane.app/"]').first()).toBeVisible();
 });
 
 test('Kindlane support pages share the approved tagline and accessible product name', async ({ page }) => {

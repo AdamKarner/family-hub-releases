@@ -10,7 +10,7 @@ for (const route of ['/demo/', '/preview/']) {
       await expect(page.getByRole('heading', { name: 'See the real Kindlane.' })).toBeVisible();
       await expect(page.getByText(/fictional, sample-only/)).toBeVisible();
       await expect(page.getByRole('link', { name: 'Open Kindlane' }))
-        .toHaveAttribute('href', 'https://family-hub-7cb05.web.app/');
+        .toHaveAttribute('href', 'https://app.kindlane.app/');
       await expect(page.getByRole('link', { name: 'Get started' })).toHaveAttribute('href', '../get-started.html');
       await expect(page.getByRole('link', { name: /How to use Kindlane/ })).toHaveAttribute('href', '../web.html');
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
