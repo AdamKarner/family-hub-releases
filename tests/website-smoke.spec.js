@@ -502,7 +502,7 @@ test('Help Center explains browser signup, invitations and current Settings', as
   const appearance=page.getByText("How do I change Kindlane's appearance?",{exact:true}).locator('..');
   await appearance.locator('summary').click();
   await expect(appearance).toContainText('Preferences');
-  await expect(appearance).toContainText('Light is the default');
+  await expect(appearance).toContainText('New browsers start in Modern Light');
 });
 
 test('old Firebase guide URLs clearly identify their legacy scope and lead new families to signup', async ({ page }) => {
