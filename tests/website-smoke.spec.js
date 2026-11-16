@@ -664,6 +664,8 @@ test('tester page links to the Play opt-in and store, and the home page links to
   await expect(page.locator('#nav-testers')).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator('#mobile-testers')).toBeVisible();
+  await expect(page.locator('#mobile-web-guide')).toBeVisible();
+  await expect(page.locator('#mobile-web-guide')).toHaveAttribute('href', 'web.html');
   for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/testers.html');
