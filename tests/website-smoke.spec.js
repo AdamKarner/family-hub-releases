@@ -99,7 +99,7 @@ test('updated household guidance and Baton feature are discoverable', async ({pa
 });
 test('privacy describes household membership and private requests', async ({page}) => {
   await page.goto('/privacy.html');
-  await expect(page.getByText('Last reviewed: November 6, 2026')).toBeVisible();
+  await expect(page.getByText('Last reviewed: November 16, 2026')).toBeVisible();
   await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
   await expect(page.getByText(/This sharing never changes anything in Google Calendar/)).toBeVisible();
   await expect(page.getByText(/Edit inside Kindlane/)).toBeVisible();
