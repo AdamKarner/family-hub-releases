@@ -37,7 +37,7 @@ test('Help Center search filters FAQ and guides', async ({ page }) => {
 
 test('public entry pages fit a narrow Android viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 780 });
-  for (const path of ['/', '/download.html', '/releases.html', '/install.html', '/help.html', '/feedback.html', '/start.html', '/privacy.html']) {
+  for (const path of ['/', '/download.html', '/releases.html', '/install.html', '/help.html', '/feedback.html', '/start.html', '/privacy.html', '/delete-account.html']) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(overflow, path + ' has horizontal overflow').toBe(false);
@@ -99,12 +99,21 @@ test('updated household guidance and Baton feature are discoverable', async ({pa
 });
 test('privacy describes household membership and private requests', async ({page}) => {
   await page.goto('/privacy.html');
-  await expect(page.getByText('Last reviewed: November 16, 2026')).toBeVisible();
+  await expect(page.getByText('Last reviewed: November 18, 2026')).toBeVisible();
   await expect(page.getByText(/Pass the Baton requests are intended for the sender and recipient/)).toBeVisible();
   await expect(page.getByText(/This sharing never changes anything in Google Calendar/)).toBeVisible();
   await expect(page.getByText(/Edit inside Kindlane/)).toBeVisible();
   await expect(page.getByText(/We do not sell this data/)).toBeVisible();
   await expect(page.getByText(/Google API Services User Data Policy, including the Limited Use requirements/)).toBeVisible();
+});
+
+test('delete account page gives the in-app steps and a way to ask without the app', async ({page}) => {
+  await page.goto('/delete-account.html');
+  await expect(page.locator('h1')).toHaveText('Delete your Kindlane account');
+  await expect(page.getByText('Household & sync', {exact: false}).first()).toBeVisible();
+  await expect(page.locator('main a[href="feedback.html"]')).toBeVisible();
+  await page.goto('/privacy.html');
+  await expect(page.locator('a[href="delete-account.html"]')).toBeVisible();
 });
 
 test('home page footer links to the privacy policy', async ({ page }) => {
@@ -441,7 +450,7 @@ test('homepage uses the selected artwork and responsive crop at the approved bre
 test('new visitors start every themed website page in Light even on a dark device', async ({ page }) => {
   await page.addInitScript(() => localStorage.removeItem('fh_site_theme'));
   await page.emulateMedia({ colorScheme: 'dark' });
-  for (const name of ['index','get-started','web','help','start','download','install','hearth','releases','privacy','feedback','access','setup','household-setup-concept']) {
+  for (const name of ['index','get-started','web','help','start','download','install','hearth','releases','privacy','delete-account','feedback','access','setup','household-setup-concept']) {
     await page.goto('/' + name + '.html');
     await expect(page.locator('html'), name).toHaveAttribute('data-mode', 'light');
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme), name).toBe('light');
