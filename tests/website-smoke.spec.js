@@ -105,6 +105,10 @@ test('privacy describes household membership and private requests', async ({page
   await expect(page.getByText(/Edit inside Kindlane/)).toBeVisible();
   await expect(page.getByText(/We do not sell this data/)).toBeVisible();
   await expect(page.getByText(/Google API Services User Data Policy, including the Limited Use requirements/)).toBeVisible();
+  await expect(page.getByRole('heading', {name: 'How we protect sensitive information'})).toBeVisible();
+  await expect(page.getByText(/encrypted HTTPS\/TLS transport/)).toBeVisible();
+  await expect(page.getByText(/encryption of stored Firestore data at rest/)).toBeVisible();
+  await expect(page.getByText(/a screen-level restriction or local PIN alone/)).toBeVisible();
 });
 
 test('delete account page gives the in-app steps and a way to ask without the app', async ({page}) => {
