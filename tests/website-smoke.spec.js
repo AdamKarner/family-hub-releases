@@ -689,3 +689,27 @@ test('tester page links to the Play opt-in and store, and the home page links to
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
+
+test('School mail help is discoverable, with steps for Android and for iPhone and computer', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('Smore');
+  await expect(page.locator('#articles .tile:visible')).toHaveCount(1);
+  await expect(page.getByRole('link', { name: /School mail/ })).toHaveAttribute('href', '#faq-school');
+  const newsletter = page.locator('#faqgroup details').filter({ hasText: 'How do I add a school newsletter, like one on Smore?' });
+  await expect(newsletter).toBeVisible();
+  await newsletter.locator('summary').click();
+  await expect(newsletter.getByText('On an Android phone or tablet:')).toBeVisible();
+  await expect(newsletter.getByText('On an iPhone or a computer:', { exact: false })).toBeVisible();
+  await expect(newsletter.getByText('School flyer link')).toBeVisible();
+  await expect(newsletter.getByText('Pick what to keep').first()).toBeVisible();
+  await page.locator('#search').fill('Seesaw');
+  await expect(page.getByText('How do I add a flyer from Seesaw or Canva?')).toBeVisible();
+  await page.locator('#search').fill('');
+  // The web app's How to card links straight to the first School question.
+  await page.goto('/help.html#faq-school');
+  await expect(page.locator('#faq-school summary')).toHaveText('What are the ways to add a school email or flyer?');
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.locator('#faq-school summary').click();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+  expect(overflow).toBe(false);
+});
