@@ -713,3 +713,19 @@ test('School mail help is discoverable, with steps for Android and for iPhone an
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(overflow).toBe(false);
 });
+
+test('School breaks, weekly items and renaming the household are findable, and Add is the way in', async ({ page }) => {
+  await page.goto('/help.html');
+  await page.locator('#search').fill('thanksgiving');
+  await expect(page.getByText('How do I pause weekly things during a school break?')).toBeVisible();
+  await page.locator('#search').fill('every week');
+  await expect(page.getByText('How do I add something that happens every week?')).toBeVisible();
+  await page.locator('#search').fill('rename household');
+  await expect(page.getByText('How do I rename my household?')).toBeVisible();
+  await page.locator('#search').fill('');
+  // Scan a flyer and Paste a notice are under + Add now, not the three dots.
+  await page.goto('/help.html#faq-school');
+  await page.locator('#faq-school summary').click();
+  await expect(page.locator('#faq-school')).toContainText('+ Add');
+  await expect(page.locator('#faq-school')).not.toContainText('three dots');
+});
