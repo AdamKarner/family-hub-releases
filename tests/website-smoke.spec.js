@@ -623,12 +623,14 @@ test('features page has a section with a picture for every module, in Light and 
     await page.addInitScript(m => { try { localStorage.setItem('fh_site_theme', JSON.stringify({mode:m,accent:'coral'})); } catch (_) {} }, mode);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/features.html');
-    const ids = ['home','calendar','daily','meals','grocery','baton','notes','wall','widgets','styles'];
+    const ids = ['home','calendar','daily','meals','grocery','baton','pets','upkeep','school','notes','wall','widgets','styles'];
+    const textOnly = ['pets','upkeep','school'];
     for (const id of ids) {
       const section = page.locator('#' + id);
       await expect(section).toHaveCount(1);
       await expect(page.locator('.fchips a[href="#' + id + '"]')).toHaveCount(1);
       await section.scrollIntoViewIfNeeded();
+      if (textOnly.includes(id)) { await expect(section.locator('.fpoints li').first()).toBeVisible(); continue; }
       const shot = section.locator('.fshot');
       await expect(shot).toBeVisible();
       const img = shot.locator('picture.only-' + mode + ' img');
@@ -642,7 +644,7 @@ test('home page feature cards and the Features menu link open the Features page'
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/');
   await expect(page.locator('.nav .links a[href="features.html"]')).toHaveText('Features');
-  await expect(page.locator('#features a.feature')).toHaveCount(10);
+  await expect(page.locator('#features a.feature')).toHaveCount(13);
   await expect(page.locator('#setup, #updates')).toHaveCount(0);
   await page.locator('#features a.feature', { hasText: 'Sticky notes' }).click();
   await expect(page).toHaveURL(/features\.html#notes$/);
