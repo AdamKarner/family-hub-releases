@@ -624,13 +624,11 @@ test('features page has a section with a picture for every module, in Light and 
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/features.html');
     const ids = ['home','calendar','daily','meals','grocery','baton','pets','upkeep','school','notes','wall','widgets','styles'];
-    const textOnly = ['pets','upkeep','school'];
     for (const id of ids) {
       const section = page.locator('#' + id);
       await expect(section).toHaveCount(1);
       await expect(page.locator('.fchips a[href="#' + id + '"]')).toHaveCount(1);
       await section.scrollIntoViewIfNeeded();
-      if (textOnly.includes(id)) { await expect(section.locator('.fpoints li').first()).toBeVisible(); continue; }
       const shot = section.locator('.fshot');
       await expect(shot).toBeVisible();
       const img = shot.locator('picture.only-' + mode + ' img');
