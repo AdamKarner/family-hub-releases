@@ -707,6 +707,17 @@ test('School mail help is discoverable, with steps for Android and for iPhone an
   await page.locator('#search').fill('Seesaw');
   await expect(page.getByText('How do I add a flyer from Seesaw or Canva?')).toBeVisible();
   await expect(page.getByText('How do I get Seesaw messages into Kindlane?')).toBeVisible();
+  // School email is found by Gmail, and its answer has the steps on the screens.
+  await page.locator('#search').fill('Gmail');
+  const email = page.locator('#faq-school-email');
+  await expect(email).toBeVisible();
+  await email.locator('summary').click();
+  for (const w of ['Connect Gmail', 'Read email from', '+ Add a sender', 'New from email', 'Check the email', 'Disconnect']) {
+    await expect(email).toContainText(w);
+  }
+  await page.locator('#search').fill('unverified');
+  await expect(page.getByText("Why does Google say it hasn't verified Kindlane?")).toBeVisible();
+  await page.locator('#search').fill('Seesaw');
   // The Seesaw email setting is found by its own name too.
   await page.locator('#search').fill('Parent Notifications');
   const seesaw = page.locator('#faq-school-seesaw');
