@@ -706,6 +706,14 @@ test('School mail help is discoverable, with steps for Android and for iPhone an
   await expect(newsletter.getByText('Pick what to keep').first()).toBeVisible();
   await page.locator('#search').fill('Seesaw');
   await expect(page.getByText('How do I add a flyer from Seesaw or Canva?')).toBeVisible();
+  await expect(page.getByText('How do I get Seesaw messages into Kindlane?')).toBeVisible();
+  // The Seesaw email setting is found by its own name too.
+  await page.locator('#search').fill('Parent Notifications');
+  const seesaw = page.locator('#faq-school-seesaw');
+  await expect(seesaw).toBeVisible();
+  await seesaw.locator('summary').click();
+  await expect(seesaw).toContainText('Set Email to All');
+  await expect(seesaw).toContainText('School notice');
   await page.locator('#search').fill('');
   // The web app's How to card links straight to the first School question.
   await page.goto('/help.html#faq-school');
